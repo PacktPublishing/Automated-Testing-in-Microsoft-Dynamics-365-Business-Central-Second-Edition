@@ -1,0 +1,26 @@
+{
+  "id": "53e8cd57-4f18-43b2-9c18-6f84a2efcd59",
+  "name": "Chapter2",
+  "publisher": "fluxxus.nl",
+  "version": "1.0.0.0",
+  "brief": "Code examples Chapter 2 book: Automated Testing in Microsoft Dynamics 365 Business Central",
+  "description": "Code examples for Chapter 2 the book Automated Testing in Microsoft Dynamics 365 Business Central written by Luc van Vugt and published by Packt",
+  "privacyStatement": "",
+  "EULA": "",
+  "help": "",
+  "url": "",
+  "logo": "",
+  "dependencies": [],
+  "screenshots": [],
+  "platform": "16.0.0.0",
+  "application": "16.0.0.0",
+  "idRanges": [
+    {
+      "from": 70000,
+      "to": 70099
+    }
+  ],
+  "contextSensitiveHelpUrl": "https://Chapter2.com/help/",
+  "showMyCode": true,
+  "runtime": "6.0"
+}
