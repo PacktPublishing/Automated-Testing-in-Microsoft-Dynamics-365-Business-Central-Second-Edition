@@ -25,10 +25,23 @@ pageextension 70000 "Sales Invoice Subform Ext" extends "Sales Invoice Subform"
             DocumentNoFilter := Rec.GetFilter("Document No.");
             if (DocumentNoFilter <> '') and (Rec.GetRangeMin("Document No.") = Rec.GetRangeMax("Document No.")) then begin
                 SalesHeader.Get(Rec."Document Type", Rec."Document No.");
-                Result := SalesHeader."VAT Bus. Posting Group" <> 'EXPORT';
+                Result := not DoesZeroPercentVATCalculationAlwaysApply(SalesHeader."VAT Bus. Posting Group");
             end;
         end;
         Rec.FilterGroup(0);
+    end;
+
+    local procedure DoesZeroPercentVATCalculationAlwaysApply(VATBusPostingGroup: Code[20]): Boolean
+    var
+        VATPostingSetup: Record "VAT Posting Setup";
+        NumberOfRecordsWithZeroPercentage, NumberOfRecords : Integer;
+    begin
+        VATPostingSetup.SetRange("VAT Bus. Posting Group", VATBusPostingGroup);
+        VATPostingSetup.SetRange("VAT %", 0);
+        NumberOfRecordsWithZeroPercentage := VATPostingSetup.Count();
+        VATPostingSetup.SetRange("VAT %");
+        NumberOfRecords := VATPostingSetup.Count();
+        exit(NumberOfRecordsWithZeroPercentage = NumberOfRecords);
     end;
 
     var
