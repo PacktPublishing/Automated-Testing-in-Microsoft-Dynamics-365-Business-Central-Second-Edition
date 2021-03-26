@@ -34,14 +34,10 @@ pageextension 70000 "Sales Invoice Subform Ext" extends "Sales Invoice Subform"
     local procedure DoesZeroPercentVATCalculationAlwaysApply(VATBusPostingGroup: Code[20]): Boolean
     var
         VATPostingSetup: Record "VAT Posting Setup";
-        NumberOfRecordsWithZeroPercentage, NumberOfRecords : Integer;
     begin
         VATPostingSetup.SetRange("VAT Bus. Posting Group", VATBusPostingGroup);
-        VATPostingSetup.SetRange("VAT %", 0);
-        NumberOfRecordsWithZeroPercentage := VATPostingSetup.Count();
-        VATPostingSetup.SetRange("VAT %");
-        NumberOfRecords := VATPostingSetup.Count();
-        exit(NumberOfRecordsWithZeroPercentage = NumberOfRecords);
+        VATPostingSetup.SetFilter("VAT %", '<>%1', 0);
+        exit(VATPostingSetup.IsEmpty());
     end;
 
     var
