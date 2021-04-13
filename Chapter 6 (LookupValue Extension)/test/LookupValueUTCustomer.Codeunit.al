@@ -1,6 +1,7 @@
 codeunit 81000 "LookupValue UT Customer"
 {
     Subtype = Test;
+
     trigger OnRun()
     begin
         //[FEATURE] LookupValue UT Customer
