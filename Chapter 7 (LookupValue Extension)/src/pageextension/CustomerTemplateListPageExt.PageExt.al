@@ -1,4 +1,4 @@
-pageextension 50015 "CustomerTemplateListPageExt" extends "Customer Template List" //5156
+pageextension 50015 "CustomerTemplateListPageExt" extends "Customer Templ. List" //1381
 {
     layout
     {

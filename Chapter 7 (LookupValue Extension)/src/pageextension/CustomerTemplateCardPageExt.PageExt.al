@@ -1,4 +1,4 @@
-pageextension 50016 "CustomerTemplateCardPageExt" extends "Customer Template Card" //5157
+pageextension 50016 "CustomerTemplateCardPageExt" extends "Customer Templ. Card" //1382
 {
     layout
     {
