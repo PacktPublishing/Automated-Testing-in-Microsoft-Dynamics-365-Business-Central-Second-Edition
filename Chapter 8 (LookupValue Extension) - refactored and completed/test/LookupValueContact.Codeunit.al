@@ -13,7 +13,6 @@ codeunit 81007 "LookupValue Contact"
         LibraryTemplates: Codeunit "Library - Templates";
         LibraryLookupValue: Codeunit "Library - Lookup Value";
         LibraryMessages: Codeunit "Library - Messages";
-        isInitialized: Boolean;
 
     // Instruction NOTES
     // (1) Replacing the argument LookupValueCode in verification call, i.e. [THEN] clause, should make any test fail

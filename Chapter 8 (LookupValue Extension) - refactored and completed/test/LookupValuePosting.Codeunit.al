@@ -128,6 +128,7 @@ codeunit 81005 "LookupValue Posting"
         if isInitialized then
             exit;
 
+        //[GIVEN] A lookup value
         LocationSetup();
 
         isInitialized := true;

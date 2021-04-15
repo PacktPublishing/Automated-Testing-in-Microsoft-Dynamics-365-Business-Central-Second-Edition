@@ -8,7 +8,6 @@ codeunit 81008 "Lookup Value Report"
     end;
 
     var
-        LibraryUtility: Codeunit "Library - Utility";
         LibrarySales: Codeunit "Library - Sales";
         LibraryReportDataset: Codeunit "Library - Report Dataset";
         LibraryLookupValue: Codeunit "Library - Lookup Value";
