@@ -1,4 +1,4 @@
-tableextension 50005 "CustomerTemplTableExt" extends "Customer Templ." //5105
+tableextension 50005 "CustomerTemplTableExt" extends "Customer Templ." //1381
 {
     fields
     {
