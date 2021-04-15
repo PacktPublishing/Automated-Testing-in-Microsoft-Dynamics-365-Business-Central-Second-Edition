@@ -44,7 +44,7 @@ jobs:
     inputs:
       usedocker: true
       nav_app_version: '1.0.[yyyyWW].*'
-      targetproject: 'Chapter 7 (LookupValue Extension) - refactored and completed/app.json'
+      targetproject: 'Chapter 8 (LookupValue Extension) - refactored and completed/app.json'
       app_file_suffix: '_APP'                                 # A trick to uniquely identify the APP (from the TEST-app)
 
   - task: ALOpsAppPublish@1
