@@ -1,8 +1,11 @@
 codeunit 50003 "ContactEvents"
 {
-    [EventSubscriber(ObjectType::Table, Database::Contact, 'OnCreateCustomerFromTemplateOnAfterApplyCustomerTemplate', '', false, false)]
-    local procedure OnCreateCustomerOnTransferFieldsFromTemplateEvent(var Customer: Record Customer; CustomerTemplate: Record "Customer Templ.")
+    [EventSubscriber(ObjectType::Table, Database::Contact, 'OnCreateCustomerFromTemplateOnBeforeCustomerInsert', '', false, false)]
+    local procedure OnCreateCustomerOnTransferFieldsFromTemplateEventt(var Cust: Record Customer; CustomerTemplate: Code[20]; var Contact: Record Contact)
+    var
+        CustomerTempl: Record "Customer Templ.";
     begin
-        Customer."Lookup Value Code" := CustomerTemplate."Lookup Value Code";
+        CustomerTempl.Get(CustomerTemplate);
+        Cust."Lookup Value Code" := CustomerTempl."Lookup Value Code";
     end;
 }

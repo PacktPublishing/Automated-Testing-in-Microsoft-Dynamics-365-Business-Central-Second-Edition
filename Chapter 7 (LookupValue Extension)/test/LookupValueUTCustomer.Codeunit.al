@@ -153,6 +153,6 @@ codeunit 81000 "LookupValue UT Customer"
     [ModalPageHandler]
     procedure HandleConfigTemplates(var ConfigTemplates: TestPage "Config Templates")
     begin
-        ConfigTemplates.OK.Invoke();
+        ConfigTemplates.OK().Invoke();
     end;
 }

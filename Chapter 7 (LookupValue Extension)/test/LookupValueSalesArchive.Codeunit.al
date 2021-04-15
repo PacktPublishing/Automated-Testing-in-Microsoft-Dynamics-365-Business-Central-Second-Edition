@@ -12,7 +12,6 @@ codeunit 81004 "LookupValue Sales Archive"
         LibraryUtility: Codeunit "Library - Utility";
         LibrarySales: Codeunit "Library - Sales";
 
-
     // Instruction NOTES
     // (1) Replacing the argument LookupValueCode in verification call, i.e. [THEN] clause, should make any test fail
 
@@ -132,10 +131,6 @@ codeunit 81004 "LookupValue Sales Archive"
         SalesListArchive.OpenView();
         SalesListArchive.GoToRecord(SalesHeaderArchive);
 
-        // Assert.AreEqual(
-        //     "Lookup Value Code",
-        //     SalesListArchive."Lookup Value Code".Value(),
-        //     LibraryMessages.GetFieldOnTableTxt(FieldCaption("Lookup Value Code"), TableCaption()));
         Assert.AreEqual(
             SalesHeaderArchive."Lookup Value Code",
             SalesListArchive."Lookup Value Code".Value(),
