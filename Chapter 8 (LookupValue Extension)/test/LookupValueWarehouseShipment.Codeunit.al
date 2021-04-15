@@ -2,21 +2,23 @@ codeunit 81003 "LookupValue Warehouse Shipment"
 {
     Subtype = Test;
 
+    trigger OnRun()
+    begin
+        //[FEATURE] LookupValue Warehouse Shipment
+    end;
+
     var
         DefaultLocation: Record Location;
-        Assert: Codeunit Assert;
-        LibraryRandom: Codeunit "Library - Random";
+        Assert: Codeunit "Library Assert";
         LibraryUtility: Codeunit "Library - Utility";
         LibrarySales: Codeunit "Library - Sales";
         LibraryWarehouse: Codeunit "Library - Warehouse";
         isInitialized: Boolean;
         LookupValueCode: Code[10];
 
-    //[FEATURE] LookupValue Warehouse Shipment
-
-    //Instruction NOTES
-    //(1) Replacing the argument LookupValueCode in verification call, i.e. [THEN] clause, should make any test fail
-    //(2) Making field "Lookup Value Code", on any of the related pages, Visible=false should make any UI test fail
+    // Instruction NOTES
+    // (1) Replacing the argument LookupValueCode in verification call, i.e. [THEN] clause, should make any test fail
+    // (2) Making field "Lookup Value Code", on any of the related pages, Visible=false should make any UI test fail
 
     [Test]
     procedure AssignLookupValueToWarehouseShipmentLine()
@@ -144,8 +146,11 @@ codeunit 81003 "LookupValue Warehouse Shipment"
         if isInitialized then
             exit;
 
+        //[GIVEN] A lookup value
         LookupValueCode := CreateLookupValueCode();
+        //[GIVEN] A location with require shipment
         LibraryWarehouse.CreateLocationWMS(DefaultLocation, false, false, false, false, true);
+        //[GIVEN] A warehouse employee for current user
         LibraryWarehouse.CreateWarehouseEmployee(WarehouseEmployee, DefaultLocation."Code", false);
 
         isInitialized := true;
@@ -159,7 +164,7 @@ codeunit 81003 "LookupValue Warehouse Shipment"
         LookupValue.Init();
         LookupValue.Validate(
             Code,
-            LibraryUtility.GenerateRandomCode(LookupValue.FIELDNO(Code),
+            LibraryUtility.GenerateRandomCode(LookupValue.FieldNo(Code),
             Database::LookupValue));
         LookupValue.Validate(Description, LookupValue.Code);
         LookupValue.Insert();
@@ -182,8 +187,8 @@ codeunit 81003 "LookupValue Warehouse Shipment"
         LibrarySales.CreateSalesDocumentWithItem(SalesHeader, SalesLine, SalesHeader."Document Type"::Order, '', '', 1, Location."Code", 0D);
 
         if WithLookupValue then begin
-            Validate("Lookup Value Code", LookupValueCode);
-            Modify();
+            SalesHeader.Validate("Lookup Value Code", LookupValueCode);
+            SalesHeader.Modify();
         end;
 
         LibrarySales.ReleaseSalesDocument(SalesHeader);
@@ -191,9 +196,9 @@ codeunit 81003 "LookupValue Warehouse Shipment"
 
     local procedure FindWarehouseShipmentLine(var WarehouseShipmentLine: Record "Warehouse Shipment Line"; SourceNo: Code[20])
     begin
-        SetRange("Source Document", "Source Document"::"Sales Order");
-        SetRange("Source No.", SourceNo);
-        FindFirst();
+        WarehouseShipmentLine.SetRange("Source Document", WarehouseShipmentLine."Source Document"::"Sales Order");
+        WarehouseShipmentLine.SetRange("Source No.", SourceNo);
+        WarehouseShipmentLine.FindFirst();
     end;
 
     local procedure FindAndSetLookupValueOnWarehouseShipmentLine(DocumentNo: Code[20]; LookupValueCode: Code[10])
@@ -206,8 +211,8 @@ codeunit 81003 "LookupValue Warehouse Shipment"
 
     local procedure SetLookupValueOnWarehouseShipmentLine(var WarehouseShipmentLine: Record "Warehouse Shipment Line"; LookupValueCode: Code[10])
     begin
-        Validate("Lookup Value Code", LookupValueCode);
-        Modify();
+        WarehouseShipmentLine.Validate("Lookup Value Code", LookupValueCode);
+        WarehouseShipmentLine.Modify();
     end;
 
     local procedure SetLookupValueOnLineOnWarehouseShipmentDocumentPage(DocumentNo: Code[20])
@@ -216,12 +221,12 @@ codeunit 81003 "LookupValue Warehouse Shipment"
         WarehouseShipmentPage: TestPage "Warehouse Shipment";
     begin
         FindWarehouseShipmentLine(WarehouseShipmentLine, DocumentNo);
-        OpenEdit();
-        GoToKey(WarehouseShipmentLine."No.");
-        WhseShptLines.GoToKey(WarehouseShipmentLine."No.", WarehouseShipmentLine."Line No.");
-        Assert.IsTrue(WhseShptLines."Lookup Value Code".Editable(), 'Editable');
-        WhseShptLines."Lookup Value Code".SetValue(LookupValueCode);
-        Close();
+        WarehouseShipmentPage.OpenEdit();
+        WarehouseShipmentPage.GoToKey(WarehouseShipmentLine."No.");
+        WarehouseShipmentPage.WhseShptLines.GoToKey(WarehouseShipmentLine."No.", WarehouseShipmentLine."Line No.");
+        Assert.IsTrue(WarehouseShipmentPage.WhseShptLines."Lookup Value Code".Editable(), 'Editable');
+        WarehouseShipmentPage.WhseShptLines."Lookup Value Code".SetValue(LookupValueCode);
+        WarehouseShipmentPage.Close();
     end;
 
     local procedure CreateWarehouseShipmentWithOutLines(LocationCode: Code[10]): Code[20]
@@ -229,9 +234,9 @@ codeunit 81003 "LookupValue Warehouse Shipment"
         WarehouseShipmentHeader: Record "Warehouse Shipment Header";
     begin
         LibraryWarehouse.CreateWarehouseShipmentHeader(WarehouseShipmentHeader);
-        Validate("Location Code", LocationCode);
-        Modify();
-        exit("No.");
+        WarehouseShipmentHeader.Validate("Location Code", LocationCode);
+        WarehouseShipmentHeader.Modify();
+        exit(WarehouseShipmentHeader."No.");
     end;
 
     local procedure GetSalesOrderShipment(WarehouseShipmentNo: Code[20])
@@ -239,8 +244,8 @@ codeunit 81003 "LookupValue Warehouse Shipment"
         WarehouseShipmentHeader: Record "Warehouse Shipment Header";
         WarehouseSourceFilter: Record "Warehouse Source Filter";
     begin
-        Get(WarehouseShipmentNo);
-        LibraryWarehouse.GetSourceDocumentsShipment(WarehouseShipmentHeader, WarehouseSourceFilter, "Location Code");
+        WarehouseShipmentHeader.Get(WarehouseShipmentNo);
+        LibraryWarehouse.GetSourceDocumentsShipment(WarehouseShipmentHeader, WarehouseSourceFilter, WarehouseShipmentHeader."Location Code");
     end;
 
     local procedure VerifyLookupValueOnWarehouseShipmentLine(DocumentNo: Code[20]; LookupValueCode: Code[10])
@@ -250,13 +255,13 @@ codeunit 81003 "LookupValue Warehouse Shipment"
     begin
         FindWarehouseShipmentLine(WarehouseShipmentLine, DocumentNo);
         Assert.AreEqual(
-    LookupValueCode,
-    "Lookup Value Code",
-    StrSubstNo(
-        FieldOnTableTxt,
-        FieldCaption("Lookup Value Code"),
-        TableCaption())
-    );
+            LookupValueCode,
+            WarehouseShipmentLine."Lookup Value Code",
+            StrSubstNo(
+                FieldOnTableTxt,
+                WarehouseShipmentLine.FieldCaption("Lookup Value Code"),
+                WarehouseShipmentLine.TableCaption())
+            );
     end;
 
     local procedure VerifyNonExistingLookupValueError(LookupValueCode: Code[10])
@@ -266,11 +271,11 @@ codeunit 81003 "LookupValue Warehouse Shipment"
         ValueCannotBeFoundInTableTxt: Label 'The field %1 of table %2 contains a value (%3) that cannot be found in the related table (%4).';
     begin
         Assert.ExpectedError(
-    StrSubstNo(
-        ValueCannotBeFoundInTableTxt,
-        FieldCaption("Lookup Value Code"),
-        TableCaption(),
-        LookupValueCode,
-        LookupValue.TableCaption()));
+            StrSubstNo(
+                ValueCannotBeFoundInTableTxt,
+                WarehouseShipmentLine.FieldCaption("Lookup Value Code"),
+                WarehouseShipmentLine.TableCaption(),
+                LookupValueCode,
+                LookupValue.TableCaption()));
     end;
 }

@@ -2,14 +2,16 @@ codeunit 81008 "Lookup Value Report"
 {
     Subtype = Test;
 
+    trigger OnRun()
+    begin
+        //[FEATURE] LookupValue Report
+    end;
+
     var
-        Assert: Codeunit Assert;
         LibraryUtility: Codeunit "Library - Utility";
         LibrarySales: Codeunit "Library - Sales";
         LibraryReportDataset: Codeunit "Library - Report Dataset";
         isInitialized: Boolean;
-
-    //[FEATURE] LookupValue Report
 
     [Test]
     [HandlerFunctions('CustomerListRequestPageHandler')]
@@ -60,7 +62,7 @@ codeunit 81008 "Lookup Value Report"
         LookupValue.Init();
         LookupValue.Validate(
             Code,
-            LibraryUtility.GenerateRandomCode(LookupValue.FIELDNO(Code),
+            LibraryUtility.GenerateRandomCode(LookupValue.FieldNo(Code),
             Database::LookupValue));
         LookupValue.Validate(Description, LookupValue.Code);
         LookupValue.Insert();
@@ -84,11 +86,8 @@ codeunit 81008 "Lookup Value Report"
     end;
 
     local procedure VerifyCustomerWithLookupValueOnCustomerListReport(No: Code[20]; LookupValueCode: Code[10])
-    var
-        Row: array[2] of Integer;
     begin
-        Row[1] := LibraryReportDataset.FindRow('Customer_No_', No);
-        Row[2] := LibraryReportDataset.FindRow('Customer_Lookup_Value_Code', LookupValueCode);
-        Assert.AreEqual(13, Row[2] - Row[1], 'Delta between columns Customer_No_ and Customer_Lookup_Value_Code')
+        LibraryReportDataset.AssertElementWithValueExists('Customer_No_', No);
+        LibraryReportDataset.AssertElementWithValueExists('Customer_Lookup_Value_Code', LookupValueCode);
     end;
 }
