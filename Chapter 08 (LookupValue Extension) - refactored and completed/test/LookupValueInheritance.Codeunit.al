@@ -10,6 +10,8 @@ codeunit 81006 "LookupValue Inheritance"
     var
         Assert: Codeunit "Library Assert";
         LibrarySales: Codeunit "Library - Sales";
+        LibraryMarketing: Codeunit "Library - Marketing";
+        LibraryTemplates: Codeunit "Library - Templates";
         LibraryVariableStorage: Codeunit "Library - Variable Storage";
         LibraryRapidStart: Codeunit "Library - Rapid Start";
         LibrarySmallBusiness: Codeunit "Library - Small Business";
@@ -41,6 +43,28 @@ codeunit 81006 "LookupValue Inheritance"
 
         //[THEN] LookupValue on sales document is populated with lookup value of customer
         VerifyLookupValueOnSalesHeader(SalesHeader, LookupValueCode);
+    end;
+
+    [Test]
+    procedure CreateCustomerFromContactWithLookupValue()
+    //[FEATURE] LookupValue Contact
+    var
+        Contact: Record Contact;
+        Customer: Record Customer;
+        CustomerTemplate: Record "Customer Templ.";
+    begin
+        //[SCENARIO #0026] Check that lookup value is inherited from customer template to customer when creating customer from contact
+
+        //[GIVEN] A customer template with lookup value
+        CreateCustomerTemplate(CustomerTemplate, UseLookupValue());
+        //[GIVEN] A contact
+        CreateCompanyContact(Contact);
+
+        //[WHEN] Customer is created from contact
+        CreateCustomerFromContact(Contact, CustomerTemplate.Code, Customer);
+
+        //[THEN] Customer has lookup value code field populated with lookup value from customer template
+        VerifyLookupValueOnCustomer(Customer."No.", CustomerTemplate."Lookup Value Code");
     end;
 
     [Test]
@@ -101,6 +125,45 @@ codeunit 81006 "LookupValue Inheritance"
         SalesHeader.SetHideValidationDialog(true);
         SalesHeader.Validate("Sell-to Customer No.", CustomerNo);
         SalesHeader.Modify();
+    end;
+
+    local procedure CreateCustomerTemplate(var CustomerTemplate: Record "Customer Templ."; WithLookupValue: Boolean): Code[10]
+    begin
+        LibraryTemplates.CreateCustomerTemplate(CustomerTemplate);
+
+        if WithLookupValue then begin
+            CustomerTemplate.Validate("Lookup Value Code", CreateLookupValueCode());
+            CustomerTemplate.Modify();
+        end;
+        exit(CustomerTemplate."Lookup Value Code");
+    end;
+
+    local procedure UseLookupValue(): Boolean
+    begin
+        exit(true)
+    end;
+
+    local procedure UseNoLookupValue(): Boolean
+    begin
+        exit(false)
+    end;
+
+    local procedure CreateCompanyContact(var Contact: Record Contact);
+    begin
+        LibraryMarketing.CreateCompanyContact(Contact);
+    end;
+
+    local procedure CreateCustomerFromContact(Contact: Record Contact; CustomerTemplateCode: Code[10]; var Customer: Record Customer);
+    begin
+        Contact.SetHideValidationDialog(true);
+        Contact.CreateCustomerFromTemplate(CustomerTemplateCode);
+        FindCustomerByCompanyName(Customer, Contact.Name);
+    end;
+
+    local procedure FindCustomerByCompanyName(var Customer: Record Customer; CompanyName: Text[50]);
+    begin
+        Customer.SetRange(Name, CompanyName);
+        Customer.FindFirst();
     end;
 
     local procedure CreateCustomerConfigurationTemplateWithLookupValue(LookupValueCode: Code[10]): Code[10]

@@ -10,7 +10,6 @@ codeunit 81003 "LookupValue Warehouse Shipment"
     var
         DefaultLocation: Record Location;
         Assert: Codeunit "Library Assert";
-        Any: Codeunit Any;
         LibrarySales: Codeunit "Library - Sales";
         LibraryWarehouse: Codeunit "Library - Warehouse";
         LibraryLookupValue: Codeunit "Library - Lookup Value";

@@ -204,6 +204,7 @@ codeunit 81001 "LookupValue UT Sales Document"
         if isInitialized then
             exit;
 
+        //[GIVEN] A lookup value
         LookupValueCode := CreateLookupValueCode();
 
         isInitialized := true;

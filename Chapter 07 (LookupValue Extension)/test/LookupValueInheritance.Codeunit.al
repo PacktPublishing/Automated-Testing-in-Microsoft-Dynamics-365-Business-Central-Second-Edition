@@ -68,6 +68,7 @@ codeunit 81006 "LookupValue Inheritance"
         if isInitialized then
             exit;
 
+        //[GIVEN] A lookup value
         LookupValueCode := CreateLookupValueCode();
 
         isInitialized := true;
