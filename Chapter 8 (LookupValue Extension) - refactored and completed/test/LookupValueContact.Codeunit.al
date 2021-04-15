@@ -68,8 +68,7 @@ codeunit 81007 "LookupValue Contact"
 
     local procedure CreateCompanyContact(var Contact: Record Contact);
     begin
-        // LibraryMarketing.CreateCompanyContact(Contact);
-        LibraryMarketing.CreatePersonContact(Contact);
+        LibraryMarketing.CreateCompanyContact(Contact);
     end;
 
     local procedure CreateCustomerFromContact(Contact: Record Contact; CustomerTemplateCode: Code[10]; var Customer: Record Customer);
