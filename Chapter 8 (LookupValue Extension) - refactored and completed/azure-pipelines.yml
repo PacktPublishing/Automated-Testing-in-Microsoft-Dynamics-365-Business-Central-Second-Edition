@@ -3,7 +3,7 @@ name: $(Build.BuildId)
 trigger:
  branches:
    include:
-     - master/Chapter-7-(LookupValue-Extension)-refactored-and-completed
+     - master/Chapter-8-(LookupValue-Extension)-refactored-and-completed
 
 variables:
 - group: 'PipelineVariables'
