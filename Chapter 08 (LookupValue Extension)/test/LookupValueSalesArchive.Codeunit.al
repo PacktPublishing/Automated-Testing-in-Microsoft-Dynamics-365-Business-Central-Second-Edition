@@ -57,7 +57,7 @@ codeunit 81004 "LookupValue Sales Archive"
         DocumentNo: Code[20];
     begin
         //[SCENARIO #0021] Check that lookup value is shown right on Sales List Archive
-        //[GIVEN] Sales document with a lookup value
+        //[GIVEN] Sales document with lookup value
         //[WHEN] Sales document is archived
         //[THEN] Archived sales document has lookup value from sales document
         DocumentNo := ArchiveSalesDocumentWithLookupValue(SalesHeader."Document Type"::Order);
@@ -69,7 +69,7 @@ codeunit 81004 "LookupValue Sales Archive"
     var
         SalesHeader: record "Sales Header";
     begin
-        //[GIVEN] Sales document with a lookup value
+        //[GIVEN] Sales document with lookup value
         CreateSalesDocumentWithLookupValue(SalesHeader, DocumentType);
 
         //[WHEN] Sales document is archived

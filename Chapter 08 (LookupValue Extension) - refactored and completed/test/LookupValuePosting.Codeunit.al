@@ -31,7 +31,7 @@ codeunit 81005 "LookupValue Posting"
         //[SCENARIO #0022] Check that posted sales invoice and shipment inherit lookup value from sales order
         Initialize();
 
-        //[GIVEN] Sales order with a lookup value
+        //[GIVEN] Sales order with lookup value
         CreateSalesOrder(SalesHeader, UseLookupValue());
 
         //[WHEN] Sales order is posted (invoice & ship)
@@ -78,7 +78,7 @@ codeunit 81005 "LookupValue Posting"
         //[GIVEN] Warehouse employee for current user
         Initialize();
 
-        //[GIVEN] Warehouse shipment line with a lookup value created from a sales order
+        //[GIVEN] Warehouse shipment line with lookup value created from a sales order
         WarehouseShipmentNo := CreateWarehouseShipmentFromSalesOrder(SalesHeader, UseLookupValue());
 
         //[WHEN] Warehouse shipment is posted
