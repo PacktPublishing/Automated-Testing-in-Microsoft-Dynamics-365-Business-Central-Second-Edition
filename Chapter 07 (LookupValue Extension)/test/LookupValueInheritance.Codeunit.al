@@ -30,7 +30,7 @@ codeunit 81006 "LookupValue Inheritance"
         //[SCENARIO #0024] Assign customer lookup value to sales document
         Initialize();
 
-        //[GIVEN] Customer with a lookup value
+        //[GIVEN] Customer with lookup value
         CustomerNo := CreateCustomerWithLookupValue(LookupValueCode);
         //[GIVEN] Sales document (invoice) without a lookup value
         CreateSalesHeader(SalesHeader);
@@ -171,14 +171,8 @@ codeunit 81006 "LookupValue Inheritance"
 
     [ModalPageHandler]
     procedure HandleConfigTemplates(var ConfigTemplates: TestPage "Config Templates")
-    var
-        ConfigTemplateCode: Code[10];
-        "Value": Variant;
     begin
-        LibraryVariableStorage.Dequeue("Value");
-        ConfigTemplateCode := "Value";
-
-        ConfigTemplates.GoToKey(ConfigTemplateCode);
+        ConfigTemplates.GoToKey(LibraryVariableStorage.DequeueText());
         ConfigTemplates.OK().Invoke();
     end;
 }
