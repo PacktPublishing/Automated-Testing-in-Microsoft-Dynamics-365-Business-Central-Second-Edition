@@ -27,9 +27,9 @@ codeunit 81007 "LookupValue Contact"
     begin
         //[SCENARIO #0026] Check that lookup value is inherited from customer template to customer when creating customer from contact
 
-        //[GIVEN] A customer template with lookup value
+        //[GIVEN] Customer template with lookup value
         CreateCustomerTemplate(CustomerTemplate, UseLookupValue());
-        //[GIVEN] A contact
+        //[GIVEN] Contact
         CreateCompanyContact(Contact);
 
         //[WHEN] Customer is created from contact

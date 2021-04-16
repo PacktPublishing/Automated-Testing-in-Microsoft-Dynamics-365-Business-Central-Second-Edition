@@ -28,9 +28,9 @@ codeunit 81001 "LookupValue UT Sales Document"
         //[SCENARIO #0004] Assign lookup value to sales header
         Initialize();
 
-        //[GIVEN] A lookup value
+        //[GIVEN] Lookup value
 
-        //[GIVEN] A sales header
+        //[GIVEN] Sales header
         CreateSalesHeader(SalesHeader);
 
         //[WHEN] Set lookup value on sales header
@@ -49,9 +49,9 @@ codeunit 81001 "LookupValue UT Sales Document"
     begin
         //[SCENARIO #0005] Assign non-existing lookup value on sales header
 
-        //[GIVEN] A non-existing lookup value
+        //[GIVEN] Non-existing lookup value
         NonExistingLookupValueCode := 'SC #0005';
-        //[GIVEN] A sales header record variable
+        //[GIVEN] Sales header record variable
         // See local variable SalesHeader
 
         //[WHEN] Set non-existing lookup value to sales header
@@ -71,10 +71,10 @@ codeunit 81001 "LookupValue UT Sales Document"
     begin
         //[SCENARIO #0006] Assign lookup value on sales quote document page
 
-        //[GIVEN] A lookup value
+        //[GIVEN] Lookup value
         Initialize();
 
-        //[GIVEN] A sales quote document page
+        //[GIVEN] Sales quote document page
         CreateSalesQuoteDocument(SalesDocument);
 
         //[WHEN] Set lookup value on sales quote document
@@ -94,10 +94,10 @@ codeunit 81001 "LookupValue UT Sales Document"
     begin
         //[SCENARIO #0007] Assign lookup value on sales order document page
 
-        //[GIVEN] A lookup value
+        //[GIVEN] Lookup value
         Initialize();
 
-        //[GIVEN] A sales order document page
+        //[GIVEN] Sales order document page
         CreateSalesOrderDocument(SalesDocument);
 
         //[WHEN] Set lookup value on sales order document
@@ -117,10 +117,10 @@ codeunit 81001 "LookupValue UT Sales Document"
     begin
         //[SCENARIO #0008] Assign lookup value on sales invoice document page
 
-        //[GIVEN] A lookup value
+        //[GIVEN] Lookup value
         Initialize();
 
-        //[GIVEN] A sales invoice document page
+        //[GIVEN] Sales invoice document page
         CreateSalesInvoiceDocument(SalesDocument);
 
         //[WHEN] Set lookup value on sales invoice document
@@ -140,10 +140,10 @@ codeunit 81001 "LookupValue UT Sales Document"
     begin
         //[SCENARIO #0009] Assign lookup value on sales credit memo document page
 
-        //[GIVEN] A lookup value
+        //[GIVEN] Lookup value
         Initialize();
 
-        //[GIVEN] A sales credit memo document page
+        //[GIVEN] Sales credit memo document page
         CreateSalesCreditMemoDocument(SalesDocument);
 
         //[WHEN] Set lookup value on sales credit memo document
@@ -163,10 +163,10 @@ codeunit 81001 "LookupValue UT Sales Document"
     begin
         //[SCENARIO #0010] Assign lookup value on sales return order document page
 
-        //[GIVEN] A lookup value
+        //[GIVEN] Lookup value
         Initialize();
 
-        //[GIVEN] A sales return order document page
+        //[GIVEN] Sales return order document page
         CreateSalesReturnOrderDocument(SalesDocument);
 
         //[WHEN] Set lookup value on sales return order document
@@ -186,10 +186,10 @@ codeunit 81001 "LookupValue UT Sales Document"
     begin
         //[SCENARIO #0011] Assign lookup value on blanket sales order document page
 
-        //[GIVEN] A lookup value
+        //[GIVEN] Lookup value
         Initialize();
 
-        //[GIVEN] A blanket sales order document page
+        //[GIVEN] Blanket sales order document page
         CreateBlanketSalesOrderDocument(SalesDocument);
 
         //[WHEN] Set lookup value on blanket sales order document
@@ -208,7 +208,7 @@ codeunit 81001 "LookupValue UT Sales Document"
 
         //[GIVEN] technical: SetSkipOnAfterCreateCustomer (see chapter 9) 
         LibraryTestsSetup.SetSkipOnAfterCreateCustomer(true);
-        //[GIVEN] A lookup value
+        //[GIVEN] Lookup value
         LookupValueCode := CreateLookupValueCode();
 
         isInitialized := true;

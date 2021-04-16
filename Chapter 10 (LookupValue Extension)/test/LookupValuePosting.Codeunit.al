@@ -31,7 +31,7 @@ codeunit 81005 "LookupValue Posting"
         //[SCENARIO #0022] Check that posted sales invoice and shipment inherit lookup value from sales order
         Initialize();
 
-        //[GIVEN] A sales order with a lookup value
+        //[GIVEN] Sales order with a lookup value
         CreateSalesOrder(SalesHeader, UseLookupValue());
 
         //[WHEN] Sales order is posted (invoice & ship)
@@ -54,7 +54,7 @@ codeunit 81005 "LookupValue Posting"
         //[SCENARIO #0027] Check posting throws error on sales order with empty lookup value
         Initialize();
 
-        //[GIVEN] A sales order without a lookup value
+        //[GIVEN] Sales order without a lookup value
         CreateSalesOrder(SalesHeader, UseNoLookupValue());
 
         //[WHEN] Sales order is posted (invoice & ship)
@@ -74,11 +74,11 @@ codeunit 81005 "LookupValue Posting"
     begin
         //[SCENARIO #0023] Check that posted warehouse shipment line inherits lookup value from sales order through warehouse shipment line
 
-        //[GIVEN] A location with require shipment
-        //[GIVEN] A warehouse employee for current user
+        //[GIVEN] Location with require shipment
+        //[GIVEN] Warehouse employee for current user
         Initialize();
 
-        //[GIVEN] A warehouse shipment line with a lookup value created from a sales order
+        //[GIVEN] Warehouse shipment line with a lookup value created from a sales order
         WarehouseShipmentNo := CreateWarehouseShipmentFromSalesOrder(SalesHeader, UseLookupValue());
 
         //[WHEN] Warehouse shipment is posted
@@ -98,11 +98,11 @@ codeunit 81005 "LookupValue Posting"
     begin
         //[SCENARIO #0025] Check posting throws error on sales order with empty lookup value
 
-        //[GIVEN] A location with require shipment
-        //[GIVEN] A warehouse employee for current user
+        //[GIVEN] Location with require shipment
+        //[GIVEN] Warehouse employee for current user
         Initialize();
 
-        //[GIVEN] A warehouse shipment created from a sales order without lookup value
+        //[GIVEN] Warehouse shipment created from a sales order without lookup value
         WarehouseShipmentNo := CreateWarehouseShipmentFromSalesOrder(SalesHeader, UseNoLookupValue());
 
         //[WHEN] Warehouse shipment is posted
@@ -131,7 +131,7 @@ codeunit 81005 "LookupValue Posting"
 
         //[GIVEN] technical: SetSkipOnAfterCreateCustomer (see chapter 9) 
         LibraryTestsSetup.SetSkipOnAfterCreateCustomer(true);
-        //[GIVEN] A lookup value
+        //[GIVEN] Lookup value
         LocationSetup();
 
         isInitialized := true;

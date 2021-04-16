@@ -30,11 +30,11 @@ codeunit 81003 "LookupValue Warehouse Shipment"
     begin
         //[SCENARIO #0015] Assign lookup value to warehouse shipment line on warehouse shipment page
 
-        //[GIVEN] A lookup value
-        //[GIVEN] A location with require shipment
-        //[GIVEN] A warehouse employee for current user
+        //[GIVEN] Lookup value
+        //[GIVEN] Location with require shipment
+        //[GIVEN] Warehouse employee for current user
         Initialize();
-        //[GIVEN] A warehouse shipment from released sales order with line with require shipment location
+        //[GIVEN] Warehouse shipment from released sales order with line with require shipment location
         SalesOrderNo := CreateWarehouseShipmentFromSalesOrder(DefaultLocation, UseNoLookupValue());
 
         //[WHEN] Set lookup value on warehouse shipment line on warehouse shipment page
@@ -53,9 +53,9 @@ codeunit 81003 "LookupValue Warehouse Shipment"
     begin
         //[SCENARIO #0016] Assign non-existing lookup value on warehouse shipment line
 
-        //[GIVEN] A non-existing lookup value
+        //[GIVEN] Non-existing lookup value
         NoExistingLookupValueCode := 'SC #0016';
-        //[GIVEN] A warehouse shipment line record variable
+        //[GIVEN] Warehouse shipment line record variable
         // See local variable WarehouseShipmentLine
 
         //[WHEN] Set non-existing lookup value to warehouse shipment line
@@ -73,11 +73,11 @@ codeunit 81003 "LookupValue Warehouse Shipment"
     begin
         //[SCENARIO #0017] Assign lookup value to warehouse shipment line on warehouse shipment page
 
-        //[GIVEN] A lookup value
-        //[GIVEN] A location with require shipment
-        //[GIVEN] A warehouse employee for current user
+        //[GIVEN] Lookup value
+        //[GIVEN] Location with require shipment
+        //[GIVEN] Warehouse employee for current user
         Initialize();
-        //[GIVEN] A warehouse shipment from released sales order with line with require shipment location
+        //[GIVEN] Warehouse shipment from released sales order with line with require shipment location
         SalesOrderNo := CreateWarehouseShipmentFromSalesOrder(DefaultLocation, UseNoLookupValue());
 
         //[WHEN] Set lookup value on warehouse shipment line on warehouse shipment document page
@@ -94,9 +94,9 @@ codeunit 81003 "LookupValue Warehouse Shipment"
         SalesOrderNo: Code[20];
     begin
         //[SCENARIO #0030] Create warehouse shipment from sales order with lookup value
-        //[GIVEN] A lookup value
-        //[GIVEN] A location with require shipment
-        //[GIVEN] A warehouse employee for current user
+        //[GIVEN] Lookup value
+        //[GIVEN] Location with require shipment
+        //[GIVEN] Warehouse employee for current user
         Initialize();
 
         //[WHEN] Create warehouse shipment from released sales order with lookup value and with line with require shipment location
@@ -115,13 +115,13 @@ codeunit 81003 "LookupValue Warehouse Shipment"
     begin
         //[SCENARIO #0031] Get sales order with lookup value on warehouse shipment
 
-        //[GIVEN] A lookup value
-        //[GIVEN] A location with require shipment
-        //[GIVEN] A warehouse employee for current user
+        //[GIVEN] Lookup value
+        //[GIVEN] Location with require shipment
+        //[GIVEN] Warehouse employee for current user
         Initialize();
-        //[GIVEN] A released sales order with lookup value and with line with require shipment location
+        //[GIVEN] Released sales order with lookup value and with line with require shipment location
         CreateAndReleaseSalesOrder(SalesHeader, DefaultLocation, UseLookupValue());
-        //[GIVEN] A warehouse shipment without lines
+        //[GIVEN] Warehouse shipment without lines
         WarehouseShipmentNo := CreateWarehouseShipmentWithOutLines(DefaultLocation."Code");
 
         //[WHEN] Get sales order with lookup value on warehouse shipment
@@ -151,11 +151,11 @@ codeunit 81003 "LookupValue Warehouse Shipment"
 
         //[GIVEN] technical: SetSkipOnAfterCreateCustomer (see chapter 9) 
         LibraryTestsSetup.SetSkipOnAfterCreateCustomer(true);
-        //[GIVEN] A lookup value
+        //[GIVEN] Lookup value
         LookupValueCode := LibraryLookupValue.CreateLookupValueCode();
-        //[GIVEN] A location with require shipment
+        //[GIVEN] Location with require shipment
         LibraryWarehouse.CreateLocationWMS(DefaultLocation, false, false, false, false, true);
-        //[GIVEN] A warehouse employee for current user
+        //[GIVEN] Warehouse employee for current user
         LibraryWarehouse.CreateWarehouseEmployee(WarehouseEmployee, DefaultLocation."Code", false);
 
         isInitialized := true;

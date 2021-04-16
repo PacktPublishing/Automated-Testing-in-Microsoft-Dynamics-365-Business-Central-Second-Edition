@@ -29,9 +29,9 @@ codeunit 81002 "LookupValue UT Cust. Template"
     begin
         //[SCENARIO #00012] Assign lookup value to customer
 
-        //[GIVEN] A lookup value
+        //[GIVEN] Lookup value
         LookupValueCode := CreateLookupValueCode();
-        //[GIVEN] A customer template
+        //[GIVEN] Customer template
         CreateCustomerTemplate(CustomerTemplate);
 
         //[WHEN] Set lookup value on customer template
@@ -50,9 +50,9 @@ codeunit 81002 "LookupValue UT Cust. Template"
     begin
         //[SCENARIO #00013] Assign non-existing lookup value to customer template
 
-        //[GIVEN] A non-existing lookup value
+        //[GIVEN] Non-existing lookup value
         LookupValueCode := 'SC #0013';
-        //[GIVEN] A customer template record variable
+        //[GIVEN] Customer template record variable
         // See local variable CustomerTemplate
 
         //[WHEN] Set non-existing lookup value to customer template
@@ -72,9 +72,9 @@ codeunit 81002 "LookupValue UT Cust. Template"
     begin
         //[SCENARIO #00014] Assign lookup value on customer template card
 
-        //[GIVEN] A lookup value
+        //[GIVEN] Lookup value
         LookupValueCode := CreateLookupValueCode();
-        //[GIVEN] A customer template card
+        //[GIVEN] Customer template card
         CreateCustomerTemplateCard(CustomerTemplateCard);
 
         //[WHEN] Set lookup value on customer template card

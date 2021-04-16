@@ -29,9 +29,9 @@ codeunit 81000 "LookupValue UT Customer"
 
         //[GIVEN] technical: SetSkipOnAfterCreateCustomer (see chapter 9) 
         LibraryTestsSetup.SetSkipOnAfterCreateCustomer(true);
-        //[GIVEN] A lookup value
+        //[GIVEN] Lookup value
         LookupValueCode := CreateLookupValueCode();
-        //[GIVEN] A customer
+        //[GIVEN] Customer
         CreateCustomer(Customer);
 
         //[WHEN] Set lookup value on customer
@@ -50,9 +50,9 @@ codeunit 81000 "LookupValue UT Customer"
     begin
         //[SCENARIO #0002] Assign non-existing lookup value to customer
 
-        //[GIVEN] A non-existing lookup value
+        //[GIVEN] Non-existing lookup value
         LookupValueCode := 'SC #0002';
-        //[GIVEN] A customer record variable
+        //[GIVEN] Customer record variable
         // See local variable Customer
 
         //[WHEN] Set non-existing lookup value on customer
@@ -73,9 +73,9 @@ codeunit 81000 "LookupValue UT Customer"
     begin
         //[SCENARIO #0003] Assign lookup value on customer card
 
-        //[GIVEN] A lookup value
+        //[GIVEN] Lookup value
         LookupValueCode := CreateLookupValueCode();
-        //[GIVEN] A customer card
+        //[GIVEN] Customer card
         CreateCustomerCard(CustomerCard);
 
         //[WHEN] Set lookup value on customer card

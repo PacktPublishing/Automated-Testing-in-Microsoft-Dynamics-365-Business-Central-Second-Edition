@@ -31,9 +31,9 @@ codeunit 81006 "LookupValue Inheritance"
         //[SCENARIO #0024] Assign customer lookup value to sales document
         Initialize();
 
-        //[GIVEN] A customer with a lookup value
+        //[GIVEN] Customer with a lookup value
         CustomerNo := CreateCustomerWithLookupValue(LookupValueCode);
-        //[GIVEN] A sales document (invoice) without a lookup value
+        //[GIVEN] Sales document (invoice) without a lookup value
         CreateSalesHeader(SalesHeader);
 
         //[WHEN] Set customer on sales header
@@ -53,7 +53,7 @@ codeunit 81006 "LookupValue Inheritance"
         //[SCENARIO #0028] Create customer from configuration template with lookup value
         Initialize();
 
-        //[GIVEN] A configuration template (customer) with lookup value
+        //[GIVEN] Configuration template (customer) with lookup value
         ConfigTemplateCode := CreateCustomerConfigurationTemplateWithLookupValue(LookupValueCode);
 
         //[WHEN] Create customer from configuration template
@@ -73,7 +73,7 @@ codeunit 81006 "LookupValue Inheritance"
 
         //[GIVEN] technical: SetSkipOnAfterCreateCustomer (see chapter 9) 
         LibraryTestsSetup.SetSkipOnAfterCreateCustomer(true);
-        //[GIVEN] A lookup value
+        //[GIVEN] Lookup value
         LookupValueCode := CreateLookupValueCode();
 
         isInitialized := true;
