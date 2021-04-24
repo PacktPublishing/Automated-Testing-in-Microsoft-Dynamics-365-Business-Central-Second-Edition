@@ -144,13 +144,13 @@ codeunit 81006 "LookupValue Inheritance"
         FieldOnTableTxt: Label '%1 on %2';
     begin
         Assert.AreEqual(
-    LookupValueCode,
-    SalesHeader."Lookup Value Code",
-    StrSubstNo(
-        FieldOnTableTxt,
-        SalesHeader.FieldCaption("Lookup Value Code"),
-        SalesHeader.TableCaption())
-    );
+            LookupValueCode,
+            SalesHeader."Lookup Value Code",
+            StrSubstNo(
+                FieldOnTableTxt,
+                SalesHeader.FieldCaption("Lookup Value Code"),
+                SalesHeader.TableCaption())
+            );
     end;
 
     local procedure VerifyLookupValueOnCustomer(CustomerNo: Code[20]; LookupValueCode: Code[10])

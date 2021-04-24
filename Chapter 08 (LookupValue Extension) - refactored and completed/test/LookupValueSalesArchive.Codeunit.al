@@ -131,14 +131,26 @@ codeunit 81004 "LookupValue Sales Archive"
 
     [ConfirmHandler]
     procedure ConfirmHandlerYes(Question: Text[1024]; var Reply: Boolean);
+    var
+        ArchiveDocumentNo: Label 'Archive %1 no.: %2';
     begin
-        Assert.ExpectedMessage(StrSubstNo('Archive %1 no.: %2', LibraryVariableStorage.DequeueText(), LibraryVariableStorage.DequeueText()), Question);
+        Assert.ExpectedMessage(
+            StrSubstNo(ArchiveDocumentNo,
+                LibraryVariableStorage.DequeueText(),
+                LibraryVariableStorage.DequeueText()
+            ),
+            Question);
         Reply := true;
     end;
 
     [MessageHandler]
     procedure MessageHandler(Message: Text[1024]);
+    var
+        DocumentHasBeenArchivedTxt: Label 'Document %1 has been archived';
     begin
-        Assert.ExpectedMessage(StrSubstNo('Document %1 has been archived', LibraryVariableStorage.DequeueText()), Message);
+        Assert.ExpectedMessage(
+            StrSubstNo(DocumentHasBeenArchivedTxt,
+                LibraryVariableStorage.DequeueText()),
+            Message);
     end;
 }
