@@ -12,6 +12,7 @@ codeunit 81004 "LookupValue Sales Archive"
         LibrarySales: Codeunit "Library - Sales";
         LibraryLookupValue: Codeunit "Library - Lookup Value";
         LibraryMessages: Codeunit "Library - Messages";
+        LibraryVariableStorage: Codeunit "Library - Variable Storage";
 
     // Instruction NOTES
     // (1) Replacing the argument LookupValueCode in verification call, i.e. [THEN] clause, should make any test fail
