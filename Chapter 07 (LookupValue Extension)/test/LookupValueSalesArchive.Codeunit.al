@@ -56,7 +56,6 @@ codeunit 81004 "LookupValue Sales Archive"
         //[THEN] Archived sales document has lookup value from sales document
         DocumentNo := ArchiveSalesDocumentWithLookupValue("Sales Document Type"::Order);
         //[THEN] LookupValue is shown right on Sales List Archive
-        // VerifyLookupValueOnSalesListArchive("Sales Document Type"::Order, DocumentNo);
         VerifyLookupValueOnSalesListArchive("Sales Document Type"::Order, DocumentNo);
     end;
 

@@ -209,14 +209,8 @@ codeunit 81006 "LookupValue Inheritance"
 
     [ModalPageHandler]
     procedure HandleConfigTemplates(var ConfigTemplates: TestPage "Config Templates")
-    var
-        ConfigTemplateCode: Code[10];
-        "Value": Variant;
     begin
-        LibraryVariableStorage.Dequeue("Value");
-        ConfigTemplateCode := "Value";
-
-        ConfigTemplates.GoToKey(ConfigTemplateCode);
+        ConfigTemplates.GoToKey(LibraryVariableStorage.DequeueText());
         ConfigTemplates.OK().Invoke();
     end;
 }

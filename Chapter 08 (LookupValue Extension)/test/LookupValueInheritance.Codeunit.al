@@ -144,13 +144,13 @@ codeunit 81006 "LookupValue Inheritance"
         FieldOnTableTxt: Label '%1 on %2';
     begin
         Assert.AreEqual(
-    LookupValueCode,
-    SalesHeader."Lookup Value Code",
-    StrSubstNo(
-        FieldOnTableTxt,
-        SalesHeader.FieldCaption("Lookup Value Code"),
-        SalesHeader.TableCaption())
-    );
+        LookupValueCode,
+        SalesHeader."Lookup Value Code",
+        StrSubstNo(
+            FieldOnTableTxt,
+            SalesHeader.FieldCaption("Lookup Value Code"),
+            SalesHeader.TableCaption())
+        );
     end;
 
     local procedure VerifyLookupValueOnCustomer(CustomerNo: Code[20]; LookupValueCode: Code[10])
@@ -171,14 +171,8 @@ codeunit 81006 "LookupValue Inheritance"
 
     [ModalPageHandler]
     procedure HandleConfigTemplates(var ConfigTemplates: TestPage "Config Templates")
-    var
-        ConfigTemplateCode: Code[10];
-        "Value": Variant;
     begin
-        LibraryVariableStorage.Dequeue("Value");
-        ConfigTemplateCode := "Value";
-
-        ConfigTemplates.GoToKey(ConfigTemplateCode);
+        ConfigTemplates.GoToKey(LibraryVariableStorage.DequeueText());
         ConfigTemplates.OK().Invoke();
     end;
 }
