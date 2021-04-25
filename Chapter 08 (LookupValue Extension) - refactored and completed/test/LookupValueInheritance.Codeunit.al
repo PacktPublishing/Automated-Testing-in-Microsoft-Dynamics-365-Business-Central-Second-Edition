@@ -144,11 +144,6 @@ codeunit 81006 "LookupValue Inheritance"
         exit(true)
     end;
 
-    local procedure UseNoLookupValue(): Boolean
-    begin
-        exit(false)
-    end;
-
     local procedure CreateCompanyContact(var Contact: Record Contact);
     begin
         LibraryMarketing.CreateCompanyContact(Contact);
