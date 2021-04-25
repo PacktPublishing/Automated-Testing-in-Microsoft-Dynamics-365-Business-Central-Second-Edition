@@ -18,7 +18,6 @@ codeunit 81000 "LookupValue UT Customer"
 
     [Test]
     procedure AssignLookupValueToCustomer()
-    //[FEATURE] LookupValue UT Customer
     var
         Customer: Record Customer;
         LookupValueCode: Code[10];
@@ -39,7 +38,6 @@ codeunit 81000 "LookupValue UT Customer"
 
     [Test]
     procedure AssignNonExistingLookupValueToCustomer()
-    //[FEATURE] LookupValue UT Customer
     var
         Customer: Record Customer;
         LookupValueCode: Code[10];
@@ -61,7 +59,6 @@ codeunit 81000 "LookupValue UT Customer"
     [Test]
     [HandlerFunctions('HandleConfigTemplates')]
     procedure AssignLookupValueToCustomerCard()
-    //[FEATURE] LookupValue UT Customer UI
     var
         CustomerCard: TestPage "Customer Card";
         CustomerNo: Code[20];

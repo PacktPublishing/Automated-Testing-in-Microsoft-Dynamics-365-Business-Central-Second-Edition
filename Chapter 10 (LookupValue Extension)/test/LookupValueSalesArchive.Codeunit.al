@@ -12,6 +12,7 @@ codeunit 81004 "LookupValue Sales Archive"
         LibrarySales: Codeunit "Library - Sales";
         LibraryLookupValue: Codeunit "Library - Lookup Value";
         LibraryMessages: Codeunit "Library - Messages";
+        LibraryVariableStorage: Codeunit "Library - Variable Storage";
 
     // Instruction NOTES
     // (1) Replacing the argument LookupValueCode in verification call, i.e. [THEN] clause, should make any test fail
@@ -20,33 +21,27 @@ codeunit 81004 "LookupValue Sales Archive"
     [HandlerFunctions('ConfirmHandlerYes,MessageHandler')]
     procedure ArchiveSalesOrderWithLookupValue();
     //[FEATURE] LookupValue Sales Archive
-    var
-        SalesHeader: record "Sales Header";
     begin
         //[SCENARIO #0018] Archive sales order with lookup value
-        ArchiveSalesDocumentWithLookupValue(SalesHeader."Document Type"::Order)
+        ArchiveSalesDocumentWithLookupValue("Sales Document Type"::Order)
     end;
 
     [Test]
     [HandlerFunctions('ConfirmHandlerYes,MessageHandler')]
     procedure ArchiveSalesQuoteWithLookupValue();
     //[FEATURE] LookupValue Sales Archive
-    var
-        SalesHeader: record "Sales Header";
     begin
         //[SCENARIO #0019] Archive sales quote with lookup value
-        ArchiveSalesDocumentWithLookupValue(SalesHeader."Document Type"::Quote)
+        ArchiveSalesDocumentWithLookupValue("Sales Document Type"::Quote)
     end;
 
     [Test]
     [HandlerFunctions('ConfirmHandlerYes,MessageHandler')]
     procedure ArchiveSalesReturnOrderWithLookupValue();
     //[FEATURE] LookupValue Sales Archive
-    var
-        SalesHeader: record "Sales Header";
     begin
         //[SCENARIO #0020] Archive sales return order with lookup value
-        ArchiveSalesDocumentWithLookupValue(SalesHeader."Document Type"::"Return Order")
+        ArchiveSalesDocumentWithLookupValue("Sales Document Type"::"Return Order")
     end;
 
     [Test]
@@ -54,16 +49,15 @@ codeunit 81004 "LookupValue Sales Archive"
     procedure FindLookupValueOnSalesListArchive();
     //[FEATURE] LookupValue Sales Archive
     var
-        SalesHeader: record "Sales Header";
         DocumentNo: Code[20];
     begin
         //[SCENARIO #0021] Check that lookup value is shown right on Sales List Archive
         //[GIVEN] Sales document with lookup value
         //[WHEN] Sales document is archived
         //[THEN] Archived sales document has lookup value from sales document
-        DocumentNo := ArchiveSalesDocumentWithLookupValue(SalesHeader."Document Type"::Order);
+        DocumentNo := ArchiveSalesDocumentWithLookupValue("Sales Document Type"::Order);
         //[THEN] LookupValue is shown right on Sales List Archive
-        VerifyLookupValueOnSalesListArchive(SalesHeader."Document Type"::Order, DocumentNo);
+        VerifyLookupValueOnSalesListArchive("Sales Document Type"::Order, DocumentNo);
     end;
 
     local procedure ArchiveSalesDocumentWithLookupValue(DocumentType: Enum "Sales Document Type"): Code[20]
@@ -78,6 +72,9 @@ codeunit 81004 "LookupValue Sales Archive"
         CreateSalesDocumentWithLookupValue(SalesHeader, DocumentType);
 
         //[WHEN] Sales document is archived
+        LibraryVariableStorage.Enqueue(DocumentType);
+        LibraryVariableStorage.Enqueue(SalesHeader."No.");
+        LibraryVariableStorage.Enqueue(SalesHeader."No.");
         ArchiveSalesDocument(SalesHeader);
 
         //[THEN] Archived sales document has lookup value from sales document
@@ -138,14 +135,26 @@ codeunit 81004 "LookupValue Sales Archive"
 
     [ConfirmHandler]
     procedure ConfirmHandlerYes(Question: Text[1024]; var Reply: Boolean);
+    var
+        ArchiveDocumentNo: Label 'Archive %1 no.: %2';
     begin
-        // Just to handle the confirm
+        Assert.ExpectedMessage(
+            StrSubstNo(ArchiveDocumentNo,
+                LibraryVariableStorage.DequeueText(),
+                LibraryVariableStorage.DequeueText()
+            ),
+            Question);
         Reply := true;
     end;
 
     [MessageHandler]
     procedure MessageHandler(Message: Text[1024]);
+    var
+        DocumentHasBeenArchivedTxt: Label 'Document %1 has been archived';
     begin
-        // Just to handle the message
+        Assert.ExpectedMessage(
+            StrSubstNo(DocumentHasBeenArchivedTxt,
+                LibraryVariableStorage.DequeueText()),
+            Message);
     end;
 }

@@ -4,7 +4,7 @@ codeunit 81006 "LookupValue Inheritance"
 
     trigger OnRun()
     begin
-        //[FEATURE] LookupValue Sales Document / Customer
+        //[FEATURE] LookupValue Inheritance
     end;
 
     var
@@ -25,7 +25,7 @@ codeunit 81006 "LookupValue Inheritance"
 
     [Test]
     procedure InheritLookupValueFromCustomerOnSalesDocument();
-    //[FEATURE] LookupValue Sales Document / Customer
+    //[FEATURE] LookupValue Inheritance - Sales Document / Customer
     var
         SalesHeader: Record "Sales Header";
         CustomerNo: Code[20];
@@ -47,7 +47,7 @@ codeunit 81006 "LookupValue Inheritance"
 
     [Test]
     procedure CreateCustomerFromContactWithLookupValue()
-    //[FEATURE] LookupValue Contact
+    //[FEATURE] LookupValue Inheritance - Contact
     var
         Contact: Record Contact;
         Customer: Record Customer;
@@ -70,6 +70,7 @@ codeunit 81006 "LookupValue Inheritance"
     [Test]
     [HandlerFunctions('HandleConfigTemplates')]
     procedure InheritLookupValueFromConfigurationTemplateToCustomer();
+    //[FEATURE] LookupValue Inheritance - Customer / Configuration Templates
     var
         CustomerNo: Code[20];
         ConfigTemplateCode: Code[10];

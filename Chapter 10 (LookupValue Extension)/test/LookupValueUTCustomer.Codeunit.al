@@ -19,7 +19,6 @@ codeunit 81000 "LookupValue UT Customer"
 
     [Test]
     procedure AssignLookupValueToCustomer()
-    //[FEATURE] LookupValue UT Customer
     var
         Customer: Record Customer;
         LibraryTestsSetup: Codeunit "Library - Tests Setup";
@@ -43,7 +42,6 @@ codeunit 81000 "LookupValue UT Customer"
 
     [Test]
     procedure AssignNonExistingLookupValueToCustomer()
-    //[FEATURE] LookupValue UT Customer
     var
         Customer: Record Customer;
         LookupValueCode: Code[10];
@@ -65,7 +63,6 @@ codeunit 81000 "LookupValue UT Customer"
     [Test]
     [HandlerFunctions('HandleConfigTemplates')]
     procedure AssignLookupValueToCustomerCard()
-    //[FEATURE] LookupValue UT Customer UI
     var
         CustomerCard: TestPage "Customer Card";
         CustomerNo: Code[20];
@@ -95,15 +92,15 @@ codeunit 81000 "LookupValue UT Customer"
         LibrarySales.CreateCustomer(Customer);
     end;
 
-    local procedure CreateCustomerCard(var CustomerCard: TestPage "Customer Card")
-    begin
-        CustomerCard.OpenNew();
-    end;
-
     local procedure SetLookupValueOnCustomer(var Customer: record Customer; LookupValueCode: Code[10])
     begin
         Customer.Validate("Lookup Value Code", LookupValueCode);
         Customer.Modify();
+    end;
+
+    local procedure CreateCustomerCard(var CustomerCard: TestPage "Customer Card")
+    begin
+        CustomerCard.OpenNew();
     end;
 
     local procedure SetLookupValueOnCustomerCard(var CustomerCard: TestPage "Customer Card"; LookupValueCode: Code[10]) CustomerNo: Code[20]
