@@ -1,12 +1,4 @@
 {
-    "al.enableCodeAnalysis":  false,
-    "editor.codeLens":  false,
-    "al.incrementalBuild":  true,
-    "al.assemblyProbingPaths":  [
-        "./.netpackages"
-    ],
-    "al.enableCodeActions":  false,
-
     "CRS.ObjectNameSuffix": "",
     "CRS.FileNamePattern": "<ObjectNameShort>.<ObjectTypeShortPascalCase>.al",
     "CRS.FileNamePatternExtensions": "<ObjectNameShort>.<ObjectTypeShortPascalCase>.al",
