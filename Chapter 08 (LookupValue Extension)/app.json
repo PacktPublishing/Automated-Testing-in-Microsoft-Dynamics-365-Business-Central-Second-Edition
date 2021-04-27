@@ -34,6 +34,13 @@
       "publisher": "Microsoft",
       "version": "18.0.0.0",
       "name": "Library Variable Storage"
+    },
+    {
+      "id":  "23de40a6-dfe8-4f80-80db-d70f83ce8caf",
+      "name":  "Test Runner",
+      "publisher":  "Microsoft",
+      "version":  "18.0.0.0"
+ 
     }
   ],
   "screenshots": [],
@@ -45,7 +52,7 @@
       "to": 81099
     }
   ],
-  "contextSensitiveHelpUrl": "https://Chapter3.com/help/",
+  "contextSensitiveHelpUrl": "https://Chapter8.com/help/",
   "target": "OnPrem",
   "showMyCode": true,
   "runtime": "7.0"
