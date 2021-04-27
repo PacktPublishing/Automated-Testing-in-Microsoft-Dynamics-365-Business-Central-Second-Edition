@@ -120,12 +120,12 @@ codeunit 81006 "LookupValue Inheritance"
         exit(Customer."No.");
     end;
 
-    local procedure CreateSalesHeader(var SalesHeader: record "Sales Header")
+    local procedure CreateSalesHeader(var SalesHeader: Record "Sales Header")
     begin
         LibrarySales.CreateSalesHeader(SalesHeader, SalesHeader."Document Type"::Invoice, '');
     end;
 
-    local procedure SetCustomerOnSalesHeader(var SalesHeader: record "Sales Header"; CustomerNo: Code[20])
+    local procedure SetCustomerOnSalesHeader(var SalesHeader: Record "Sales Header"; CustomerNo: Code[20])
     begin
         SalesHeader.SetHideValidationDialog(true);
         SalesHeader.Validate("Sell-to Customer No.", CustomerNo);
@@ -174,7 +174,7 @@ codeunit 81006 "LookupValue Inheritance"
     local procedure CreateCustomerConfigurationTemplateWithLookupValue(LookupValueCode: Code[10]): Code[10]
     // Adopted from Codeunit 132213 Library - Small Business
     var
-        ConfigTemplateHeader: record "Config. Template Header";
+        ConfigTemplateHeader: Record "Config. Template Header";
         Customer: Record Customer;
     begin
         LibraryRapidStart.CreateConfigTemplateHeader(ConfigTemplateHeader);

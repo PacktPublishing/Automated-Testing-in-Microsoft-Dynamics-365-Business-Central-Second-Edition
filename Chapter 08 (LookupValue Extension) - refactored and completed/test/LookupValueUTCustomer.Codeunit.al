@@ -84,12 +84,12 @@ codeunit 81000 "LookupValue UT Customer"
         exit(LibraryLookupValue.CreateLookupValueCode())
     end;
 
-    local procedure CreateCustomer(var Customer: record Customer)
+    local procedure CreateCustomer(var Customer: Record Customer)
     begin
         LibrarySales.CreateCustomer(Customer);
     end;
 
-    local procedure SetLookupValueOnCustomer(var Customer: record Customer; LookupValueCode: Code[10])
+    local procedure SetLookupValueOnCustomer(var Customer: Record Customer; LookupValueCode: Code[10])
     begin
         Customer.Validate("Lookup Value Code", LookupValueCode);
         Customer.Modify();

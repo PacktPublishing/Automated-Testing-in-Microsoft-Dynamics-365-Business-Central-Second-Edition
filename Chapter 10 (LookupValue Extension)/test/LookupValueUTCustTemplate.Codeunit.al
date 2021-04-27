@@ -89,7 +89,7 @@ codeunit 81002 "LookupValue UT Cust. Template"
         exit(LibraryLookupValue.CreateLookupValueCode())
     end;
 
-    local procedure CreateCustomerTemplate(var CustomerTemplate: record "Customer Templ.")
+    local procedure CreateCustomerTemplate(var CustomerTemplate: Record "Customer Templ.")
     begin
         LibraryTemplates.CreateCustomerTemplate(CustomerTemplate);
     end;
@@ -102,7 +102,7 @@ codeunit 81002 "LookupValue UT Cust. Template"
         CustomerTemplateCard.Code.SetValue(LibraryUtility.GenerateRandomCode(CustomerTemplate.FieldNo(Code), Database::"Customer Templ."));
     end;
 
-    local procedure SetLookupValueOnCustomerTemplate(var CustomerTemplate: record "Customer Templ."; LookupValueCode: Code[10])
+    local procedure SetLookupValueOnCustomerTemplate(var CustomerTemplate: Record "Customer Templ."; LookupValueCode: Code[10])
     begin
         CustomerTemplate.Validate("Lookup Value Code", LookupValueCode);
         CustomerTemplate.Modify();

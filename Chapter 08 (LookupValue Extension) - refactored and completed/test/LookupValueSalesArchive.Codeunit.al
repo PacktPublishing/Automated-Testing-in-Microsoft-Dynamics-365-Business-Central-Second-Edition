@@ -62,7 +62,7 @@ codeunit 81004 "LookupValue Sales Archive"
 
     local procedure ArchiveSalesDocumentWithLookupValue(DocumentType: Enum "Sales Document Type"): Code[20]
     var
-        SalesHeader: record "Sales Header";
+        SalesHeader: Record "Sales Header";
     begin
         //[GIVEN] Sales document with lookup value
         CreateSalesDocumentWithLookupValue(SalesHeader, DocumentType);
@@ -79,7 +79,7 @@ codeunit 81004 "LookupValue Sales Archive"
         exit(SalesHeader."No.")
     end;
 
-    local procedure CreateSalesDocumentWithLookupValue(var SalesHeader: record "Sales Header"; DocumentType: Enum "Sales Document Type"): Code[20]
+    local procedure CreateSalesDocumentWithLookupValue(var SalesHeader: Record "Sales Header"; DocumentType: Enum "Sales Document Type"): Code[20]
     begin
         LibrarySales.CreateSalesHeader(SalesHeader, DocumentType, '');
 

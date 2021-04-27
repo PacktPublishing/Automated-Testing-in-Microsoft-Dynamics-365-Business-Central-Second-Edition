@@ -216,12 +216,12 @@ codeunit 81001 "LookupValue UT Sales Document"
         exit(LookupValue.Code);
     end;
 
-    local procedure CreateSalesHeader(var SalesHeader: record "Sales Header")
+    local procedure CreateSalesHeader(var SalesHeader: Record "Sales Header")
     begin
         LibrarySales.CreateSalesHeader(SalesHeader, SalesHeader."Document Type"::Invoice, '');
     end;
 
-    local procedure SetLookupValueOnSalesHeader(var SalesHeader: record "Sales Header"; LookupValueCode: Code[10])
+    local procedure SetLookupValueOnSalesHeader(var SalesHeader: Record "Sales Header"; LookupValueCode: Code[10])
     begin
         SalesHeader.Validate("Lookup Value Code", LookupValueCode);
         SalesHeader.Modify();

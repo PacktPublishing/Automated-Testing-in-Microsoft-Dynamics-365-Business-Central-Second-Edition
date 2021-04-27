@@ -24,7 +24,7 @@ codeunit 81005 "LookupValue Posting"
     procedure PostSalesOrderWithLookupValue();
     //[FEATURE] LookupValue Posting Sales Document
     var
-        SalesHeader: record "Sales Header";
+        SalesHeader: Record "Sales Header";
         PostedSaleInvoiceNo: Code[20];
         SalesShipmentNo: Code[20];
     begin
@@ -148,9 +148,9 @@ codeunit 81005 "LookupValue Posting"
         LibraryWarehouse.CreateWarehouseEmployee(WarehouseEmployee, Location.Code, false);
     end;
 
-    local procedure CreateSalesOrder(var SalesHeader: record "Sales Header"; WithLookupValue: Boolean)
+    local procedure CreateSalesOrder(var SalesHeader: Record "Sales Header"; WithLookupValue: Boolean)
     var
-        SalesLine: record "Sales Line";
+        SalesLine: Record "Sales Line";
     begin
         LibrarySales.CreateSalesHeader(SalesHeader, SalesHeader."Document Type"::Order, CreateCustomerNo());
         CreateSalesLine(SalesHeader, SalesLine, SalesLine.Type::Item, '', 1, DefaultLocation."Code");
@@ -181,7 +181,7 @@ codeunit 81005 "LookupValue Posting"
         exit(LibraryLookupValue.CreateLookupValueCode())
     end;
 
-    local procedure PostSalesDocument(var SalesHeader: record "Sales Header"; var PostedSaleInvoiceNo: Code[20]; var SalesShipmentNo: Code[20])
+    local procedure PostSalesDocument(var SalesHeader: Record "Sales Header"; var PostedSaleInvoiceNo: Code[20]; var SalesShipmentNo: Code[20])
     begin
         LibrarySales.PostSalesDocument(SalesHeader, true, true);
         PostedSaleInvoiceNo := FindPostedSalesOrderToInvoice(SalesHeader."No.");
@@ -215,7 +215,7 @@ codeunit 81005 "LookupValue Posting"
 
     local procedure CreateWarehouseShipment(SalesHeader: Record "Sales Header"): Code[20]
     var
-        WarehouseShipmentHeader: record "Warehouse Shipment Header";
+        WarehouseShipmentHeader: Record "Warehouse Shipment Header";
     begin
         LibraryWarehouse.CreateWhseShipmentFromSO(SalesHeader);
         GetWarehouseShipmentHeader(WarehouseShipmentHeader, SalesHeader."No.");

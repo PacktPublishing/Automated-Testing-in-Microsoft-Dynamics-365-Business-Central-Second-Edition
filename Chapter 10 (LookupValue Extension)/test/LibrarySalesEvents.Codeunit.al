@@ -11,7 +11,7 @@ codeunit 80050 "Library - Sales Events"
         SetLookupValueOnCustomer(Customer);
     end;
 
-    local procedure SetLookupValueOnCustomer(var Customer: record Customer)
+    local procedure SetLookupValueOnCustomer(var Customer: Record Customer)
     var
         LibraryLookupValue: Codeunit "Library - Lookup Value";
     begin

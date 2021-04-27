@@ -37,7 +37,7 @@ codeunit 81008 "Lookup Value Report"
 
     local procedure Initialize()
     var
-        Customer: record Customer;
+        Customer: Record Customer;
         LibraryTestsSetup: Codeunit "Library - Tests Setup";
     begin
         if isInitialized then

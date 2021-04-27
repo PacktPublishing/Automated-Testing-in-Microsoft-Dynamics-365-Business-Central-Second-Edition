@@ -167,9 +167,9 @@ codeunit 81003 "LookupValue Warehouse Shipment"
         exit(SalesHeader."No.");
     end;
 
-    local procedure CreateAndReleaseSalesOrder(var SalesHeader: record "Sales Header"; Location: Record Location; WithLookupValue: Boolean)
+    local procedure CreateAndReleaseSalesOrder(var SalesHeader: Record "Sales Header"; Location: Record Location; WithLookupValue: Boolean)
     var
-        SalesLine: record "Sales Line";
+        SalesLine: Record "Sales Line";
     begin
         LibrarySales.CreateSalesDocumentWithItem(SalesHeader, SalesLine, SalesHeader."Document Type"::Order, '', '', 1, Location."Code", 0D);
 
