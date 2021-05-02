@@ -1,7 +1,7 @@
-permissionset 50000 "LookupValue"
+permissionset 50000 "Lookup Value"
 {
     Assignable = true;
-    IncludedPermissionSets = "D365 BASIC";
+    Caption = 'Lookup Value';
     Permissions =
-        tabledata LookupValue = rimd;
+        tabledata LookupValue = RIMD;
 }
