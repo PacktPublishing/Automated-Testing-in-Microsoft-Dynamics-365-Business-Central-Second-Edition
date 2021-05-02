@@ -2,7 +2,7 @@ pageextension 50014 "CustomerListPageExt" extends "Customer List" //22
 {
     layout
     {
-        addlast(Control1)
+        addafter("No.")
         {
             field("Lookup Value Code"; Rec."Lookup Value Code")
             {

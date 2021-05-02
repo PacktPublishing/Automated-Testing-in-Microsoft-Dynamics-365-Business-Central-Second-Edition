@@ -2,7 +2,7 @@ pageextension 50041 "SalesListArchivePageExt" extends "Sales List Archive" //516
 {
     layout
     {
-        addlast(Control1)
+        addafter("No.")
         {
             field("Lookup Value Code"; Rec."Lookup Value Code")
             {

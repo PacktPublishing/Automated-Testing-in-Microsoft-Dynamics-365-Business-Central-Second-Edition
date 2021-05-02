@@ -2,7 +2,7 @@ pageextension 50009 "SalesInvoiceListPageExt" extends "Sales Invoice List" //930
 {
     layout
     {
-        addfirst(Control1)
+        addafter("No.")
         {
             field("Lookup Value Code"; Rec."Lookup Value Code")
             {

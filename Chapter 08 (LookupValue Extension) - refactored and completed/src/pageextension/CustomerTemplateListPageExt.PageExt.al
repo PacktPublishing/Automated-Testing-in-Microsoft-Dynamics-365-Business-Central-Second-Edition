@@ -2,7 +2,7 @@ pageextension 50015 "CustomerTemplateListPageExt" extends "Customer Templ. List"
 {
     layout
     {
-        addlast(Control1)
+        addafter(Code)
         {
             field("Lookup Value Code"; Rec."Lookup Value Code")
             {

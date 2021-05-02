@@ -2,7 +2,7 @@ pageextension 50044 "SalesRtrnOrderListArchPageExt" extends "Sales Return List A
 {
     layout
     {
-        addlast(Control1)
+        addafter("No.")
         {
             field("Lookup Value Code"; Rec."Lookup Value Code")
             {

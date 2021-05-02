@@ -2,7 +2,7 @@ pageextension 50046 "SalesOrderArchivesPageExt" extends "Sales Order Archives" /
 {
     layout
     {
-        addlast(Control1)
+        addafter("No.")
         {
             field("Lookup Value Code"; Rec."Lookup Value Code")
             {
