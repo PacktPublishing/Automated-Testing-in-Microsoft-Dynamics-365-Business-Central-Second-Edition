@@ -1,4 +1,4 @@
-codeunit 81008 "Lookup Value Report"
+codeunit 81008 "LookupValue Report"
 {
     Subtype = Test;
 
