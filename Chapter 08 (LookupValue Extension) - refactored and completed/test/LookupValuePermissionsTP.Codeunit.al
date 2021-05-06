@@ -1,4 +1,4 @@
-codeunit 81020 "LookupValue Permissions"
+codeunit 81021 "LookupValue Permissions u. TP"
 {
     Subtype = Test;
 
@@ -13,12 +13,13 @@ codeunit 81020 "LookupValue Permissions"
         LibraryLowerPermissions: Codeunit "Library - Lower Permissions";
 
     [Test]
+    [TestPermissions(TestPermissions::NonRestrictive)]
     procedure CreateLookupValueWithoutPermissions()
     begin
         //[SCENARIO #0041] Create lookup value without permissions
 
         //[GIVEN] Non-restrictive base permissions
-        LibraryLowerPermissions.StartLoggingNAVPermissions('D365 BUS FULL ACCESS');
+        // [TestPermissions(TestPermissions::NonRestrictive)]
 
         //[WHEN] Create lookup value
         asserterror CreateLookupValueCode();
@@ -28,6 +29,7 @@ codeunit 81020 "LookupValue Permissions"
     end;
 
     [Test]
+    [TestPermissions(TestPermissions::NonRestrictive)]
     procedure CreateLookupValueWithPermissions()
     var
         LookupValueCode: Code[10];
@@ -35,7 +37,7 @@ codeunit 81020 "LookupValue Permissions"
         //[SCENARIO #0042] Create lookup value with permissions
 
         //[GIVEN] Non-restrictive base permissions extended with Lookup Value permissions
-        LibraryLowerPermissions.StartLoggingNAVPermissions('D365 BUS FULL ACCESS');
+        // [TestPermissions(TestPermissions::NonRestrictive)]
         LibraryLowerPermissions.AddPermissionSet('LOOKUP VALUE');
 
         //[WHEN] Create lookup value
@@ -46,6 +48,7 @@ codeunit 81020 "LookupValue Permissions"
     end;
 
     [Test]
+    [TestPermissions(TestPermissions::Disabled)]
     procedure ReadLookupValueWithoutPermissions()
     var
         LookupValueCode: Code[10];
@@ -53,7 +56,7 @@ codeunit 81020 "LookupValue Permissions"
         //[SCENARIO #0043] Read lookup value without permissions
 
         //[GIVEN] Unrestricted permissions
-        LibraryLowerPermissions.StartLoggingNAVPermissions('SUPER');
+        // [TestPermissions(TestPermissions::Disabled)]
         //[GIVEN] Create lookup value
         LookupValueCode := CreateLookupValueCode();
         //[GIVEN] Non-restrictive base permissions
@@ -67,6 +70,7 @@ codeunit 81020 "LookupValue Permissions"
     end;
 
     [Test]
+    [TestPermissions(TestPermissions::Disabled)]
     procedure ReadLookupValueWithPermissions()
     var
         LookupValueCode: Code[10];
@@ -74,7 +78,7 @@ codeunit 81020 "LookupValue Permissions"
         //[SCENARIO #0044] Read lookup value with permissions
 
         //[GIVEN] Unrestricted permissions
-        LibraryLowerPermissions.StartLoggingNAVPermissions('SUPER');
+        // [TestPermissions(TestPermissions::Disabled)]
         //[GIVEN] Create lookup value
         LookupValueCode := CreateLookupValueCode();
         //[GIVEN] Non-restrictive base permissions extended with Lookup Value permissions
@@ -89,6 +93,7 @@ codeunit 81020 "LookupValue Permissions"
     end;
 
     [Test]
+    [TestPermissions(TestPermissions::Disabled)]
     procedure ModifyLookupValueWithoutPermissions()
     var
         LookupValue: Record LookupValue;
@@ -96,7 +101,7 @@ codeunit 81020 "LookupValue Permissions"
         //[SCENARIO #0045] Modify lookup value without permissions
 
         //[GIVEN] Unrestricted permissions
-        LibraryLowerPermissions.StartLoggingNAVPermissions('SUPER');
+        // [TestPermissions(TestPermissions::Disabled)]
         //[GIVEN] Create lookup value
         CreateLookupValue(LookupValue);
         //[GIVEN] Non-restrictive base permissions
@@ -110,6 +115,7 @@ codeunit 81020 "LookupValue Permissions"
     end;
 
     [Test]
+    [TestPermissions(TestPermissions::Disabled)]
     procedure ModifyLookupValueWithPermissions()
     var
         LookupValue: Record LookupValue;
@@ -117,7 +123,7 @@ codeunit 81020 "LookupValue Permissions"
         //[SCENARIO #0046] Modify lookup value with permissions
 
         //[GIVEN] Unrestricted permissions
-        LibraryLowerPermissions.StartLoggingNAVPermissions('SUPER');
+        // [TestPermissions(TestPermissions::Disabled)]
         //[GIVEN] Create lookup value
         CreateLookupValue(LookupValue);
         //[GIVEN] Non-restrictive base permissions extended with Lookup Value permissions
@@ -132,6 +138,7 @@ codeunit 81020 "LookupValue Permissions"
     end;
 
     [Test]
+    [TestPermissions(TestPermissions::Disabled)]
     procedure DeleteLookupValueWithoutPermissions()
     var
         LookupValue: Record LookupValue;
@@ -139,7 +146,7 @@ codeunit 81020 "LookupValue Permissions"
         //[SCENARIO #0047] Delete lookup value without permissions
 
         //[GIVEN] Unrestricted permissions
-        LibraryLowerPermissions.StartLoggingNAVPermissions('SUPER');
+        // [TestPermissions(TestPermissions::Disabled)]
         //[GIVEN] Create lookup value
         CreateLookupValue(LookupValue);
         //[GIVEN] Non-restrictive base permissions
@@ -153,6 +160,7 @@ codeunit 81020 "LookupValue Permissions"
     end;
 
     [Test]
+    [TestPermissions(TestPermissions::Disabled)]
     procedure DeleteLookupValueWithPermissions()
     var
         LookupValue: Record LookupValue;
@@ -160,7 +168,7 @@ codeunit 81020 "LookupValue Permissions"
         //[SCENARIO #0048] Delete lookup value with permissions
 
         //[GIVEN] Unrestricted permissions
-        LibraryLowerPermissions.StartLoggingNAVPermissions('SUPER');
+        // [TestPermissions(TestPermissions::Disabled)]
         //[GIVEN] Create lookup value
         CreateLookupValue(LookupValue);
         //[GIVEN] Non-restrictive base permissions
@@ -175,6 +183,7 @@ codeunit 81020 "LookupValue Permissions"
     end;
 
     [Test]
+    [TestPermissions(TestPermissions::Disabled)]
     procedure OpenLookupValuesPageWithoutPermissions()
     var
         LookupValues: TestPage LookupValues;
@@ -182,7 +191,7 @@ codeunit 81020 "LookupValue Permissions"
         //[SCENARIO #0049] Open Lookup Values Page without permissions
 
         //[GIVEN] Unrestricted permissions
-        LibraryLowerPermissions.StartLoggingNAVPermissions('SUPER');
+        // [TestPermissions(TestPermissions::Disabled)]
         //[Given] Lookup value
         CreateLookupValueCode();
         //[GIVEN] Non-restrictive base permissions
@@ -196,6 +205,7 @@ codeunit 81020 "LookupValue Permissions"
     end;
 
     [Test]
+    [TestPermissions(TestPermissions::NonRestrictive)]
     procedure OpenLookupValuesPageWithPermissions()
     var
         LookupValues: TestPage LookupValues;
@@ -203,7 +213,7 @@ codeunit 81020 "LookupValue Permissions"
         //[SCENARIO #0050] Open Lookup Values Page with permissions
 
         //[GIVEN] Non-restrictive base permissions extended with Lookup Value permissions
-        LibraryLowerPermissions.StartLoggingNAVPermissions('D365 BUS FULL ACCESS');
+        // [TestPermissions(TestPermissions::NonRestrictive)]
         LibraryLowerPermissions.AddPermissionSet('LOOKUP VALUE');
         //[GIVEN] Clear last error
         ClearLastError();
@@ -216,6 +226,7 @@ codeunit 81020 "LookupValue Permissions"
     end;
 
     [Test]
+    [TestPermissions(TestPermissions::NonRestrictive)]
     procedure CheckLookupValueOnCustomerCardWithoutPermissions()
     var
         CustomerCard: TestPage "Customer Card";
@@ -223,7 +234,7 @@ codeunit 81020 "LookupValue Permissions"
         //[SCENARIO #0051] Check lookup value on customer card without permissions
 
         //[GIVEN] Non-restrictive base permissions
-        LibraryLowerPermissions.StartLoggingNAVPermissions('D365 FULL ACCESS');
+        // [TestPermissions(TestPermissions::NonRestrictive)]
 
         //[WHEN] Open customer card
         CustomerCard.OpenView();
@@ -233,6 +244,7 @@ codeunit 81020 "LookupValue Permissions"
     end;
 
     [Test]
+    [TestPermissions(TestPermissions::NonRestrictive)]
     procedure CheckLookupValueOnCustomerCardWithPermissions()
     var
         CustomerCard: TestPage "Customer Card";
@@ -240,7 +252,7 @@ codeunit 81020 "LookupValue Permissions"
         //[SCENARIO #0052] Check lookup value on customer card with permissions
 
         //[GIVEN] Non-restrictive base permissions extended with Lookup Value permissions
-        LibraryLowerPermissions.StartLoggingNAVPermissions('D365 FULL ACCESS');
+        // [TestPermissions(TestPermissions::NonRestrictive)]
         LibraryLowerPermissions.AddPermissionSet('LOOKUP VALUE');
 
         //[WHEN] Open customer card
@@ -251,6 +263,7 @@ codeunit 81020 "LookupValue Permissions"
     end;
 
     [Test]
+    [TestPermissions(TestPermissions::NonRestrictive)]
     procedure CheckLookupValueOnCustomerListWithoutPermissions()
     var
         CustomerList: TestPage "Customer List";
@@ -258,7 +271,7 @@ codeunit 81020 "LookupValue Permissions"
         //[SCENARIO #0053] Check lookup value on customer list without permissions
 
         //[GIVEN] Non-restrictive base permissions
-        LibraryLowerPermissions.StartLoggingNAVPermissions('D365 FULL ACCESS');
+        // [TestPermissions(TestPermissions::NonRestrictive)]
 
         //[WHEN] Open customer list
         CustomerList.OpenView();
@@ -268,6 +281,7 @@ codeunit 81020 "LookupValue Permissions"
     end;
 
     [Test]
+    [TestPermissions(TestPermissions::NonRestrictive)]
     procedure CheckLookupValueOnCustomerListWithPermissions()
     var
         CustomerList: TestPage "Customer List";
@@ -275,7 +289,7 @@ codeunit 81020 "LookupValue Permissions"
         //[SCENARIO #0054] Check lookup value on customer list with permissions
 
         //[GIVEN] Non-restrictive base permissions extended with Lookup Value permissions
-        LibraryLowerPermissions.StartLoggingNAVPermissions('D365 FULL ACCESS');
+        // [TestPermissions(TestPermissions::NonRestrictive)]
         LibraryLowerPermissions.AddPermissionSet('LOOKUP VALUE');
 
         //[WHEN] Open customer list

@@ -37,12 +37,12 @@ codeunit 80001 "Library - Messages"
         FieldMustHaveValueInSalesHeaderTxt: Label '%1 must have a value in %2: %3=%4, %5=%6. It cannot be zero or empty.';
     begin
         exit(StrSubstNo(
-        FieldMustHaveValueInSalesHeaderTxt,
-        NewFieldCaption,
-        SalesHeader.TableCaption(),
-        SalesHeader.FieldCaption("Document Type"),
-        SalesHeader."Document Type",
-        SalesHeader.FieldCaption("No."),
-        SalesHeader."No."))
+                FieldMustHaveValueInSalesHeaderTxt,
+                NewFieldCaption,
+                SalesHeader.TableCaption(),
+                SalesHeader.FieldCaption("Document Type"),
+                SalesHeader."Document Type",
+                SalesHeader.FieldCaption("No."),
+                SalesHeader."No."))
     end;
 }
