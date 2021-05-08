@@ -9,7 +9,6 @@ codeunit 81004 "LookupValue Sales Archive"
 
     var
         Assert: Codeunit "Library Assert";
-        LibraryUtility: Codeunit "Library - Utility";
         LibrarySales: Codeunit "Library - Sales";
         LibraryVariableStorage: Codeunit "Library - Variable Storage";
 
@@ -85,16 +84,9 @@ codeunit 81004 "LookupValue Sales Archive"
 
     local procedure CreateLookupValueCode(): Code[10]
     var
-        LookupValue: Record LookupValue;
+        LibraryLookupValue: Codeunit "Library - Lookup Value";
     begin
-        LookupValue.Init();
-        LookupValue.Validate(
-            Code,
-            LibraryUtility.GenerateRandomCode(LookupValue.FieldNo(Code),
-            Database::LookupValue));
-        LookupValue.Validate(Description, LookupValue.Code);
-        LookupValue.Insert();
-        exit(LookupValue.Code);
+        exit(LibraryLookupValue.CreateLookupValueCode())
     end;
 
     local procedure ArchiveSalesDocument(var SalesHeader: Record "Sales Header");

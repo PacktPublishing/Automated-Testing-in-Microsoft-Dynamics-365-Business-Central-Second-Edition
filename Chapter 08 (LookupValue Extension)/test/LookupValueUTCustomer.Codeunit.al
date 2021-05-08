@@ -9,7 +9,6 @@ codeunit 81000 "LookupValue UT Customer"
 
     var
         Assert: Codeunit "Library Assert";
-        LibraryUtility: Codeunit "Library - Utility";
         LibrarySales: Codeunit "Library - Sales";
 
     // Instruction NOTES
@@ -80,16 +79,9 @@ codeunit 81000 "LookupValue UT Customer"
 
     local procedure CreateLookupValueCode(): Code[10]
     var
-        LookupValue: Record LookupValue;
+        LibraryLookupValue: Codeunit "Library - Lookup Value";
     begin
-        LookupValue.Init();
-        LookupValue.Validate(
-            Code,
-            LibraryUtility.GenerateRandomCode(LookupValue.FieldNo(Code),
-            Database::LookupValue));
-        LookupValue.Validate(Description, LookupValue.Code);
-        LookupValue.Insert();
-        exit(LookupValue.Code);
+        exit(LibraryLookupValue.CreateLookupValueCode())
     end;
 
     local procedure CreateCustomer(var Customer: Record Customer)
