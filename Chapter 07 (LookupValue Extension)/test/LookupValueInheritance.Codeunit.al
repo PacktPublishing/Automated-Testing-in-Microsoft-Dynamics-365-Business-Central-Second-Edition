@@ -99,6 +99,7 @@ codeunit 81006 "LookupValue Inheritance"
     end;
 
     local procedure CreateLookupValueCode(): Code[10]
+    // this smells like duplication ;-) - see test example 1
     var
         LookupValue: Record LookupValue;
     begin
@@ -200,6 +201,7 @@ codeunit 81006 "LookupValue Inheritance"
     var
         Customer: Record Customer;
         FieldOnTableTxt: Label '%1 on %2';
+    // this smells like duplication ;-) - see test example 1
     begin
         Customer.Get(CustomerNo);
         Assert.AreEqual(

@@ -203,6 +203,7 @@ codeunit 81001 "LookupValue UT Sales Document"
     end;
 
     local procedure CreateLookupValueCode(): Code[10]
+    // this smells like duplication ;-) - see test example 1
     var
         LookupValue: Record LookupValue;
     begin

@@ -109,11 +109,8 @@ codeunit 81000 "LookupValue UT Customer"
     end;
 
     local procedure VerifyLookupValueOnCustomer(CustomerNo: Code[20]; LookupValueCode: Code[10])
-    var
-        Customer: Record Customer;
     begin
-        Customer.Get(CustomerNo);
-        Assert.AreEqual(LookupValueCode, Customer."Lookup Value Code", LibraryMessages.GetFieldOnTableTxt(Customer.FieldCaption("Lookup Value Code"), Customer.TableCaption()));
+        LibraryLookupValue.VerifyLookupValueOnCustomer(CustomerNo, LookupValueCode);
     end;
 
     local procedure VerifyNonExistingLookupValueError(LookupValueCode: Code[10])
