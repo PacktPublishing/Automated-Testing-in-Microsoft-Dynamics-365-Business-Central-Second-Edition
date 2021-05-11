@@ -148,7 +148,7 @@ codeunit 81000 "LookupValue UT Customer"
     end;
 
     [ModalPageHandler]
-    procedure HandleConfigTemplates(var ConfigTemplates: TestPage "Config Templates")
+    procedure HandleConfigTemplates(var ConfigTemplates: TestPage "Select Customer Templ. List")
     begin
         ConfigTemplates.OK().Invoke();
     end;
