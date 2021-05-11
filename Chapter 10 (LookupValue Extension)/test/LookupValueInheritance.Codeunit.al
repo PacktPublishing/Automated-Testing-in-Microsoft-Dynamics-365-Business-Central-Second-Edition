@@ -13,6 +13,7 @@ codeunit 81006 "LookupValue Inheritance"
         LibraryMarketing: Codeunit "Library - Marketing";
         LibraryTemplates: Codeunit "Library - Templates";
         LibraryVariableStorage: Codeunit "Library - Variable Storage";
+        LibraryLookupValue: Codeunit "Library - Lookup Value";
         LibraryMessages: Codeunit "Library - Messages";
         isInitialized: Boolean;
         LookupValueCode: Code[10];

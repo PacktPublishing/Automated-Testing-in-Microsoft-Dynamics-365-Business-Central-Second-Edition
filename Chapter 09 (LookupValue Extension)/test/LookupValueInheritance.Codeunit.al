@@ -13,6 +13,7 @@ codeunit 81006 "LookupValue Inheritance"
         LibraryMarketing: Codeunit "Library - Marketing";
         LibraryTemplates: Codeunit "Library - Templates";
         LibraryVariableStorage: Codeunit "Library - Variable Storage";
+        LibraryLookupValue: Codeunit "Library - Lookup Value";
         LibraryMessages: Codeunit "Library - Messages";
         isInitialized: Boolean;
         LookupValueCode: Code[10];
@@ -99,8 +100,6 @@ codeunit 81006 "LookupValue Inheritance"
     end;
 
     local procedure CreateLookupValueCode(): Code[10]
-    var
-        LibraryLookupValue: Codeunit "Library - Lookup Value";
     begin
         exit(LibraryLookupValue.CreateLookupValueCode())
     end;

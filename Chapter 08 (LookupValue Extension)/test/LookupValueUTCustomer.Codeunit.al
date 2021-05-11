@@ -120,11 +120,9 @@ codeunit 81000 "LookupValue UT Customer"
     var
         Customer: Record Customer;
         LookupValue: Record LookupValue;
-        ValueCannotBeFoundInTableTxt: Label 'The field %1 of table %2 contains a value (%3) that cannot be found in the related table (%4).';
     begin
         Assert.ExpectedError(
-            StrSubstNo(
-                ValueCannotBeFoundInTableTxt,
+            LibraryMessages.GetValueCannotBeFoundInTableTxt(
                 Customer.FieldCaption("Lookup Value Code"),
                 Customer.TableCaption(),
                 LookupValueCode,
