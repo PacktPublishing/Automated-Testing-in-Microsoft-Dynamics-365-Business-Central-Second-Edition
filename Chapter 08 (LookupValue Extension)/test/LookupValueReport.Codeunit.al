@@ -8,9 +8,9 @@ codeunit 81008 "LookupValue Report"
     end;
 
     var
-        LibraryUtility: Codeunit "Library - Utility";
         LibrarySales: Codeunit "Library - Sales";
         LibraryReportDataset: Codeunit "Library - Report Dataset";
+        LibraryLookupValue: Codeunit "Library - Lookup Value";
 
     [Test]
     [HandlerFunctions('CustomerListRequestPageHandler')]
@@ -41,17 +41,8 @@ codeunit 81008 "LookupValue Report"
     end;
 
     local procedure CreateLookupValueCode(): Code[10]
-    var
-        LookupValue: Record LookupValue;
     begin
-        LookupValue.Init();
-        LookupValue.Validate(
-            Code,
-            LibraryUtility.GenerateRandomCode(LookupValue.FieldNo(Code),
-            Database::LookupValue));
-        LookupValue.Validate(Description, LookupValue.Code);
-        LookupValue.Insert();
-        exit(LookupValue.Code);
+        exit(LibraryLookupValue.CreateLookupValueCode())
     end;
 
     local procedure CommitAndRunReportCustomerList()
