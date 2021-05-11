@@ -10,6 +10,7 @@ codeunit 81000 "LookupValue UT Customer"
     var
         Assert: Codeunit "Library Assert";
         LibrarySales: Codeunit "Library - Sales";
+        LibraryLookupValue: Codeunit "Library - Lookup Value";
 
     // Instruction NOTES
     // (1) Replacing the argument LookupValueCode in verification call, i.e. [THEN] clause, should make any test fail
@@ -78,8 +79,6 @@ codeunit 81000 "LookupValue UT Customer"
     end;
 
     local procedure CreateLookupValueCode(): Code[10]
-    var
-        LibraryLookupValue: Codeunit "Library - Lookup Value";
     begin
         exit(LibraryLookupValue.CreateLookupValueCode())
     end;

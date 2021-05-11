@@ -159,7 +159,7 @@ codeunit 81006 "LookupValue Inheritance"
     local procedure CreateCustomerTemplateWithLookupValue(LookupValueCode: Code[10]): Code[20]
     var
         CustomerTemplate: Record "Customer Templ.";
-        LibraryTemplates: codeunit "Library - Templates";
+        LibraryTemplates: Codeunit "Library - Templates";
     begin
         LibraryTemplates.CreateCustomerTemplate(CustomerTemplate);
 
