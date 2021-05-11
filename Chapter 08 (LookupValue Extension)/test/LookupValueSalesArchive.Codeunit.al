@@ -10,6 +10,8 @@ codeunit 81004 "LookupValue Sales Archive"
     var
         Assert: Codeunit "Library Assert";
         LibrarySales: Codeunit "Library - Sales";
+        LibraryLookupValue: Codeunit "Library - Lookup Value";
+        LibraryMessages: Codeunit "Library - Messages";
         LibraryVariableStorage: Codeunit "Library - Variable Storage";
 
     // Instruction NOTES
@@ -83,8 +85,6 @@ codeunit 81004 "LookupValue Sales Archive"
     end;
 
     local procedure CreateLookupValueCode(): Code[10]
-    var
-        LibraryLookupValue: Codeunit "Library - Lookup Value";
     begin
         exit(LibraryLookupValue.CreateLookupValueCode())
     end;
@@ -110,20 +110,12 @@ codeunit 81004 "LookupValue Sales Archive"
     var
         SalesHeaderArchive: Record "Sales Header Archive";
         SalesListArchive: TestPage "Sales List Archive";
-        FieldOnTableTxt: Label '%1 on %2';
     begin
         SalesHeaderArchive.Get(DocumentType, DocumentNo, 1, 1);  // Used 1 for Occurrence of Document No.  No. of Archived Versions
         SalesListArchive.OpenView();
         SalesListArchive.GoToRecord(SalesHeaderArchive);
 
-        Assert.AreEqual(
-            SalesHeaderArchive."Lookup Value Code",
-            SalesListArchive."Lookup Value Code".Value(),
-            StrSubstNo(
-                FieldOnTableTxt,
-                SalesHeaderArchive.FieldCaption("Lookup Value Code"),
-                SalesHeaderArchive.TableCaption())
-            );
+        Assert.AreEqual(SalesHeaderArchive."Lookup Value Code", SalesListArchive."Lookup Value Code".Value(), LibraryMessages.GetFieldOnTableTxt(SalesHeaderArchive.FieldCaption("Lookup Value Code"), SalesHeaderArchive.TableCaption()));
     end;
 
     local procedure FindSalesDocumentArchive(var SalesHeaderArchive: Record "Sales Header Archive"; DocumentType: Enum "Sales Document Type"; DocumentNo: Code[20])

@@ -13,7 +13,8 @@ codeunit 81006 "LookupValue Inheritance"
         LibraryMarketing: Codeunit "Library - Marketing";
         LibraryTemplates: Codeunit "Library - Templates";
         LibraryVariableStorage: Codeunit "Library - Variable Storage";
-        LibrarySmallBusiness: Codeunit "Library - Small Business";
+        LibraryLookupValue: Codeunit "Library - Lookup Value";
+        LibraryMessages: Codeunit "Library - Messages";
         isInitialized: Boolean;
         LookupValueCode: Code[10];
 
@@ -53,7 +54,7 @@ codeunit 81006 "LookupValue Inheritance"
         //[SCENARIO #0026] Check that lookup value is inherited from customer template to customer when creating customer from contact
 
         //[GIVEN] Customer template with lookup value
-        CreateCustomerTemplate(CustomerTemplate, true);
+        CreateCustomerTemplateWithLookupValue(CustomerTemplate);
         //[GIVEN] Contact
         CreateCompanyContact(Contact);
 
@@ -99,8 +100,6 @@ codeunit 81006 "LookupValue Inheritance"
     end;
 
     local procedure CreateLookupValueCode(): Code[10]
-    var
-        LibraryLookupValue: Codeunit "Library - Lookup Value";
     begin
         exit(LibraryLookupValue.CreateLookupValueCode())
     end;
@@ -127,14 +126,11 @@ codeunit 81006 "LookupValue Inheritance"
         SalesHeader.Modify();
     end;
 
-    local procedure CreateCustomerTemplate(var CustomerTemplate: Record "Customer Templ."; WithLookupValue: Boolean): Code[10]
+    local procedure CreateCustomerTemplateWithLookupValue(var CustomerTemplate: Record "Customer Templ."): Code[10]
     begin
         LibraryTemplates.CreateCustomerTemplate(CustomerTemplate);
-
-        if WithLookupValue then begin
-            CustomerTemplate.Validate("Lookup Value Code", CreateLookupValueCode());
-            CustomerTemplate.Modify();
-        end;
+        CustomerTemplate.Validate("Lookup Value Code", CreateLookupValueCode());
+        CustomerTemplate.Modify();
         exit(CustomerTemplate."Lookup Value Code");
     end;
 
@@ -179,33 +175,16 @@ codeunit 81006 "LookupValue Inheritance"
     end;
 
     local procedure VerifyLookupValueOnSalesHeader(var SalesHeader: Record "Sales Header"; LookupValueCode: Code[10])
-    var
-        FieldOnTableTxt: Label '%1 on %2';
     begin
-        Assert.AreEqual(
-            LookupValueCode,
-            SalesHeader."Lookup Value Code",
-            StrSubstNo(
-                FieldOnTableTxt,
-                SalesHeader.FieldCaption("Lookup Value Code"),
-                SalesHeader.TableCaption())
-            );
+        Assert.AreEqual(LookupValueCode, SalesHeader."Lookup Value Code", LibraryMessages.GetFieldOnTableTxt(SalesHeader.FieldCaption("Lookup Value Code"), SalesHeader.TableCaption()));
     end;
 
     local procedure VerifyLookupValueOnCustomer(CustomerNo: Code[20]; LookupValueCode: Code[10])
     var
         Customer: Record Customer;
-        FieldOnTableTxt: Label '%1 on %2';
     begin
         Customer.Get(CustomerNo);
-        Assert.AreEqual(
-            LookupValueCode,
-            Customer."Lookup Value Code",
-            StrSubstNo(
-                FieldOnTableTxt,
-                Customer.FieldCaption("Lookup Value Code"),
-                Customer.TableCaption())
-            );
+        Assert.AreEqual(LookupValueCode, Customer."Lookup Value Code", LibraryMessages.GetFieldOnTableTxt(Customer.FieldCaption("Lookup Value Code"), Customer.TableCaption()));
     end;
 
     [ModalPageHandler]

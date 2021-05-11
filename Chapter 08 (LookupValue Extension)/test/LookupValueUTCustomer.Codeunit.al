@@ -11,6 +11,7 @@ codeunit 81000 "LookupValue UT Customer"
         Assert: Codeunit "Library Assert";
         LibrarySales: Codeunit "Library - Sales";
         LibraryLookupValue: Codeunit "Library - Lookup Value";
+        LibraryMessages: Codeunit "Library - Messages";
 
     // Instruction NOTES
     // (1) Replacing the argument LookupValueCode in verification call, i.e. [THEN] clause, should make any test fail
@@ -110,17 +111,9 @@ codeunit 81000 "LookupValue UT Customer"
     local procedure VerifyLookupValueOnCustomer(CustomerNo: Code[20]; LookupValueCode: Code[10])
     var
         Customer: Record Customer;
-        FieldOnTableTxt: Label '%1 on %2';
     begin
         Customer.Get(CustomerNo);
-        Assert.AreEqual(
-            LookupValueCode,
-            Customer."Lookup Value Code",
-            StrSubstNo(
-                FieldOnTableTxt,
-                Customer.FieldCaption("Lookup Value Code"),
-                Customer.TableCaption())
-            );
+        Assert.AreEqual(LookupValueCode, Customer."Lookup Value Code", LibraryMessages.GetFieldOnTableTxt(Customer.FieldCaption("Lookup Value Code"), Customer.TableCaption()));
     end;
 
     local procedure VerifyNonExistingLookupValueError(LookupValueCode: Code[10])
