@@ -13,7 +13,6 @@ codeunit 81006 "LookupValue Inheritance"
         LibraryMarketing: Codeunit "Library - Marketing";
         LibraryTemplates: Codeunit "Library - Templates";
         LibraryVariableStorage: Codeunit "Library - Variable Storage";
-        LibrarySmallBusiness: Codeunit "Library - Small Business";
         isInitialized: Boolean;
         LookupValueCode: Code[10];
 
@@ -53,7 +52,7 @@ codeunit 81006 "LookupValue Inheritance"
         //[SCENARIO #0026] Check that lookup value is inherited from customer template to customer when creating customer from contact
 
         //[GIVEN] Customer template with lookup value
-        CreateCustomerTemplate(CustomerTemplate, true);
+        CreateCustomerTemplateWithLookupValue(CustomerTemplate);
         //[GIVEN] Contact
         CreateCompanyContact(Contact);
 
@@ -134,14 +133,11 @@ codeunit 81006 "LookupValue Inheritance"
         SalesHeader.Modify();
     end;
 
-    local procedure CreateCustomerTemplate(var CustomerTemplate: Record "Customer Templ."; WithLookupValue: Boolean): Code[10]
+    local procedure CreateCustomerTemplateWithLookupValue(var CustomerTemplate: Record "Customer Templ."): Code[10]
     begin
         LibraryTemplates.CreateCustomerTemplate(CustomerTemplate);
-
-        if WithLookupValue then begin
-            CustomerTemplate.Validate("Lookup Value Code", CreateLookupValueCode());
-            CustomerTemplate.Modify();
-        end;
+        CustomerTemplate.Validate("Lookup Value Code", CreateLookupValueCode());
+        CustomerTemplate.Modify();
         exit(CustomerTemplate."Lookup Value Code");
     end;
 
@@ -166,7 +162,7 @@ codeunit 81006 "LookupValue Inheritance"
     local procedure CreateCustomerTemplateWithLookupValue(LookupValueCode: Code[10]): Code[20]
     var
         CustomerTemplate: Record "Customer Templ.";
-        LibraryTemplates: codeunit "Library - Templates";
+        LibraryTemplates: Codeunit "Library - Templates";
     begin
         LibraryTemplates.CreateCustomerTemplate(CustomerTemplate);
 
