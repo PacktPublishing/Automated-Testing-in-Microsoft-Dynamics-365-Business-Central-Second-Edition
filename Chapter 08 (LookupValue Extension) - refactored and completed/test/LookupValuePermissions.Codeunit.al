@@ -289,7 +289,7 @@ codeunit 81020 "LookupValue Permissions"
     local procedure SetFullBaseStartingPermissionsExtendedWithLookupValue()
     begin
         SetFullBaseStartingPermissions();
-        LibraryLowerPermissions.AddPermissionSet('LOOKUP VALUE');
+        AddLookupValuePermissions();
     end;
 
     local procedure SetFullBasePermissions()
@@ -300,12 +300,17 @@ codeunit 81020 "LookupValue Permissions"
     local procedure SetFullBasePermissionsExtendedWithLookupValue()
     begin
         SetFullBasePermissions();
-        LibraryLowerPermissions.AddPermissionSet('LOOKUP VALUE');
+        AddLookupValuePermissions();
     end;
 
     local procedure SetUnrestrictedStartingPermissions()
     begin
         LibraryLowerPermissions.StartLoggingNAVPermissions('SUPER');
+    end;
+
+    local procedure AddLookupValuePermissions()
+    begin
+        LibraryLowerPermissions.AddPermissionSet('LOOKUP VALUE');
     end;
 
     local procedure CreateLookupValue(var LookupValue: Record LookupValue)
