@@ -1,8 +1,4 @@
 {
-    "al.assemblyProbingPaths": [
-        "./.netpackages"
-    ],
-
     "CRS.ObjectNameSuffix": "",
     "CRS.FileNamePattern": "<ObjectNameShort>.<ObjectTypeShortPascalCase>.al",
     "CRS.FileNamePatternExtensions": "<ObjectNameShort>.<ObjectTypeShortPascalCase>.al",
