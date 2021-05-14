@@ -20,7 +20,6 @@ codeunit 81004 "LookupValue Sales Archive"
     [Test]
     [HandlerFunctions('ConfirmHandlerYes,MessageHandler')]
     procedure ArchiveSalesOrderWithLookupValue();
-    //[FEATURE] LookupValue Sales Archive
     begin
         //[SCENARIO #0018] Archive sales order with lookup value
         ArchiveSalesDocumentWithLookupValue("Sales Document Type"::Order)
@@ -29,7 +28,6 @@ codeunit 81004 "LookupValue Sales Archive"
     [Test]
     [HandlerFunctions('ConfirmHandlerYes,MessageHandler')]
     procedure ArchiveSalesQuoteWithLookupValue();
-    //[FEATURE] LookupValue Sales Archive
     begin
         //[SCENARIO #0019] Archive sales quote with lookup value
         ArchiveSalesDocumentWithLookupValue("Sales Document Type"::Quote)
@@ -38,7 +36,6 @@ codeunit 81004 "LookupValue Sales Archive"
     [Test]
     [HandlerFunctions('ConfirmHandlerYes,MessageHandler')]
     procedure ArchiveSalesReturnOrderWithLookupValue();
-    //[FEATURE] LookupValue Sales Archive
     begin
         //[SCENARIO #0020] Archive sales return order with lookup value
         ArchiveSalesDocumentWithLookupValue("Sales Document Type"::"Return Order")
@@ -47,7 +44,6 @@ codeunit 81004 "LookupValue Sales Archive"
     [Test]
     [HandlerFunctions('ConfirmHandlerYes,MessageHandler')]
     procedure FindLookupValueOnSalesListArchive();
-    //[FEATURE] LookupValue Sales Archive
     var
         DocumentNo: Code[20];
     begin

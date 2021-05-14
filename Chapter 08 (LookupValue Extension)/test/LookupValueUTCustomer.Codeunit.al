@@ -10,6 +10,8 @@ codeunit 81000 "LookupValue UT Customer"
     var
         Assert: Codeunit "Library Assert";
         LibrarySales: Codeunit "Library - Sales";
+        LibraryLookupValue: Codeunit "Library - Lookup Value";
+        LibraryMessages: Codeunit "Library - Messages";
 
     // Instruction NOTES
     // (1) Replacing the argument LookupValueCode in verification call, i.e. [THEN] clause, should make any test fail
@@ -78,8 +80,6 @@ codeunit 81000 "LookupValue UT Customer"
     end;
 
     local procedure CreateLookupValueCode(): Code[10]
-    var
-        LibraryLookupValue: Codeunit "Library - Lookup Value";
     begin
         exit(LibraryLookupValue.CreateLookupValueCode())
     end;
@@ -109,30 +109,17 @@ codeunit 81000 "LookupValue UT Customer"
     end;
 
     local procedure VerifyLookupValueOnCustomer(CustomerNo: Code[20]; LookupValueCode: Code[10])
-    var
-        Customer: Record Customer;
-        FieldOnTableTxt: Label '%1 on %2';
     begin
-        Customer.Get(CustomerNo);
-        Assert.AreEqual(
-            LookupValueCode,
-            Customer."Lookup Value Code",
-            StrSubstNo(
-                FieldOnTableTxt,
-                Customer.FieldCaption("Lookup Value Code"),
-                Customer.TableCaption())
-            );
+        LibraryLookupValue.VerifyLookupValueOnCustomer(CustomerNo, LookupValueCode);
     end;
 
     local procedure VerifyNonExistingLookupValueError(LookupValueCode: Code[10])
     var
         Customer: Record Customer;
         LookupValue: Record LookupValue;
-        ValueCannotBeFoundInTableTxt: Label 'The field %1 of table %2 contains a value (%3) that cannot be found in the related table (%4).';
     begin
         Assert.ExpectedError(
-            StrSubstNo(
-                ValueCannotBeFoundInTableTxt,
+            LibraryMessages.GetValueCannotBeFoundInTableTxt(
                 Customer.FieldCaption("Lookup Value Code"),
                 Customer.TableCaption(),
                 LookupValueCode,

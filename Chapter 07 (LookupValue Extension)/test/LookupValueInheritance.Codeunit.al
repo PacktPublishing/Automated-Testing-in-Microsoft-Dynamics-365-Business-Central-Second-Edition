@@ -9,11 +9,11 @@ codeunit 81006 "LookupValue Inheritance"
 
     var
         Assert: Codeunit "Library Assert";
-        LibraryUtility: Codeunit "Library - Utility";
         LibrarySales: Codeunit "Library - Sales";
         LibraryMarketing: Codeunit "Library - Marketing";
         LibraryTemplates: Codeunit "Library - Templates";
         LibraryVariableStorage: Codeunit "Library - Variable Storage";
+        LibraryUtility: Codeunit "Library - Utility";
         LibraryRapidStart: Codeunit "Library - Rapid Start";
         LibrarySmallBusiness: Codeunit "Library - Small Business";
         isInitialized: Boolean;
@@ -55,7 +55,7 @@ codeunit 81006 "LookupValue Inheritance"
         //[SCENARIO #0026] Check that lookup value is inherited from customer template to customer when creating customer from contact
 
         //[GIVEN] Customer template with lookup value
-        CreateCustomerTemplate(CustomerTemplate, true);
+        CreateCustomerTemplateWithLookupValue(CustomerTemplate);
         //[GIVEN] Contact
         CreateCompanyContact(Contact);
 
@@ -101,6 +101,7 @@ codeunit 81006 "LookupValue Inheritance"
     end;
 
     local procedure CreateLookupValueCode(): Code[10]
+    // this smells like duplication ;-) - see test example 1
     var
         LookupValue: Record LookupValue;
     begin
@@ -136,14 +137,11 @@ codeunit 81006 "LookupValue Inheritance"
         SalesHeader.Modify();
     end;
 
-    local procedure CreateCustomerTemplate(var CustomerTemplate: Record "Customer Templ."; WithLookupValue: Boolean): Code[10]
+    local procedure CreateCustomerTemplateWithLookupValue(var CustomerTemplate: Record "Customer Templ."): Code[10]
     begin
         LibraryTemplates.CreateCustomerTemplate(CustomerTemplate);
-
-        if WithLookupValue then begin
-            CustomerTemplate.Validate("Lookup Value Code", CreateLookupValueCode());
-            CustomerTemplate.Modify();
-        end;
+        CustomerTemplate.Validate("Lookup Value Code", CreateLookupValueCode());
+        CustomerTemplate.Modify();
         exit(CustomerTemplate."Lookup Value Code");
     end;
 
@@ -211,6 +209,7 @@ codeunit 81006 "LookupValue Inheritance"
     var
         Customer: Record Customer;
         FieldOnTableTxt: Label '%1 on %2';
+    // this smells like duplication ;-) - see test example 1
     begin
         Customer.Get(CustomerNo);
         Assert.AreEqual(

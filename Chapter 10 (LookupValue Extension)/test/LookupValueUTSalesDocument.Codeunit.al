@@ -21,7 +21,6 @@ codeunit 81001 "LookupValue UT Sales Document"
 
     [Test]
     procedure AssignLookupValueToSalesHeader()
-    //[FEATURE] LookupValue UT Sales Document
     var
         SalesHeader: Record "Sales Header";
     begin
@@ -42,7 +41,6 @@ codeunit 81001 "LookupValue UT Sales Document"
 
     [Test]
     procedure AssignNonExistingLookupValueToSalesHeader()
-    //[FEATURE] LookupValue UT Sales Document
     var
         SalesHeader: Record "Sales Header";
         NonExistingLookupValueCode: Code[10];
@@ -63,7 +61,6 @@ codeunit 81001 "LookupValue UT Sales Document"
 
     [Test]
     procedure AssignLookupValueToSalesQuoteDocument()
-    //[FEATURE] LookupValue UT Sales Document UI
     var
         SalesHeader: Record "Sales Header";
         SalesDocument: TestPage "Sales Quote";
@@ -86,7 +83,6 @@ codeunit 81001 "LookupValue UT Sales Document"
 
     [Test]
     procedure AssignLookupValueToSalesOrderDocument()
-    //[FEATURE] LookupValue UT Sales Document UI
     var
         SalesHeader: Record "Sales Header";
         SalesDocument: TestPage "Sales Order";
@@ -109,7 +105,6 @@ codeunit 81001 "LookupValue UT Sales Document"
 
     [Test]
     procedure AssignLookupValueToSalesInvoiceDocument()
-    //[FEATURE] LookupValue UT Sales Document UI
     var
         SalesHeader: Record "Sales Header";
         SalesDocument: TestPage "Sales Invoice";
@@ -132,7 +127,6 @@ codeunit 81001 "LookupValue UT Sales Document"
 
     [Test]
     procedure AssignLookupValueToSalesCreditMemoDocument()
-    //[FEATURE] LookupValue UT Sales Document UI
     var
         SalesHeader: Record "Sales Header";
         SalesDocument: TestPage "Sales Credit Memo";
@@ -155,7 +149,6 @@ codeunit 81001 "LookupValue UT Sales Document"
 
     [Test]
     procedure AssignLookupValueToSalesReturnOrderDocument()
-    //[FEATURE] LookupValue UT Sales Document UI
     var
         SalesHeader: Record "Sales Header";
         SalesDocument: TestPage "Sales Return Order";
@@ -178,7 +171,6 @@ codeunit 81001 "LookupValue UT Sales Document"
 
     [Test]
     procedure AssignLookupValueToBlanketSalesOrderDocument()
-    //[FEATURE] LookupValue UT Sales Document UI
     var
         SalesHeader: Record "Sales Header";
         SalesDocument: TestPage "Blanket Sales Order";

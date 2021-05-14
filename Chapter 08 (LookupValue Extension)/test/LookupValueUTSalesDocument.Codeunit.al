@@ -10,6 +10,8 @@ codeunit 81001 "LookupValue UT Sales Document"
     var
         Assert: Codeunit "Library Assert";
         LibrarySales: Codeunit "Library - Sales";
+        LibraryLookupValue: Codeunit "Library - Lookup Value";
+        LibraryMessages: Codeunit "Library - Messages";
         isInitialized: Boolean;
         LookupValueCode: Code[10];
 
@@ -202,8 +204,6 @@ codeunit 81001 "LookupValue UT Sales Document"
     end;
 
     local procedure CreateLookupValueCode(): Code[10]
-    var
-        LibraryLookupValue: Codeunit "Library - Lookup Value";
     begin
         exit(LibraryLookupValue.CreateLookupValueCode())
     end;
@@ -300,28 +300,18 @@ codeunit 81001 "LookupValue UT Sales Document"
     local procedure VerifyLookupValueOnSalesHeader(DocumentType: Enum "Sales Document Type"; DocumentNo: Code[20]; LookupValueCode: Code[10])
     var
         SalesHeader: Record "Sales Header";
-        FieldOnTableTxt: Label '%1 on %2';
     begin
         SalesHeader.Get(DocumentType, DocumentNo);
-        Assert.AreEqual(
-            LookupValueCode,
-            SalesHeader."Lookup Value Code",
-            StrSubstNo(
-                FieldOnTableTxt,
-                SalesHeader.FieldCaption("Lookup Value Code"),
-                SalesHeader.TableCaption())
-            );
+        Assert.AreEqual(LookupValueCode, SalesHeader."Lookup Value Code", LibraryMessages.GetFieldOnTableTxt(SalesHeader.FieldCaption("Lookup Value Code"), SalesHeader.TableCaption()));
     end;
 
     local procedure VerifyNonExistingLookupValueError(LookupValueCode: Code[10])
     var
         SalesHeader: Record "Sales Header";
         LookupValue: Record LookupValue;
-        ValueCannotBeFoundInTableTxt: Label 'The field %1 of table %2 contains a value (%3) that cannot be found in the related table (%4).';
     begin
         Assert.ExpectedError(
-            StrSubstNo(
-                ValueCannotBeFoundInTableTxt,
+            LibraryMessages.GetValueCannotBeFoundInTableTxt(
                 SalesHeader.FieldCaption("Lookup Value Code"),
                 SalesHeader.TableCaption(),
                 LookupValueCode,
