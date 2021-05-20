@@ -25,9 +25,8 @@ codeunit 81001 "LookupValue UT Sales Document"
         SalesHeader: Record "Sales Header";
     begin
         //[SCENARIO #0004] Assign lookup value to sales header
-        Initialize();
-
         //[GIVEN] Lookup value
+        Initialize();
 
         //[GIVEN] Sales header
         CreateSalesHeader(SalesHeader);
