@@ -3,7 +3,7 @@ name: $(Build.BuildId)
 trigger:
  branches:
    include:
-     - master/Chapter-8-(LookupValue-Extension)-refactored-and-completed
+     - master/LookupValue-Extension
 
 variables:
 - group: 'PipelineVariables'
@@ -38,17 +38,31 @@ steps:
   displayName: 'ALOPS - Compile Extension: App'
   inputs:
     usedocker: true
-    nav_app_version: '1.0.[yyyyWW].*'
-    targetproject: 'Chapter 8 (LookupValue Extension) - refactored and completed/app.json'
+    nav_app_version: '*.*.[yyyyWW].*'
+    targetproject: '$(Build.Repository.name)/App/app.json'
     app_file_suffix: '_APP'                                 # A trick to uniquely identify the APP (from the TEST-app)
 
 - task: ALOpsAppPublish@1
   displayName: 'ALOPS - Publish Extension'
   inputs:
     usedocker: true
-    nav_artifact_app_filter: '*.app'
+    nav_artifact_app_filter: '*APP.app'
     skip_verification: true
 
+- task: ALOpsAppCompiler@1
+  displayName: 'ALOPS - Compile Extension: Test'
+  inputs:
+    usedocker: true
+    nav_app_version: '*.*.[yyyyWW].*'
+    targetproject: '$(Build.Repository.name)/Test/app.json'
+    app_file_suffix: '_TEST'                                 # A trick to uniquely identify the TEST (from the App-app)
+
+- task: ALOpsAppPublish@1
+  displayName: 'ALOPS - Publish Extension'
+  inputs:
+    usedocker: true
+    nav_artifact_app_filter: '*TEST.app'
+    skip_verification: true
 #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 - task: ALOpsAppTest@1
