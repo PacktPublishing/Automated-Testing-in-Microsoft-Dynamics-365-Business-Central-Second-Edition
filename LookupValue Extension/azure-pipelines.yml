@@ -74,6 +74,7 @@ steps:
     import_testtoolkit: false
     import_action: 'Skip'
     testpage: '130455'
+    extensionid: '5d86850b-0d76-4eca-bd7b-951ad998e997'
     failed_test_action: 'Ignore'
   continueOnError: true
 
