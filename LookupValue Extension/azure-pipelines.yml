@@ -39,7 +39,7 @@ steps:
   inputs:
     usedocker: true
     nav_app_version: '*.*.[yyyyWW].*'
-    targetproject: '$(Build.Repository.name)/LookupValue Extension/App/app.json'
+    targetproject: 'LookupValue Extension/App/app.json'
     app_file_suffix: '_APP'                                 # A trick to uniquely identify the APP (from the TEST-app)
 
 - task: ALOpsAppPublish@1
@@ -54,7 +54,7 @@ steps:
   inputs:
     usedocker: true
     nav_app_version: '*.*.[yyyyWW].*'
-    targetproject: '$(Build.Repository.name)/LookupValue Extension/Test/app.json'
+    targetproject: 'LookupValue Extension/Test/app.json'
     app_file_suffix: '_TEST'                                 # A trick to uniquely identify the TEST (from the App-app)
 
 - task: ALOpsAppPublish@1
