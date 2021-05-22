@@ -19,6 +19,7 @@ steps:
   inputs:
     artifactversion: '18'
     artifactcountry: 'w1'
+    forcecreateimage: true
     includetestframeworkonly: true
 
 - task: ALOpsDockerStart@1
