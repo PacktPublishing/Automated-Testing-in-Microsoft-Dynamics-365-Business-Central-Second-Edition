@@ -41,7 +41,7 @@ steps:
   displayName: 'ALOPS - Compile Extension: App'
   inputs:
     usedocker: true
-    nav_app_version: '2.0.[yyyyWW].*'
+    nav_app_version: '?.?.[yyyyWW].*'
     targetproject: 'LookupValue Extension/App/app.json'
     app_file_suffix: '_APP'                                 # A trick to uniquely identify the APP (from the TEST-app)
 
@@ -56,7 +56,7 @@ steps:
   displayName: 'ALOPS - Compile Extension: Test'
   inputs:
     usedocker: true
-    nav_app_version: '2.0.[yyyyWW].*'
+    nav_app_version: '?.?.[yyyyWW].*'
     targetproject: 'LookupValue Extension/Test/app.json'
     app_file_suffix: '_TEST'                                 # A trick to uniquely identify the TEST (from the App-app)
 
