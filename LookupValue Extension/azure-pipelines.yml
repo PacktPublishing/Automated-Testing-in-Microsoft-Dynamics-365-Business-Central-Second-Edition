@@ -19,6 +19,7 @@ steps:
   inputs:
     artifactversion: '18'
     artifactcountry: 'w1'
+    includetestframeworkonly: true
 
 - task: ALOpsDockerStart@1
   displayName: 'ALOPS - Start Docker Container' # No need to provide any details - it will get the details from previous step
