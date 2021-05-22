@@ -17,10 +17,11 @@ steps:
 - task: ALOpsDockerCreate@1
   displayName: 'ALOPS - Create Docker Image' # It will reuse the image if already exists, or build one if it doesn't.
   inputs:
-    artifactversion: $(artifactVersion)
-    artifactcountry: $(artifactCountry)
+    artifactversion: '$(artifactVersion)'
+    artifactcountry: '$(artifactCountry)'
     forcecreateimage: $(forceCreateImage)
-    includetestframeworkonly: true
+    includetesttoolkit: true
+    includetestlibrariesonly: true
 
 - task: ALOpsDockerStart@1
   displayName: 'ALOPS - Start Docker Container' # No need to provide any details - it will get the details from previous step
