@@ -1,0 +1,26 @@
+{
+  "id": "e26890f8-fafe-49c6-8951-2c1457921f9b",
+  "name": "LookupValue",
+  "publisher": "fluxxus.nl",
+  "brief": "LookupValue extension for book Automated Testing in Microsoft Dynamics 365 Business Central",
+  "description": "LookupValue extension as basis to test examples in chapters 6, 7, and 8 for book Automated Testing in Microsoft Dynamics 365 Business Central written by Luc van Vugt and published by Packt",
+  "version": "2.0.0.0",
+  "privacyStatement": "",
+  "EULA": "",
+  "help": "",
+  "url": "",
+  "logo": "",
+  "dependencies": [],
+  "screenshots": [],
+  "platform": "18.0.0.0",
+  "application": "18.0.0.0",
+  "idRanges": [
+    {
+      "from": 50000,
+      "to": 81099
+    }
+  ],
+  "target": "OnPrem",
+  "showMyCode": true,
+  "runtime": "7.0"
+}
