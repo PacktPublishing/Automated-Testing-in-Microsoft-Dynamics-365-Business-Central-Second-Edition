@@ -61,7 +61,7 @@ steps:
     import_testtoolkit: false
     import_action: 'Skip'
     testpage: '130455'
-    extensionid: '78ba7129-4003-40b6-8c5b-90d514eb088b'
+    extensionid: 'e26890f8-fafe-49c6-8951-2c1457921f9b'
     failed_test_action: 'Ignore'
   continueOnError: true
 
