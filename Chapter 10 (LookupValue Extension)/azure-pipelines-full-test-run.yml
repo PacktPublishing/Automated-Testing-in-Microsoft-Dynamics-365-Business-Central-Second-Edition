@@ -61,7 +61,7 @@ jobs:
     displayName: 'ALOPS - Run TestSuite'
     inputs:
       usedocker: true
-      import_testtoolkit: false
+      import_testtoolkit: true
       import_action: 'Skip'
       testpage: '130455'
       extensionid: '0f0955b8-92e2-4ce2-a580-3c4583dde9ae' # Tests-VAT
