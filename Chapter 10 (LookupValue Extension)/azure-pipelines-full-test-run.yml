@@ -51,6 +51,14 @@ jobs:
       app_file_suffix: '_APP'                                 # A trick to uniquely identify the APP (from the TEST-app)
 
   - task: ALOpsAppPublish@1
+    displayName: 'ALOPS - Install specific test app(s)' 
+    inputs:
+      usedocker: true
+      skip_verification: true
+      install_al_app_names: |
+        Tests-Bank
+
+  - task: ALOpsAppPublish@1
     displayName: 'ALOPS - Publish Extension'
     inputs:
       usedocker: true
