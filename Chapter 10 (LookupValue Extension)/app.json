@@ -40,24 +40,6 @@
       "name":  "Test Runner",
       "publisher":  "Microsoft",
       "version":  "18.0.0.0"
-    },
-    {
-      "id": "fa3e2564-a39e-417f-9be6-c0dbe3d94069",
-      "publisher": "Microsoft",
-      "version": "18.0.0.0",
-      "name": "Tests-ERM"
-    },
-    {
-      "id": "c81764a5-be79-4d50-ba3e-4ade02073780",
-      "publisher": "Microsoft",
-      "version": "18.0.0.0",
-      "name": "Tests-Fixed Asset"
-    },
-    {
-      "id": "74e323c4-70a3-49ce-b18e-fe9ccaff01d3",
-      "publisher": "Microsoft",
-      "version": "18.0.0.0",
-      "name": "Tests-Marketing"
     }
   ],
   "screenshots": [],

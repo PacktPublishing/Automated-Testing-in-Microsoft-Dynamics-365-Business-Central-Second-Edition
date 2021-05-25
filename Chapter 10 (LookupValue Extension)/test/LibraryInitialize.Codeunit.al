@@ -12,13 +12,6 @@ codeunit 80051 "Library - Initialize"
         LibrarySetup: Codeunit "Library - Setup";
     begin
         case CallerCodeunitID of
-            Codeunit::"ERM Fixed Assets Journal",
-            Codeunit::"ERM Fixed Assets GL Journal":
-                LibrarySetup.UpdateCustomers(LibraryLookupValue.CreateLookupValueCode());
-            Codeunit::"Service Order Release":
-                LibrarySetup.UpdateSalesHeader(LibraryLookupValue.CreateLookupValueCode());
-            Codeunit::"Sales E2E":
-                LibrarySetup.UpdateCustomerTemplates(LibraryLookupValue.CreateLookupValueCode());
         end;
     end;
 }
