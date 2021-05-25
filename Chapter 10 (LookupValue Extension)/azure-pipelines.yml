@@ -52,7 +52,6 @@ steps:
     nav_artifact_app_filter: '*APP.app'
     skip_verification: true
 
-
 - task: ALOpsAppTest@1
   displayName: 'ALOPS - Run TestSuite'
   inputs:

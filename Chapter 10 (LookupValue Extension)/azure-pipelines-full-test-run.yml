@@ -3,7 +3,7 @@ name: $(Build.BuildId)
 trigger:
  branches:
    include:
-     - master/Chapter-7-(LookupValue-Extension)-refactored-and-completed
+     - master/Chapter-10-(LookupValue-Extension)
 
 variables:
 - group: 'PipelineVariables'
@@ -22,8 +22,11 @@ jobs:
   - task: ALOpsDockerCreate@1
     displayName: 'ALOPS - Create Docker Image' # It will reuse the image if already exists, or build one if it doesn't.
     inputs:
-      artifactversion: '18'
-      artifactcountry: 'w1'
+      artifactversion: '$(artifactVersion)'
+      artifactcountry: '$(artifactCountry)'
+      forcecreateimage: $(forceCreateImage)
+      includetesttoolkit: true
+      includetestlibrariesonly: true
 
   - task: ALOpsDockerStart@1
     displayName: 'ALOPS - Start Docker Container' # No need to provide any details - it will get the details from previous step
@@ -43,8 +46,8 @@ jobs:
     displayName: 'ALOPS - Compile Extension: App'
     inputs:
       usedocker: true
-      nav_app_version: '1.0.[yyyyWW].*'
-      targetproject: 'Chapter 8 (LookupValue Extension) - refactored and completed/app.json'
+      nav_app_version: '?.?.[yyyyWW].*'
+      targetproject: 'Chapter 10 (LookupValue Extension)/app.json'
       app_file_suffix: '_APP'                                 # A trick to uniquely identify the APP (from the TEST-app)
 
   - task: ALOpsAppPublish@1
@@ -54,13 +57,14 @@ jobs:
       nav_artifact_app_filter: '*.app'
       skip_verification: true
 
-  #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
   - task: ALOpsAppTest@1
     displayName: 'ALOPS - Run TestSuite'
     inputs:
       usedocker: true
-      testfilter: '81000..'
+      import_testtoolkit: false
+      import_action: 'Skip'
+      testpage: '130455'
+      extensionid: '0f0955b8-92e2-4ce2-a580-3c4583dde9ae' # Tests-VAT
       failed_test_action: 'Ignore'
     continueOnError: true
     timeoutInMinutes: 360
@@ -72,8 +76,6 @@ jobs:
       testResultsFiles: '**/TestResults.xml'
       failTaskOnFailedTests: true
       testRunTitle: 'BC Test Results: $(Build.BuildId)'
-
-  #<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
   - task: ALOpsDockerRemove@1
     displayName: 'ALOPS - Remove Docker Container'
