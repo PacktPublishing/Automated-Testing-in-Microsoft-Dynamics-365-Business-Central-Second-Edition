@@ -3,7 +3,7 @@ name: $(Build.BuildId)
 trigger:
  branches:
    include:
-     - master/Chapter-10-(LookupValue-Extension)
+     - master/Chapter-09-(LookupValue-Extension)
 
 variables:
 - group: 'PipelineVariables'
@@ -46,6 +46,7 @@ jobs:
     displayName: 'ALOPS - Install specific test app(s)'
     inputs:
       usedocker: true
+      installaltesttool: true
       skip_verification: true
       install_al_app_names: |
         Tests-Bank
@@ -55,7 +56,7 @@ jobs:
     inputs:
       usedocker: true
       nav_app_version: '?.?.[yyyyWW].*'
-      targetproject: 'Chapter 10 (LookupValue Extension)/app.json'
+      targetproject: 'Chapter 09 (LookupValue Extension)/app.json'
       app_file_suffix: '_APP'                                 # A trick to uniquely identify the APP (from the TEST-app)
 
   - task: ALOpsAppPublish@1
