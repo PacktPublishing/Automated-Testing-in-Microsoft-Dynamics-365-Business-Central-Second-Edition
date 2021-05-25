@@ -46,6 +46,7 @@ jobs:
     displayName: 'ALOPS - Install specific test app(s)'
     inputs:
       usedocker: true
+      installaltesttool: true
       skip_verification: true
       install_al_app_names: |
         Tests-Bank
