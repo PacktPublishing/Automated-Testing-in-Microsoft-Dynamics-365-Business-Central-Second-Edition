@@ -49,7 +49,7 @@ jobs:
       installaltesttool: true
       skip_verification: true
       install_al_app_names: |
-        Tests-Bank
+        Tests-VAT
 
   - task: ALOpsAppCompiler@1
     displayName: 'ALOPS - Compile Extension: App'
