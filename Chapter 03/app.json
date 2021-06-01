@@ -28,7 +28,6 @@
       "to": 60099
     }
   ],
-  "contextSensitiveHelpUrl": "https://Chapter3.com/help/",
   "target":  "OnPrem",
   "showMyCode": true,
   "runtime": "7.0"
