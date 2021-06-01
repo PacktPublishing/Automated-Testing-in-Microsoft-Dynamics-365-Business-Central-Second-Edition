@@ -59,11 +59,7 @@ codeunit 81004 "LookupValue Sales Archive"
     local procedure ArchiveSalesDocumentWithLookupValue(DocumentType: Enum "Sales Document Type"): Code[20]
     var
         SalesHeader: Record "Sales Header";
-        LibraryTestsSetup: Codeunit "Library - Tests Setup";
     begin
-        //[GIVEN] technical: SetSkipOnAfterCreateCustomer (see chapter 9) 
-        LibraryTestsSetup.SetSkipOnAfterCreateCustomer(true);
-
         //[GIVEN] Sales document with lookup value
         CreateSalesDocumentWithLookupValue(SalesHeader, DocumentType);
 

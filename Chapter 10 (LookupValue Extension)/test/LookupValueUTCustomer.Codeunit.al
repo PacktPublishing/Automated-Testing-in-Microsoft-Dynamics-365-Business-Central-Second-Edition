@@ -21,13 +21,10 @@ codeunit 81000 "LookupValue UT Customer"
     procedure AssignLookupValueToCustomer()
     var
         Customer: Record Customer;
-        LibraryTestsSetup: Codeunit "Library - Tests Setup";
         LookupValueCode: Code[10];
     begin
         //[SCENARIO #0001] Assign lookup value to customer
 
-        //[GIVEN] technical: SetSkipOnAfterCreateCustomer (see chapter 9) 
-        LibraryTestsSetup.SetSkipOnAfterCreateCustomer(true);
         //[GIVEN] Lookup value
         LookupValueCode := CreateLookupValueCode();
         //[GIVEN] Customer
