@@ -49,6 +49,7 @@ jobs:
       installaltesttool: true
       skip_verification: true
       install_al_app_names: |
+        Tests-Fixed Asset
         Tests-VAT
 
   - task: ALOpsAppCompiler@1
