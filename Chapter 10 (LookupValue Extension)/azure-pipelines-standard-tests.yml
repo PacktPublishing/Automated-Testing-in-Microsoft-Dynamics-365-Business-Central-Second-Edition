@@ -74,7 +74,7 @@ jobs:
       import_testtoolkit: false
       import_action: 'Skip'
       testpage: '130455'
-      extensionid: '0f0955b8-92e2-4ce2-a580-3c4583dde9ae'
+      extensionid: '0f0955b8-92e2-4ce2-a580-3c4583dde9ae' # Tests-VAT
       failed_test_action: 'Ignore'
     continueOnError: true
     timeoutInMinutes: 360

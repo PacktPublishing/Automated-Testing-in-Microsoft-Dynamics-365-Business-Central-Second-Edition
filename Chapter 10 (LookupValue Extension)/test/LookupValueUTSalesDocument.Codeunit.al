@@ -191,14 +191,10 @@ codeunit 81001 "LookupValue UT Sales Document"
     end;
 
     local procedure Initialize()
-    var
-        LibraryTestsSetup: Codeunit "Library - Tests Setup";
     begin
         if isInitialized then
             exit;
 
-        //[GIVEN] technical: SetSkipOnAfterCreateCustomer (see chapter 9) 
-        LibraryTestsSetup.SetSkipOnAfterCreateCustomer(true);
         //[GIVEN] Lookup value
         LookupValueCode := CreateLookupValueCode();
 

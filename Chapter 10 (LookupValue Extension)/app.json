@@ -40,6 +40,12 @@
       "name":  "Test Runner",
       "publisher":  "Microsoft",
       "version":  "18.0.0.0"
+    },
+    {
+      "id": "c81764a5-be79-4d50-ba3e-4ade02073780",
+      "publisher": "Microsoft",
+      "version": "18.0.0.0",
+      "name": "Tests-Fixed Asset"
     }
   ],
   "screenshots": [],
