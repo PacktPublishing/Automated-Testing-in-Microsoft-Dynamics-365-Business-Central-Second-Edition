@@ -49,7 +49,7 @@ jobs:
       installaltesttool: true
       skip_verification: true
       install_al_app_names: |
-        Tests-Fixed Assets
+        Tests-Fixed Asset
 
   - task: ALOpsAppCompiler@1
     displayName: 'ALOPS - Compile Extension: App'
@@ -67,14 +67,14 @@ jobs:
       skip_verification: true
 
   - task: ALOpsAppTest@1
-    displayName: 'ALOPS - Run Tests-Fixed Assets'
+    displayName: 'ALOPS - Run Tests-Fixed Asset'
     inputs:
       usedocker: true
       disabledtests: '$(Build.SourcesDirectory)/Chapter 10 (LookupValue Extension)/test/DisabledTests.json'
       import_testtoolkit: false
       import_action: 'Skip'
       testpage: '130455'
-      extensionid: 'c81764a5-be79-4d50-ba3e-4ade02073780' # Tests-Fixed Assets
+      extensionid: 'c81764a5-be79-4d50-ba3e-4ade02073780' # Tests-Fixed Asset
       failed_test_action: 'Ignore'
     continueOnError: true
     timeoutInMinutes: 360
