@@ -68,11 +68,10 @@ jobs:
       skip_verification: true
 
   - task: ALOpsAppTest@1
-    condition: ne(variables.useDisabledTestsJson, true)
+    condition: eq(variables.useDisabledTestsJson, false)
     displayName: 'ALOPS - Run Tests-VAT'
     inputs:
       usedocker: true
-      disabledtests: '$(Build.SourcesDirectory)/Chapter 10 (LookupValue Extension)/test/DisabledTests.json'
       import_testtoolkit: false
       import_action: 'Skip'
       testpage: '130455'
