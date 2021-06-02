@@ -67,7 +67,7 @@ jobs:
       skip_verification: true
 
   - task: ALOpsAppTest@1
-    condition: eq('$(useDisabledTestsJson)', false)
+    condition: ne(variables.useDisabledTestsJson, true)
     displayName: 'ALOPS - Run Tests-Fixed Asset'
     inputs:
       usedocker: true
@@ -81,7 +81,7 @@ jobs:
     timeoutInMinutes: 360
 
   - task: ALOpsAppTest@1
-    condition: eq('$(useDisabledTestsJson)', true)
+    condition: eq(variables.useDisabledTestsJson, true)
     displayName: 'ALOPS - Run Tests-Fixed Asset'
     inputs:
       usedocker: true
