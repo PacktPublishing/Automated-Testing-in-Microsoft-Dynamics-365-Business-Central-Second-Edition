@@ -55,6 +55,7 @@ jobs:
     displayName: 'ALOPS - Run Tests-Fixed Asset'
     inputs:
       usedocker: true
+      disabledtests: '$(Build.SourcesDirectory)/Chapter 10 (LookupValue Extension)/test/DisabledTests.json'
       import_testtoolkit: false
       import_action: 'Skip'
       testpage: '130455'
