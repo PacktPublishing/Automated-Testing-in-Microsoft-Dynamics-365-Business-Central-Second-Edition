@@ -52,6 +52,20 @@ jobs:
         Tests-Fixed Asset
 
   - task: ALOpsAppTest@1
+    condition: eq($(useDisabledTestsJson), false)
+    displayName: 'ALOPS - Run Tests-Fixed Asset'
+    inputs:
+      usedocker: true
+      import_testtoolkit: false
+      import_action: 'Skip'
+      testpage: '130455'
+      extensionid: 'c81764a5-be79-4d50-ba3e-4ade02073780' # Tests-Fixed Asset
+      failed_test_action: 'Ignore'
+    continueOnError: true
+    timeoutInMinutes: 360
+
+  - task: ALOpsAppTest@1
+    condition: eq($(useDisabledTestsJson), true)
     displayName: 'ALOPS - Run Tests-Fixed Asset'
     inputs:
       usedocker: true
