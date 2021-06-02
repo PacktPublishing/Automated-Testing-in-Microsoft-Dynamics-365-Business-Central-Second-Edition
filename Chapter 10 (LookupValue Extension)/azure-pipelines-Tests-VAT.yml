@@ -68,6 +68,21 @@ jobs:
       skip_verification: true
 
   - task: ALOpsAppTest@1
+    condition: eq('$(useDisabledTestsJson)', false)
+    displayName: 'ALOPS - Run Tests-VAT'
+    inputs:
+      usedocker: true
+      disabledtests: '$(Build.SourcesDirectory)/Chapter 10 (LookupValue Extension)/test/DisabledTests.json'
+      import_testtoolkit: false
+      import_action: 'Skip'
+      testpage: '130455'
+      extensionid: '0f0955b8-92e2-4ce2-a580-3c4583dde9ae' # Tests-VAT
+      failed_test_action: 'Ignore'
+    continueOnError: true
+    timeoutInMinutes: 360
+
+  - task: ALOpsAppTest@1
+    condition: eq('$(useDisabledTestsJson)', true)
     displayName: 'ALOPS - Run Tests-VAT'
     inputs:
       usedocker: true
