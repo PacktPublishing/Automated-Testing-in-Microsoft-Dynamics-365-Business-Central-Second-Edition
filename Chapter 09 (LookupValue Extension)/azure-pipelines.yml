@@ -73,6 +73,13 @@ steps:
     failTaskOnFailedTests: true
     testRunTitle: 'BC Test Results: $(Build.BuildId)'
 
+- task: PublishPipelineArtifact@1
+  displayName: 'Publish Artifact: Test Results **/TestResults.xml'
+  inputs:
+    targetPath: '$(System.DefaultWorkingDirectory)/TestResults.xml'
+    artifact: 'TestResults'
+    publishLocation: 'pipeline'
+
 - task: ALOpsDockerRemove@1
   displayName: 'ALOPS - Remove Docker Container'
   enabled: true
