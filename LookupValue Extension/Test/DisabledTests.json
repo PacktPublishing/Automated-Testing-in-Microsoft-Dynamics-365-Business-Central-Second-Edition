@@ -1,3 +1,28 @@
 [
-    { "codeunitId": 81008, "codeunitName": "LookupValue Report","method": "*" }
+    { "codeunitId": 81008, "codeunitName": "LookupValue Report","method": "*" },
+
+    { "codeunitId": 134025,"codeunitName": "ERM Unrealized VAT Customer","method": "ApplyPaymentToInvoice" },
+    { "codeunitId": 134025,"codeunitName": "ERM Unrealized VAT Customer","method": "ThreePartialPaymentsOfUnrealVATSalesInvoiceWithThreeLines" },
+    { "codeunitId": 134026,"codeunitName": "ERM Unrealized VAT Vendor","method": "UnrealizedVATWithCreditMemo" },
+    { "codeunitId": 134029,"codeunitName": "ERM VAT On Gen Journal Line","method": "PositiveVATDiffOnGenJnlLine" },
+    { "codeunitId": 134051,"codeunitName": "ERM VAT Tool - Sales Doc","method": "VATToolSalesBlOrdMakePShpMake" },
+    { "codeunitId": 134052,"codeunitName": "ERM VAT Tool - Purch. Doc","method": "VATToolPurchaseBlOrdMakePShpMk" },
+    { "codeunitId": 134053,"codeunitName": "ERM VAT Tool - Serv. Doc","method": "VATToollServOrderPartShipAndConsume" },
+    { "codeunitId": 134090,"codeunitName": "ERM Pmt Disc And VAT Cust/Vend","method": "FullVATCustomerInvoiceWithPmtApplWithAdjustForPmtDisc" },
+    { "codeunitId": 134090,"codeunitName": "ERM Pmt Disc And VAT Cust/Vend","method": "FullVATVendorInvoiceWithPmtApplWithAdjustForPmtDisc" },
+    { "codeunitId": 134090,"codeunitName": "ERM Pmt Disc And VAT Cust/Vend","method": "FULLVATVendorPmtToInvApplWithAdjustForPmtDisc" },
+    { "codeunitId": 134090,"codeunitName": "ERM Pmt Disc And VAT Cust/Vend","method": "FULLVATCustomerPmtToInvApplWithAdjustForPmtDisc" },
+    { "codeunitId": 134090,"codeunitName": "ERM Pmt Disc And VAT Cust/Vend","method": "SalesPmtDiscountWithVAT" },
+    { "codeunitId": 134090,"codeunitName": "ERM Pmt Disc And VAT Cust/Vend","method": "PurchPmtDiscountWithVAT" },
+    { "codeunitId": 134908,"codeunitName": "ERM VAT Serv. Charge","method": "BlankPurchLineServiceCharge" },
+    { "codeunitId": 134908,"codeunitName": "ERM VAT Serv. Charge","method": "SalesOrderPostWithPrepmtAndServChargeLine" },
+    { "codeunitId": 134908,"codeunitName": "ERM VAT Serv. Charge","method": "PurchaseOrderPostWithPrepmtAndServChargeLine" },
+    { "codeunitId": 134451,"codeunitName": "ERM Fixed Assets","method": "WriteDownDepreciationTypeDisabled" },
+    { "codeunitId": 134478,"codeunitName": "ERM Fixed Asset Card","method": "TestFACardBookDisposalValueOnDrillDown" },
+    { "codeunitId": 134978,"codeunitName": "ERM Fixed Assets Reports","method": "ReclassifyBookValue02" },
+    { "codeunitId": 134990,"codeunitName": "ERM Fixed Assets Reports - III","method": "FABookValue02WithCustomSections" },
+    { "codeunitId": 135401,"codeunitName": "Fixed Assets Plan-based E2E","method": "FixedAssetJourneyAsEssentialISVEmbUser" },
+    { "codeunitId": 135401,"codeunitName": "Fixed Assets Plan-based E2E","method": "FixedAssetJourneyAsTeamMember" },
+    { "codeunitId": 135401,"codeunitName": "Fixed Assets Plan-based E2E","method": "FixedAssetJourneyAsTeamMemberISVEmb" },
+    { "codeunitId": 135401,"codeunitName": "Fixed Assets Plan-based E2E","method": "FixedAssetJourneyAsExternalAccountant" }
 ]
