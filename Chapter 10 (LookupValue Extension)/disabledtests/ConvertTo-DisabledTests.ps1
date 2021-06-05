@@ -11,8 +11,11 @@
         [string] $outputFileName = 'DisabledTests.json'
     )
 
+    write-host "ConvertTo-DisabledTests"
     $inputFilePath = join-path $inputFolderPath $inputFileName
+    write-host "Input file: $inputFilePath"
     $outputFilePath = join-path $inputFolderPath $outputFileName
+    write-host "Output file: $outputFilePath"
 
     $disabledTestsJSON = @()
     $results = [xml](Get-Content -Path $inputFilePath)
