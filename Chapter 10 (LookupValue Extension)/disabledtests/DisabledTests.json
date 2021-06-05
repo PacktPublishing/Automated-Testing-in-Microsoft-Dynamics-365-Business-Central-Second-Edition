@@ -13,7 +13,7 @@
     { "codeunitId": 134090,"codeunitName": "ERM Pmt Disc And VAT Cust/Vend","method": "SalesPmtDiscountWithVAT" },
     { "codeunitId": 134090,"codeunitName": "ERM Pmt Disc And VAT Cust/Vend","method": "PurchPmtDiscountWithVAT" },
     { "codeunitId": 134908,"codeunitName": "ERM VAT Serv. Charge","method": "PurchaseOrderPostWithPrepmtAndServChargeLine" },
-    { "codeunitId": 134908,"codeunitName": "ERM VAT Serv. Charge","method":  "BlankPurchLineServiceCharge" },
+    { "codeunitId": 134908,"codeunitName": "ERM VAT Serv. Charge","method": "BlankPurchLineServiceCharge" },
     { "codeunitId": 134451,"codeunitName": "ERM Fixed Assets","method": "ProceedsOnDisposalAndGainLoss"  },
     { "codeunitId": 134451,"codeunitName": "ERM Fixed Assets","method": "WriteDownDepreciationTypeDisabled"  },
     { "codeunitId": 134456,"codeunitName": "ERM Fixed Asset Card","method": "TestFACardBookDisposalValueOnDrillDown"  },
