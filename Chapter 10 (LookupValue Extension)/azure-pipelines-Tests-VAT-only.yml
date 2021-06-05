@@ -79,17 +79,33 @@ jobs:
     timeoutInMinutes: 360
 
   - task: PublishTestResults@2
-    displayName: 'Publish Test Results **/TestResults.xml'
+    displayName: 'Publish Test Results'
     inputs:
       testResultsFormat: XUnit
       testResultsFiles: '**/TestResults.xml'
       failTaskOnFailedTests: true
       testRunTitle: 'BC Test Results: $(Build.BuildId)'
 
-  - task: PublishPipelineArtifact@1
-    displayName: 'Publish Artifact: Test Results **/TestResults.xml'
+  - task: PowerShell@2
+    displayName: "Create DisabledTests.json"
     inputs:
-      targetPath: '$(System.DefaultWorkingDirectory)/TestResults.xml'
+      filePath: '$(Build.SourcesDirectory)/Chapter 10 (LookupValue Extension)/disabledtests/ConvertTo-DisabledTests.ps1'
+      arguments: '-inputFolderPath ''$(System.DefaultWorkingDirectory)/'''
+      errorActionPreference: 'continue'
+    condition: always()
+
+  - task: CopyFiles@2
+    displayName: 'Copy Test Artifacts to $(Agent.BuildDirectory)/TestResults'
+    inputs:
+      SourceFolder: '$(Build.Sourcesdirectory)'
+      Contents: ?(TestResults.xml|DisabledTests.json)
+      TargetFolder: '$(Agent.BuildDirectory)/TestResults'
+    condition: always()
+
+  - task: PublishPipelineArtifact@1
+    displayName: 'Publish Test Artifacts: TestResults.xml and DisabledTests.json'
+    inputs:
+      targetPath: '$(Agent.BuildDirectory)/TestResults'
       artifact: 'TestResults'
       publishLocation: 'pipeline'
     condition: always()

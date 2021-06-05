@@ -95,11 +95,10 @@ jobs:
     condition: always()
 
   - task: CopyFiles@2
-    displayName: 'Copy Test Artifacts from $(Build.Sourcesdirectory) to $(Agent.BuildDirectory)/TestResults'
+    displayName: 'Copy Test Artifacts to $(Agent.BuildDirectory)/TestResults'
     inputs:
       SourceFolder: '$(Build.Sourcesdirectory)'
-      Contents:
-        ?(TestResults.xml|DisabledTests.json)
+      Contents: ?(TestResults.xml|DisabledTests.json)
       TargetFolder: '$(Agent.BuildDirectory)/TestResults'
     condition: always()
 
