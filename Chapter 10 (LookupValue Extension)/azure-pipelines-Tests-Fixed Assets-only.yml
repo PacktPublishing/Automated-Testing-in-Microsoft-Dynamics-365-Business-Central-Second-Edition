@@ -86,14 +86,6 @@ jobs:
       failTaskOnFailedTests: true
       testRunTitle: 'BC Test Results: $(Build.BuildId)'
 
-  - task: PublishPipelineArtifact@1
-    displayName: 'Publish Artifact: TestResults.xml'
-    inputs:
-      targetPath: '$(System.DefaultWorkingDirectory)/TestResults.xml'
-      artifact: 'TestResults'
-      publishLocation: 'pipeline'
-    condition: always()
-
   - task: PowerShell@2
     displayName: "Create DisabledTests.json"
     inputs:
@@ -103,9 +95,9 @@ jobs:
     condition: always()
 
   - task: PublishPipelineArtifact@1
-    displayName: 'Publish Artifact: DisabledTests.jsonl'
+    displayName: 'Publish Artifact: TestResults.xml and DisabledTests.json'
     inputs:
-      targetPath: '$(System.DefaultWorkingDirectory)/DisabledTests.json'
+      targetPath: '$(System.DefaultWorkingDirectory)/*Test*'
       artifact: 'TestResults'
       publishLocation: 'pipeline'
     condition: always()
