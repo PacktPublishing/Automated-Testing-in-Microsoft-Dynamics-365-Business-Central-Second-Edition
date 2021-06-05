@@ -69,7 +69,7 @@ jobs:
     displayName: 'ALOPS - Run Tests-Fixed Asset'
     inputs:
       usedocker: true
-      disabledtests: '$(Build.SourcesDirectory)/Chapter 10 (LookupValue Extension)/test/DisabledTests.json'
+      disabledtests: '$(Build.SourcesDirectory)/Chapter 10 (LookupValue Extension)/disabledtests/DisabledTests.json'
       import_testtoolkit: false
       import_action: 'Skip'
       testpage: '130455'
@@ -85,6 +85,14 @@ jobs:
       testResultsFiles: '**/TestResults.xml'
       failTaskOnFailedTests: true
       testRunTitle: 'BC Test Results: $(Build.BuildId)'
+
+  - task: PowerShell@2
+    displayName: "Convert Test Results **/TestResults.xml to **/DisabledTests.json"
+    inputs:
+      filePath: '$(Build.SourcesDirectory)/Chapter 10 (LookupValue Extension)/disabledtests/ConvertTo-DisabledTests.ps1'
+      arguments: '-inputFolderPath ''$(System.DefaultWorkingDirectory)/'''
+      errorActionPreference: 'continue'
+    condition: always()
 
   - task: PublishPipelineArtifact@1
     displayName: 'Publish Artifact: Test Results **/TestResults.xml'
