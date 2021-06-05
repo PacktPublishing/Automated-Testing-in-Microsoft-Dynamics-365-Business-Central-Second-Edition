@@ -98,9 +98,8 @@ jobs:
     displayName: 'Copy Test Artifacts from $(Build.Sourcesdirectory) to $(Agent.BuildDirectory)/TestResults'
     inputs:
       SourceFolder: '$(Build.Sourcesdirectory)'
-      Contents: |
-        '*.xml'
-        '*.json'
+      Contents:
+        ?(TestResults.xml|DisabledTests.json)
       TargetFolder: '$(Agent.BuildDirectory)/TestResults'
     condition: always()
 
