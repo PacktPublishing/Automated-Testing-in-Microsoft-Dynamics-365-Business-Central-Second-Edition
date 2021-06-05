@@ -15,12 +15,11 @@
     { "codeunitId": 134908,"codeunitName": "ERM VAT Serv. Charge","method": "BlankPurchLineServiceCharge" },
     { "codeunitId": 134908,"codeunitName": "ERM VAT Serv. Charge","method": "SalesOrderPostWithPrepmtAndServChargeLine" },
     { "codeunitId": 134908,"codeunitName": "ERM VAT Serv. Charge","method": "PurchaseOrderPostWithPrepmtAndServChargeLine" },
-    { "codeunitId": 134451,"codeunitName": "ERM Fixed Assets","method": "WriteDownDepreciationTypeDisabled" },
-    { "codeunitId": 134478,"codeunitName": "ERM Fixed Asset Card","method": "TestFACardBookDisposalValueOnDrillDown" },
-    { "codeunitId": 134978,"codeunitName": "ERM Fixed Assets Reports","method": "ReclassifyBookValue02" },
-    { "codeunitId": 134990,"codeunitName": "ERM Fixed Assets Reports - III","method": "FABookValue02WithCustomSections" },
-    { "codeunitId": 135401,"codeunitName": "Fixed Assets Plan-based E2E","method": "FixedAssetJourneyAsEssentialISVEmbUser" },
-    { "codeunitId": 135401,"codeunitName": "Fixed Assets Plan-based E2E","method": "FixedAssetJourneyAsTeamMember" },
-    { "codeunitId": 135401,"codeunitName": "Fixed Assets Plan-based E2E","method": "FixedAssetJourneyAsTeamMemberISVEmb" },
-    { "codeunitId": 135401,"codeunitName": "Fixed Assets Plan-based E2E","method": "FixedAssetJourneyAsExternalAccountant" }
+    { "codeunitId": 134451,"codeunitName": "ERM Fixed Assets","method": "ProceedsOnDisposalAndGainLoss0"  },
+    { "codeunitId": 134451,"codeunitName": "ERM Fixed Assets","method": "WriteDownDepreciationTypeDisabled"  },
+    { "codeunitId": 134456,"codeunitName": "ERM Fixed Asset Card","method": "TestFACardBookDisposalValueOnDrillDown"  },
+    { "codeunitId": 134978,"codeunitName": "ERM Fixed Assets Reports","method": "ReclassifyBookValue02"  },
+    { "codeunitId": 135401,"codeunitName": "Fixed Assets Plan-based E2E","method": "FixedAssetJourneyAsTeamMember"  },
+    { "codeunitId": 135401,"codeunitName": "Fixed Assets Plan-based E2E","method": "FixedAssetJourneyAsEssentialISVEmbUser"  },
+    { "codeunitId": 135401,"codeunitName": "Fixed Assets Plan-based E2E","method": "FixedAssetJourneyAsTeamMemberISVEmb"  }
 ] 
