@@ -107,6 +107,7 @@ jobs:
       targetPath: '$(System.DefaultWorkingDirectory)/TestResults.xml'
       artifact: 'TestResults'
       publishLocation: 'pipeline'
+    condition: always()
 
   - task: ALOpsDockerRemove@1
     displayName: 'ALOPS - Remove Docker Container'
