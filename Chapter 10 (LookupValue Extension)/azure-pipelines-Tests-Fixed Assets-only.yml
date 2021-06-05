@@ -97,9 +97,7 @@ jobs:
   - task: CopyFiles@2
     displayName: 'Copy Test Artifacts to $(Agent.BuildDirectory)/TestResults'
     inputs:
-      Contents: |
-        '$(System.DefaultWorkingDirectory)/TestResults.xml'
-        '$(System.DefaultWorkingDirectory)/DisabledTests.json'
+      Contents: $(System.DefaultWorkingDirectory)/*.xml'
       TargetFolder: '$(Agent.BuildDirectory)/TestResults'
     condition: always()
 
