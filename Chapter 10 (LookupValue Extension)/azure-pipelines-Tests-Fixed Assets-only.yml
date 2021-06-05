@@ -95,15 +95,16 @@ jobs:
     condition: always()
 
   - task: CopyFiles@2
-    displayName: 'Copy Files to: $(Agent.BuildDirectory)/TestResults'
+    displayName: 'Copy Test Artifacts to $(Agent.BuildDirectory)/TestResults'
     inputs:
       Contents: |
         '$(System.DefaultWorkingDirectory)/TestResults.xml'
         '$(System.DefaultWorkingDirectory)/DisabledTests.json'
       TargetFolder: '$(Agent.BuildDirectory)/TestResults'
+    condition: always()
 
   - task: PublishPipelineArtifact@1
-    displayName: 'Publish Artifact: TestResults.xml and DisabledTests.json'
+    displayName: 'Publish Test Artifacts: TestResults.xml and DisabledTests.json'
     inputs:
       targetPath: '$(Agent.BuildDirectory)/TestResults'
       artifact: 'TestResults'
