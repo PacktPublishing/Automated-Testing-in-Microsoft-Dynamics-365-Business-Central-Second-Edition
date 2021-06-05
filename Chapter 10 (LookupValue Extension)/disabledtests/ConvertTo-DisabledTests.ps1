@@ -17,6 +17,9 @@ write-host "Output file: $outputFilePath"
 
 $disabledTestsJSON = @()
 $results = [xml](Get-Content -Path $inputFilePath)
-$results.SelectNodes('//test') | Where-Object { $_.Result -ne "Pass" } | ForEach-Object { $disabledTestsJSON += [ordered]@{ "codeunitName" = $_.name.Split(':')[0]; "method" = $_.method } }
+$results.SelectNodes('//test') | `
+    Where-Object { $_.Result -ne "Pass" } | `
+    ForEach-Object { $disabledTestsJSON += `
+        [ordered]@{ "codeunitId" = $_.ParentNode.ParentNode.name -replace '^(\d+)\s.*$', '$1'; "codeunitName" = $_.name.Split(':')[0]; "method" = $_.method } }
 
 $disabledTestsJSON | ConvertTo-Json -Depth 99 | Set-Content $outputFilePath
