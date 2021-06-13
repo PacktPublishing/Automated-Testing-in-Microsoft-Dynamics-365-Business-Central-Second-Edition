@@ -56,7 +56,7 @@ steps:
   displayName: 'ALOPS - Run TestSuite'
   inputs:
     usedocker: true
-    disabledtests: '$(Build.SourcesDirectory)/LookupValue Extension/disabledtests/DisabledTests.json'
+    disabledtests: '$(Build.SourcesDirectory)/Chapter-11-(LookupValue-Extension)/disabledtests/DisabledTests.json'
     import_testtoolkit: false
     import_action: 'Skip'
     testpage: '130455'
