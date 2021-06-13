@@ -56,7 +56,7 @@ steps:
   displayName: 'ALOPS - Run TestSuite'
   inputs:
     usedocker: true
-    disabledtests: '$(Build.SourcesDirectory)/LookupValue Extension/Test/DisabledTests.json'
+    disabledtests: '$(Build.SourcesDirectory)/LookupValue Extension/disabledtests/DisabledTests.json'
     import_testtoolkit: false
     import_action: 'Skip'
     testpage: '130455'
@@ -72,12 +72,29 @@ steps:
     failTaskOnFailedTests: true
     testRunTitle: 'BC Test Results: $(Build.BuildId)'
 
-- task: PublishPipelineArtifact@1
-  displayName: 'Publish Artifact: Test Results **/TestResults.xml'
+- task: PowerShell@2
+  displayName: "Create DisabledTests.json"
   inputs:
-    targetPath: '$(System.DefaultWorkingDirectory)/TestResults.xml'
+    filePath: '$(Build.SourcesDirectory)/Chapter 10 (LookupValue Extension)/disabledtests/ConvertTo-DisabledTests.ps1'
+    arguments: '-inputFolderPath ''$(System.DefaultWorkingDirectory)/'''
+    errorActionPreference: 'continue'
+  condition: always()
+
+- task: CopyFiles@2
+  displayName: 'Copy Test Artifacts to $(Agent.BuildDirectory)/TestResults'
+  inputs:
+    SourceFolder: '$(Build.Sourcesdirectory)'
+    Contents: ?(TestResults.xml|DisabledTests.json)
+    TargetFolder: '$(Agent.BuildDirectory)/TestResults'
+  condition: always()
+
+- task: PublishPipelineArtifact@1
+  displayName: 'Publish Test Artifacts: TestResults.xml and DisabledTests.json'
+  inputs:
+    targetPath: '$(Agent.BuildDirectory)/TestResults'
     artifact: 'TestResults'
     publishLocation: 'pipeline'
+  condition: always()
 
 - task: ALOpsDockerRemove@1
   displayName: 'ALOPS - Remove Docker Container'
