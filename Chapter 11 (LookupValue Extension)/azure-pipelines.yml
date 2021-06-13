@@ -52,12 +52,11 @@ steps:
     nav_artifact_app_filter: '*APP.app'
     skip_verification: true
 
-
 - task: ALOpsAppTest@1
   displayName: 'ALOPS - Run TestSuite'
   inputs:
     usedocker: true
-    disabledtests: '$(Build.SourcesDirectory)/LookupValue Extension/Test/DisabledTests.json'
+    disabledtests: '$(Build.SourcesDirectory)/Chapter 11 (LookupValue Extension)/Test/DisabledTests.json'
     import_testtoolkit: false
     import_action: 'Skip'
     testpage: '130455'
@@ -72,6 +71,13 @@ steps:
     testResultsFiles: '**/TestResults.xml'
     failTaskOnFailedTests: true
     testRunTitle: 'BC Test Results: $(Build.BuildId)'
+
+- task: PublishPipelineArtifact@1
+  displayName: 'Publish Artifact: Test Results **/TestResults.xml'
+  inputs:
+    targetPath: '$(System.DefaultWorkingDirectory)/TestResults.xml'
+    artifact: 'TestResults'
+    publishLocation: 'pipeline'
 
 - task: ALOpsDockerRemove@1
   displayName: 'ALOPS - Remove Docker Container'
