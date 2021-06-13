@@ -56,9 +56,11 @@ steps:
   displayName: 'ALOPS - Run TestSuite'
   inputs:
     usedocker: true
+    disabledtests: '$(Build.SourcesDirectory)/LookupValue Extension/Test/DisabledTests.json'
     import_testtoolkit: false
     import_action: 'Skip'
     testpage: '130455'
+    extensionid: 'e26890f8-fafe-49c6-8951-2c1457921f9b'
     failed_test_action: 'Ignore'
   continueOnError: true
 
