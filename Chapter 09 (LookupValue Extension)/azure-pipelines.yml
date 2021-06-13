@@ -3,7 +3,7 @@ name: $(Build.BuildId)
 trigger:
  branches:
    include:
-     - master/Chapter-8-(LookupValue-Extension)-refactored-and-completed
+     - master/Chapter-09-(LookupValue-Extension)
 
 variables:
 - group: 'PipelineVariables'
@@ -17,8 +17,11 @@ steps:
 - task: ALOpsDockerCreate@1
   displayName: 'ALOPS - Create Docker Image' # It will reuse the image if already exists, or build one if it doesn't.
   inputs:
-    artifactversion: '18'
-    artifactcountry: 'w1'
+    artifactversion: '$(artifactVersion)'
+    artifactcountry: '$(artifactCountry)'
+    forcecreateimage: $(forceCreateImage)
+    includetesttoolkit: true
+    includetestlibrariesonly: true
 
 - task: ALOpsDockerStart@1
   displayName: 'ALOPS - Start Docker Container' # No need to provide any details - it will get the details from previous step
@@ -38,26 +41,26 @@ steps:
   displayName: 'ALOPS - Compile Extension: App'
   inputs:
     usedocker: true
-    nav_app_version: '1.0.[yyyyWW].*'
-    targetproject: 'Chapter 8 (LookupValue Extension) - refactored and completed/app.json'
+    nav_app_version: '?.?.[yyyyWW].*'
+    targetproject: 'Chapter 09 (LookupValue Extension)/app.json'
     app_file_suffix: '_APP'                                 # A trick to uniquely identify the APP (from the TEST-app)
 
 - task: ALOpsAppPublish@1
   displayName: 'ALOPS - Publish Extension'
   inputs:
     usedocker: true
-    nav_artifact_app_filter: '*.app'
+    nav_artifact_app_filter: '*APP.app'
     skip_verification: true
-
-#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 - task: ALOpsAppTest@1
   displayName: 'ALOPS - Run TestSuite'
   inputs:
     usedocker: true
-    testfilter: '81000..81099'
+    import_testtoolkit: false
+    import_action: 'Skip'
+    testpage: '130455'
     failed_test_action: 'Ignore'
-  continueOnError: true   
+  continueOnError: true
 
 - task: PublishTestResults@2
   displayName: 'Publish Test Results **/TestResults.xml'
@@ -67,7 +70,12 @@ steps:
     failTaskOnFailedTests: true
     testRunTitle: 'BC Test Results: $(Build.BuildId)'
 
-#<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+- task: PublishPipelineArtifact@1
+  displayName: 'Publish Artifact: Test Results **/TestResults.xml'
+  inputs:
+    targetPath: '$(System.DefaultWorkingDirectory)/TestResults.xml'
+    artifact: 'TestResults'
+    publishLocation: 'pipeline'
 
 - task: ALOpsDockerRemove@1
   displayName: 'ALOPS - Remove Docker Container'
