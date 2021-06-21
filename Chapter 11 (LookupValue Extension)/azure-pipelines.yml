@@ -75,7 +75,7 @@ steps:
 - task: PowerShell@2
   displayName: "Create DisabledTests.json"
   inputs:
-    filePath: '$(Build.SourcesDirectory)/Chapter 10 (LookupValue Extension)/disabledtests/ConvertTo-DisabledTests.ps1'
+    filePath: '$(Build.SourcesDirectory)/Chapter 11 (LookupValue Extension)/disabledtests/ConvertTo-DisabledTests.ps1'
     arguments: '-inputFolderPath ''$(System.DefaultWorkingDirectory)/'''
     errorActionPreference: 'continue'
   condition: always()
