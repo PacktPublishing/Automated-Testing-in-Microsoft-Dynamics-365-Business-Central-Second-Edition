@@ -27,7 +27,7 @@ codeunit 81002 "LookupValue UT Cust. Template"
         CustomerTemplate: Record "Customer Templ.";
         LookupValueCode: Code[10];
     begin
-        //[SCENARIO #0012] Assign lookup value to customer
+        //[SCENARIO #0012] Assign lookup value to customer template
 
         //[GIVEN] Lookup value
         LookupValueCode := CreateLookupValueCode();
