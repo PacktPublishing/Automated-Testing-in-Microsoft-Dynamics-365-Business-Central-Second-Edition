@@ -28,13 +28,13 @@ codeunit 70000 "TotalsFrameOnSalesInvoice"
         SalesHeader.Modify();
     end;
 
-    local procedure OpenSalesInvoicePageAndVerifyVisibility(SalesHeader: Record "Sales Header"; Visible: Boolean)
+    local procedure OpenSalesInvoicePageAndVerifyVisibility(SalesHeader: Record "Sales Header"; FrameVisible: Boolean)
     var
         SalesInvoice: TestPage "Sales Invoice";
     begin
         SalesInvoice.OpenView();
         SalesInvoice.GoToRecord(SalesHeader);
-        case Visible of
+        case FrameVisible of
             true:
                 if not SalesInvoice.SalesLines."Total Amount Excl. VAT".Visible() then
                     Error('%1 should be visible.', SalesInvoice.SalesLines."Total Amount Excl. VAT".Caption);
