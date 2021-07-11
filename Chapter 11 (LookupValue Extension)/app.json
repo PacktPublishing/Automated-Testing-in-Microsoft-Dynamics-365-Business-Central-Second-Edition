@@ -48,8 +48,12 @@
   "idRanges": [
     {
       "from": 50000,
+      "to": 50099
+    },
+    {
+      "from": 80000,
       "to": 81099
-    }
+    }    
   ],
   "target": "OnPrem",
   "showMyCode": true,
