@@ -309,6 +309,7 @@ codeunit 81001 "LookupValue UT Sales Document"
     var
         SalesHeader: Record "Sales Header";
         FieldOnTableTxt: Label '%1 on %2';
+    // this smells like duplication ;-) - see test example 1
     begin
         SalesHeader.Get(DocumentType, DocumentNo);
         Assert.AreEqual(
@@ -326,6 +327,7 @@ codeunit 81001 "LookupValue UT Sales Document"
         SalesHeader: Record "Sales Header";
         LookupValue: Record LookupValue;
         ValueCannotBeFoundInTableTxt: Label 'The field %1 of table %2 contains a value (%3) that cannot be found in the related table (%4).';
+    // this smells like duplication ;-) - see test example 1
     begin
         Assert.ExpectedError(
             StrSubstNo(

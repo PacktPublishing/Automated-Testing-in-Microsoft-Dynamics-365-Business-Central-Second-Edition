@@ -120,6 +120,7 @@ codeunit 81004 "LookupValue Sales Archive"
         SalesHeaderArchive: Record "Sales Header Archive";
         SalesListArchive: TestPage "Sales List Archive";
         FieldOnTableTxt: Label '%1 on %2';
+    // this smells like duplication ;-) - see test example 1
     begin
         SalesHeaderArchive.Get(DocumentType, DocumentNo, 1, 1);  // Used 1 for Occurrence of Document No.  No. of Archived Versions
         SalesListArchive.OpenView();
