@@ -194,6 +194,7 @@ codeunit 81006 "LookupValue Inheritance"
     local procedure VerifyLookupValueOnSalesHeader(var SalesHeader: Record "Sales Header"; LookupValueCode: Code[10])
     var
         FieldOnTableTxt: Label '%1 on %2';
+    // this smells like duplication ;-) - see test example 1
     begin
         Assert.AreEqual(
             LookupValueCode,

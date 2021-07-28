@@ -11,9 +11,6 @@ codeunit 81002 "LookupValue UT Cust. Template"
         Assert: Codeunit "Library Assert";
         LibraryUtility: Codeunit "Library - Utility";
         LibraryTemplates: Codeunit "Library - Templates";
-        LibraryLookupValue: Codeunit "Library - Lookup Value";
-        LibraryMessages: Codeunit "Library - Messages";
-        isInitialized: Boolean;
 
     // Instruction NOTES
     // (1) Replacing the argument LookupValueCode in verification call, i.e. [THEN] clause, should make any test fail
@@ -85,8 +82,18 @@ codeunit 81002 "LookupValue UT Cust. Template"
     end;
 
     local procedure CreateLookupValueCode(): Code[10]
+    // this smells like duplication ;-) - see test example 1
+    var
+        LookupValue: Record LookupValue;
     begin
-        exit(LibraryLookupValue.CreateLookupValueCode())
+        LookupValue.Init();
+        LookupValue.Validate(
+            Code,
+            LibraryUtility.GenerateRandomCode(LookupValue.FieldNo(Code),
+            Database::LookupValue));
+        LookupValue.Validate(Description, LookupValue.Code);
+        LookupValue.Insert();
+        exit(LookupValue.Code);
     end;
 
     local procedure CreateCustomerTemplate(var CustomerTemplate: Record "Customer Templ.")
@@ -119,18 +126,30 @@ codeunit 81002 "LookupValue UT Cust. Template"
     local procedure VerifyLookupValueOnCustomerTemplate(CustomerTemplateCode: Code[10]; LookupValueCode: Code[10])
     var
         CustomerTemplate: Record "Customer Templ.";
+        FieldOnTableTxt: Label '%1 on %2';
+    // this smells like duplication ;-) - see test example 1
     begin
         CustomerTemplate.Get(CustomerTemplateCode);
-        Assert.AreEqual(LookupValueCode, CustomerTemplate."Lookup Value Code", LibraryMessages.GetFieldOnTableTxt(CustomerTemplate.FieldCaption("Lookup Value Code"), CustomerTemplate.TableCaption()));
+        Assert.AreEqual(
+            LookupValueCode,
+            CustomerTemplate."Lookup Value Code",
+            StrSubstNo(
+                FieldOnTableTxt,
+                CustomerTemplate.FieldCaption("Lookup Value Code"),
+                CustomerTemplate.TableCaption())
+            );
     end;
 
     local procedure VerifyNonExistingLookupValueError(LookupValueCode: Code[10])
     var
         CustomerTemplate: Record "Customer Templ.";
         LookupValue: Record LookupValue;
+        ValueCannotBeFoundInTableTxt: Label 'The field %1 of table %2 contains a value (%3) that cannot be found in the related table (%4).';
+    // this smells like duplication ;-) - see test example 1
     begin
         Assert.ExpectedError(
-    LibraryMessages.GetValueCannotBeFoundInTableTxt(
+            StrSubstNo(
+                ValueCannotBeFoundInTableTxt,
         CustomerTemplate.FieldCaption("Lookup Value Code"),
         CustomerTemplate.TableCaption(),
         LookupValueCode,
