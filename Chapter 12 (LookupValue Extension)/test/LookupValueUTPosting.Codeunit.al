@@ -1,54 +1,110 @@
 codeunit 81025 "LookupValue UT Posting"
 {
+    // Generated on 5-8-2021 at 10:21 by lvanvugt
+
     Subtype = Test;
 
     trigger OnRun()
     begin
-        //[FEATURE] LookupValue UT Posting
+        // [FEATURE] LookupValue UT Posting
     end;
 
     var
-        SalesPostEvents: Codeunit SalesPostEvents;
         Assert: Codeunit "Library Assert";
-        LibraryMessages: Codeunit "Library - Messages";
 
     [Test]
-    procedure CheckFailureOnBeforePostSalesDocEvent();
+    procedure CheckFailureOnBeforePostSalesDocEventSubscriber()
     //[FEATURE] LookupValue UT Posting Sales Document
     var
         SalesHeader: Record "Sales Header";
     begin
-        //[SCENARIO #0122] Check failure OnBeforePostSalesDocEvent subscriber
+        // [SCENARIO #0100] Check failure OnBeforePostSalesDocEvent subscriber
 
-        //[GIVEN] Sales header with no lookup value
+        // [GIVEN] Sales header without lookup value
         // See local variable SalesHeader
 
-        //[WHEN] OnBeforePostSalesDocEvent is triggered
-        asserterror SalesPostEvents.OnBeforePostSalesDocEvent(SalesHeader);
+        // [WHEN] Trigger OnBeforePostSalesDocEvent
+        asserterror TriggerOnBeforePostSalesDocEvent(SalesHeader);
 
-        //[THEN] Missing lookup value on sales header error thrown
-        VerifyMissingLookupValueOnSalesHeaderError(SalesHeader);
+        // [THEN] Missing lookup value on sales header error thrown
+        VerifyMissingLookupValueOnSalesHeaderErrorThrown(SalesHeader);
     end;
 
     [Test]
-    procedure CheckSuccesOnBeforePostSalesDocEvent();
+    procedure CheckSuccessOnBeforePostSalesDocEventSubscriber()
     //[FEATURE] LookupValue UT Posting Sales Document
     var
         SalesHeader: Record "Sales Header";
     begin
-        //[SCENARIO #0123] Check succes OnBeforePostSalesDocEvent subscriber
+        // [SCENARIO #0101] Check success OnBeforePostSalesDocEvent subscriber
 
-        //[GIVEN] Sales header with 'randon' lookup value
-        SalesHeader."Lookup Value Code" := 'SC #0123';
+        // [GIVEN] Sales header with lookup value
+        SalesHeader."Lookup Value Code" := 'SC #0101';
 
-        //[WHEN] OnBeforePostSalesDocEvent is triggered
-        SalesPostEvents.OnBeforePostSalesDocEvent(SalesHeader);
+        // [WHEN] Trigger OnBeforePostSalesDocEvent
+        TriggerOnBeforePostSalesDocEvent(SalesHeader);
 
-        //[THEN] No error thrown
+        // [THEN] No error thrown
         VerifyNoErrorThrown();
     end;
 
-    local procedure VerifyMissingLookupValueOnSalesHeaderError(SalesHeader: Record "Sales Header")
+    [Test]
+    procedure CheckFailureOnBeforePostSourceDocumentEventSubscriber()
+    // [FEATURE] LookupValue UT Posting Warehouse Shipment
+    var
+        SalesHeader: Record "Sales Header";
+    begin
+        // [SCENARIO #0102] Check failure OnBeforePostSourceDocumentEvent subscriber
+
+        // [GIVEN] Sales header with number and without lookup value
+        SalesHeader."No." := 'SC #0102';
+
+        // [WHEN] Trigger OnBeforePostSourceDocumentEvent
+        asserterror TriggerOnBeforePostSourceDocumentEvent(SalesHeader);
+
+        // [THEN] Missing lookup value on sales header error thrown
+        VerifyMissingLookupValueOnSalesHeaderErrorThrown(SalesHeader);
+    end;
+
+    [Test]
+    procedure CheckSuccessOnBeforePostSourceDocumentEventSubscriber()
+    // [FEATURE] LookupValue UT Posting Warehouse Shipment
+    var
+        SalesHeader: Record "Sales Header";
+    begin
+        // [SCENARIO #0103] Check success OnBeforePostSourceDocumentEvent subscriber
+
+        // [GIVEN] Sales header with number and lookup value
+        SalesHeader."No." := 'SC #0103';
+        SalesHeader."Lookup Value Code" := 'SC #0103';
+
+        // [WHEN] Trigger OnBeforePostSourceDocumentEvent
+        TriggerOnBeforePostSourceDocumentEvent(SalesHeader);
+
+        // [THEN] No error thrown
+        VerifyNoErrorThrown();
+    end;
+
+    local procedure TriggerOnBeforePostSalesDocEvent(SalesHeader: Record "Sales Header")
+    var
+        SalesPostEvents: Codeunit SalesPostEvents;
+    begin
+        SalesPostEvents.OnBeforePostSalesDocEvent(SalesHeader)
+    end;
+
+    local procedure TriggerOnBeforePostSourceDocumentEvent(SalesHeader: Record "Sales Header")
+    var
+        WhseShptLine: Record "Warehouse Shipment Line";
+        PurchaseHeader: Record "Purchase Header";
+        TransferHeader: Record "Transfer Header";
+        WhsePostShipmentEvents: Codeunit WhsePostShipmentEvents;
+    begin
+        WhsePostShipmentEvents.OnBeforePostSourceDocumentEvent(WhseShptLine, PurchaseHeader, SalesHeader, TransferHeader);
+    end;
+
+    local procedure VerifyMissingLookupValueOnSalesHeaderErrorThrown(SalesHeader: Record "Sales Header")
+    var
+        LibraryMessages: Codeunit "Library - Messages";
     begin
         Assert.ExpectedError(
             LibraryMessages.GetFieldMustHaveValueInSalesHeaderTxt(
