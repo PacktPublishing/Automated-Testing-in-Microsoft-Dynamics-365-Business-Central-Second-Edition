@@ -11,6 +11,13 @@
   "url": "",
   "logo": "",
   "dependencies": [],
+  "internalsVisibleTo": [
+    {
+      "id": "78ba7129-4003-40b6-8c5b-90d514eb088b",
+      "name": "TestLookupValue",
+      "publisher": "fluxxus.nl"
+    }
+  ],
   "screenshots": [],
   "platform": "18.0.0.0",
   "application": "18.0.0.0",
