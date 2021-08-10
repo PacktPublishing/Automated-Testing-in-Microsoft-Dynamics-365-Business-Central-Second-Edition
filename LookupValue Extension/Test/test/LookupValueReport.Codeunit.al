@@ -11,6 +11,7 @@ codeunit 81008 "LookupValue Report"
         LibrarySales: Codeunit "Library - Sales";
         LibraryReportDataset: Codeunit "Library - Report Dataset";
         LibraryLookupValue: Codeunit "Library - Lookup Value";
+        isInitialized: Boolean;
 
     [Test]
     [HandlerFunctions('CustomerListRequestPageHandler')]
@@ -20,6 +21,7 @@ codeunit 81008 "LookupValue Report"
         Customer: array[2] of Record Customer;
     begin
         //[SCENARIO #0029] Test that lookup value shows on CustomerList report
+        Initialize();
 
         //[GIVEN] 2 customers with different lookup value
         CreateCustomerWithLookupValue(Customer[1]);
@@ -31,6 +33,21 @@ codeunit 81008 "LookupValue Report"
         //[THEN] Report dataset contains both customers with lookup value
         VerifyCustomerWithLookupValueOnCustomerListReport(Customer[1]."No.", Customer[1]."Lookup Value Code");
         VerifyCustomerWithLookupValueOnCustomerListReport(Customer[2]."No.", Customer[2]."Lookup Value Code");
+    end;
+
+    local procedure Initialize()
+    var
+        Customer: record Customer;
+    begin
+        if isInitialized then
+            exit;
+
+        // Workaround to not get the parsing of XML dataset failing; see https://github.com/PacktPublishing/Automated-Testing-in-Microsoft-Dynamics-365-Business-Central-Second-Edition/issues/9
+        Customer.Get('46525241');
+        Customer.Delete();
+
+        isInitialized := true;
+        Commit();
     end;
 
     local procedure CreateCustomerWithLookupValue(var Customer: Record Customer)

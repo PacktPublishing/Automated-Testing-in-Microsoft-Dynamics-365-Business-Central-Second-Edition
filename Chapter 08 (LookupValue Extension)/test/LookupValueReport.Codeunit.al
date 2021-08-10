@@ -9,7 +9,6 @@ codeunit 81008 "LookupValue Report"
 
     var
         LibrarySales: Codeunit "Library - Sales";
-        // LibraryReportDataset: Codeunit "Library - Report Dataset";
         LibraryReportDataset: Codeunit "Library - Report Dataset";
         LibraryLookupValue: Codeunit "Library - Lookup Value";
         isInitialized: Boolean;
