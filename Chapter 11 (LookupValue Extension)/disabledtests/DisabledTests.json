@@ -1,6 +1,4 @@
 [
-    { "codeunitId": 81008, "codeunitName": "LookupValue Report","method": "*" },
-
     { "codeunitId": 134025,"codeunitName": "ERM Unrealized VAT Customer","method": "ApplyPaymentToInvoice" },
     { "codeunitId": 134025,"codeunitName": "ERM Unrealized VAT Customer","method": "ThreePartialPaymentsOfUnrealVATSalesInvoiceWithThreeLines" },
     { "codeunitId": 134026,"codeunitName": "ERM Unrealized VAT Vendor","method": "UnrealizedVATWithCreditMemo" },
