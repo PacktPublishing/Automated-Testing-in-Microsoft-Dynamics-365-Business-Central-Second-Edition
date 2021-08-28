@@ -1,5 +1,7 @@
 codeunit 81005 "LookupValue Posting"
 {
+    // Generated on 28-8-2021 at 12:27 by lvvugt
+
     Subtype = Test;
 
     trigger OnRun()
@@ -17,107 +19,104 @@ codeunit 81005 "LookupValue Posting"
         LibraryMessages: Codeunit "Library - Messages";
         isInitialized: Boolean;
 
-    // Instruction NOTES
-    // (1) Replacing the argument LookupValueCode in verification call, i.e. [THEN] clause, should make any test fail
-
     [Test]
-    procedure PostSalesOrderWithLookupValue();
+    procedure PostedSalesInvoiceAndShipmentInheritLookupValueFromSalesOrder()
     //[FEATURE] LookupValue Posting Sales Document
     var
         SalesHeader: Record "Sales Header";
         PostedSaleInvoiceNo: Code[20];
         SalesShipmentNo: Code[20];
     begin
-        //[SCENARIO #0022] Check that posted sales invoice and shipment inherit lookup value from sales order
+        //[SCENARIO #0022] Posted sales invoice and shipment inherit lookup value from sales order
         Initialize();
 
         //[GIVEN] Sales order with lookup value
-        CreateSalesOrder(SalesHeader, UseLookupValue());
+        CreateSalesOrder(WithLookupValue(), SalesHeader);
 
-        //[WHEN] Sales order is posted (invoice & ship)
+        //[WHEN] Post sales order (invoice & ship)
         PostSalesDocument(SalesHeader, PostedSaleInvoiceNo, SalesShipmentNo);
 
         //[THEN] Posted sales invoice has lookup value from sales order
-        VerifyLookupValueOnPostedSalesInvoice(PostedSaleInvoiceNo, SalesHeader."Lookup Value Code");
+        VerifyPostedSalesInvoiceHasLookupValueFromSalesOrder(PostedSaleInvoiceNo, SalesHeader."Lookup Value Code");
         //[THEN] Sales shipment has lookup value from sales order
-        VerifyLookupValueOnSalesShipment(SalesShipmentNo, SalesHeader."Lookup Value Code");
+        VerifySalesShipmentHasLookupValueFromSalesOrder(SalesShipmentNo, SalesHeader."Lookup Value Code");
     end;
 
     [Test]
-    procedure PostSalesOrderWithNoLookupValue();
+    procedure PostingThrowsErrorOnSalesOrderWithEmptyLookupValue()
     //[FEATURE] LookupValue Posting Sales Document
     var
         SalesHeader: Record "Sales Header";
         PostedSaleInvoiceNo: Code[20];
         SalesShipmentNo: Code[20];
     begin
-        //[SCENARIO #0027] Check posting throws error on sales order with empty lookup value
+        //[SCENARIO #0027] Posting throws error on sales order with empty lookup value
         Initialize();
 
-        //[GIVEN] Sales order without a lookup value
-        CreateSalesOrder(SalesHeader, UseNoLookupValue());
+        //[GIVEN] Sales order without lookup value
+        CreateSalesOrder(WithoutLookupValue(), SalesHeader);
 
-        //[WHEN] Sales order is posted (invoice & ship)
+        //[WHEN] Post sales order (invoice & ship)
         asserterror PostSalesDocument(SalesHeader, PostedSaleInvoiceNo, SalesShipmentNo);
 
         //[THEN] Missing lookup value on sales order error thrown
-        VerifyMissingLookupValueOnSalesOrderError(SalesHeader);
+        VerifyMissingLookupValueOnSalesOrderErrorThrown(SalesHeader);
     end;
 
     [Test]
-    procedure PostWarehouseShipmentFromSalesOrderWithLookupValue();
+    procedure PostedWarehouseShipmentLineInheritsLookupValueFromSalesOrder()
     //[FEATURE] LookupValue Posting Warehouse Shipment
     var
         SalesHeader: Record "Sales Header";
         WarehouseShipmentNo: Code[20];
         PostedWarehouseShipmentNo: Code[20];
     begin
-        //[SCENARIO #0023] Check that posted warehouse shipment line inherits lookup value from sales order through warehouse shipment line
+        //[SCENARIO #0023] Posted warehouse shipment line inherits lookup value from sales order
 
         //[GIVEN] Location with require shipment
         //[GIVEN] Warehouse employee for current user
         Initialize();
 
-        //[GIVEN] Warehouse shipment line with lookup value created from a sales order
-        WarehouseShipmentNo := CreateWarehouseShipmentFromSalesOrder(SalesHeader, UseLookupValue());
+        //[GIVEN] Warehouse shipment line from sales order with lookup value
+        WarehouseShipmentNo := CreateWarehouseShipmentFromSalesOrder(WithLookupValue(), SalesHeader);
 
-        //[WHEN] Warehouse shipment is posted
+        //[WHEN] Post Warehouse shipment
         PostedWarehouseShipmentNo := PostWarehouseShipment(WarehouseShipmentNo);
 
-        //[THEN] Posted warehouse shipment line has lookup value from warehouse shipment line
-        VerifyLookupValueOnPostedWarehouseShipmentLine(PostedWarehouseShipmentNo, SalesHeader."Lookup Value Code");
+        //[THEN] Posted warehouse shipment line has lookup value from sales order
+        VerifyPostedWarehouseShipmentLineHasLookupValueFromSalesOrder(PostedWarehouseShipmentNo, SalesHeader."Lookup Value Code");
     end;
 
     [Test]
-    procedure PostWarehouseShipmentFromSalesOrderWithNoLookupValue();
+    procedure PostingThrowsErrorOnWarehouseShipmentLineWithEmptyLookupValue()
     //[FEATURE] LookupValue Posting Warehouse Shipment
     var
         SalesHeader: Record "Sales Header";
         WarehouseShipmentNo: Code[20];
         PostedWarehouseShipmentNo: Code[20];
     begin
-        //[SCENARIO #0025] Check posting throws error on sales order with empty lookup value
+        //[SCENARIO #0025] Posting throws error on warehouse shipment line with empty lookup value
 
         //[GIVEN] Location with require shipment
         //[GIVEN] Warehouse employee for current user
         Initialize();
 
-        //[GIVEN] Warehouse shipment created from a sales order without lookup value
-        WarehouseShipmentNo := CreateWarehouseShipmentFromSalesOrder(SalesHeader, UseNoLookupValue());
+        //[GIVEN] Warehouse shipment line from sales order without lookup value
+        WarehouseShipmentNo := CreateWarehouseShipmentFromSalesOrder(WithoutLookupValue(), SalesHeader);
 
-        //[WHEN] Warehouse shipment is posted
+        //[WHEN] Post Warehouse shipment
         asserterror PostedWarehouseShipmentNo := PostWarehouseShipment(WarehouseShipmentNo);
 
         //[THEN] Missing lookup value on sales order error thrown
-        VerifyMissingLookupValueOnSalesOrderError(SalesHeader);
+        VerifyMissingLookupValueOnSalesOrderErrorThrown(SalesHeader);
     end;
 
-    local procedure UseLookupValue(): Boolean
+    local procedure WithLookupValue(): Boolean
     begin
         exit(true)
     end;
 
-    local procedure UseNoLookupValue(): Boolean
+    local procedure WithoutLookupValue(): Boolean
     begin
         exit(false)
     end;
@@ -149,7 +148,7 @@ codeunit 81005 "LookupValue Posting"
         LibraryWarehouse.CreateWarehouseEmployee(WarehouseEmployee, Location.Code, false);
     end;
 
-    local procedure CreateSalesOrder(var SalesHeader: Record "Sales Header"; WithLookupValue: Boolean)
+    local procedure CreateSalesOrder(WithLookupValue: Boolean; var SalesHeader: Record "Sales Header")
     var
         SalesLine: Record "Sales Line";
     begin
@@ -207,9 +206,9 @@ codeunit 81005 "LookupValue Posting"
         exit(SalesShipmentHeader."No.");
     end;
 
-    local procedure CreateWarehouseShipmentFromSalesOrder(var SalesHeader: Record "Sales Header"; WithLookupValue: Boolean) WarehouseShipmentNo: Code[20]
+    local procedure CreateWarehouseShipmentFromSalesOrder(WithLookupValue: Boolean; var SalesHeader: Record "Sales Header") WarehouseShipmentNo: Code[20]
     begin
-        CreateSalesOrder(SalesHeader, WithLookupValue);
+        CreateSalesOrder(WithLookupValue, SalesHeader);
         LibrarySales.ReleaseSalesDocument(SalesHeader);
         WarehouseShipmentNo := CreateWarehouseShipment(SalesHeader);
     end;
@@ -221,14 +220,6 @@ codeunit 81005 "LookupValue Posting"
         LibraryWarehouse.CreateWhseShipmentFromSO(SalesHeader);
         GetWarehouseShipmentHeader(WarehouseShipmentHeader, SalesHeader."No.");
         exit(WarehouseShipmentHeader."No.");
-    end;
-
-    local procedure CreatePick(SourceNo: Code[20]);
-    var
-        WarehouseShipmentHeader: Record "Warehouse Shipment Header";
-    begin
-        GetWarehouseShipmentHeader(WarehouseShipmentHeader, SourceNo);
-        LibraryWarehouse.CreatePick(WarehouseShipmentHeader);
     end;
 
     local procedure GetWarehouseShipmentHeader(var WarehouseShipmentHeader: Record "Warehouse Shipment Header"; SourceNo: Code[20])
@@ -244,25 +235,6 @@ codeunit 81005 "LookupValue Posting"
         WarehouseShipmentLine.Setrange("Source Document", WarehouseShipmentLine."Source Document"::"Sales Order");
         WarehouseShipmentLine.Setrange("Source No.", SourceNo);
         WarehouseShipmentLine.FindFirst();
-    end;
-
-    local procedure RegisterWarehouseActivity(SourceDocument: Option; SourceNo: Code[20]; ActivityType: Option)
-    var
-        WarehouseActivityHeader: Record "Warehouse Activity Header";
-        WarehouseActivityLine: Record "Warehouse Activity Line";
-    begin
-        FindWarehouseActivityLine(WarehouseActivityLine, SourceDocument, SourceNo, ActivityType);
-        WarehouseActivityLine.AutofillQtyToHandle(WarehouseActivityLine);
-        WarehouseActivityHeader.Get(WarehouseActivityLine."Activity Type", WarehouseActivityLine."No.");
-        LibraryWarehouse.RegisterWhseActivity(WarehouseActivityHeader);
-    end;
-
-    local procedure FindWarehouseActivityLine(var WarehouseActivityLine: Record "Warehouse Activity Line"; SourceDocument: Option; SourceNo: Code[20]; ActivityType: Option)
-    begin
-        WarehouseActivityLine.Setrange("Source Document", SourceDocument);
-        WarehouseActivityLine.Setrange("Source No.", SourceNo);
-        WarehouseActivityLine.Setrange("Activity Type", ActivityType);
-        WarehouseActivityLine.FindFirst();
     end;
 
     local procedure PostWarehouseShipment(DocumentNo: Code[20]) PostedWarehouseShipmentNo: Code[20]
@@ -283,7 +255,7 @@ codeunit 81005 "LookupValue Posting"
         exit(PostedWhseShipmentHeader."No.");
     end;
 
-    local procedure VerifyLookupValueOnPostedSalesInvoice(DocumentNo: Code[20]; LookupValueCode: Code[10])
+    local procedure VerifyPostedSalesInvoiceHasLookupValueFromSalesOrder(DocumentNo: Code[20]; LookupValueCode: Code[10])
     var
         SalesInvoiceHeader: Record "Sales Invoice Header";
     begin
@@ -296,7 +268,7 @@ codeunit 81005 "LookupValue Posting"
                 SalesInvoiceHeader.TableCaption()));
     end;
 
-    local procedure VerifyLookupValueOnSalesShipment(DocumentNo: Code[20]; LookupValueCode: Code[10])
+    local procedure VerifySalesShipmentHasLookupValueFromSalesOrder(DocumentNo: Code[20]; LookupValueCode: Code[10])
     var
         SalesShipmentHeader: Record "Sales Shipment Header";
     begin
@@ -309,7 +281,7 @@ codeunit 81005 "LookupValue Posting"
                 SalesShipmentHeader.TableCaption()));
     end;
 
-    local procedure VerifyLookupValueOnPostedWarehouseShipmentLine(DocumentNo: Code[20]; LookupValueCode: Code[10])
+    local procedure VerifyPostedWarehouseShipmentLineHasLookupValueFromSalesOrder(DocumentNo: Code[20]; LookupValueCode: Code[10])
     var
         PostedWhseShipmentLine: Record "Posted Whse. Shipment Line";
     begin
@@ -323,7 +295,7 @@ codeunit 81005 "LookupValue Posting"
                 PostedWhseShipmentLine.TableCaption()));
     end;
 
-    local procedure VerifyMissingLookupValueOnSalesOrderError(SalesHeader: Record "Sales Header")
+    local procedure VerifyMissingLookupValueOnSalesOrderErrorThrown(SalesHeader: Record "Sales Header")
     begin
         Assert.ExpectedError(
             LibraryMessages.GetFieldMustHaveValueInSalesHeaderTxt(
