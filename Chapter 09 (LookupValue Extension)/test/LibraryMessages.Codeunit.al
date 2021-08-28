@@ -21,4 +21,18 @@ codeunit 80001 "Library - Messages"
                 LookupValueCode,
                 LookupValueTableCaption))
     end;
+
+    procedure GetFieldMustHaveValueInSalesHeaderTxt(NewFieldCaption: Text; SalesHeader: Record "Sales Header"): Text
+    var
+        FieldMustHaveValueInSalesHeaderTxt: Label '%1 must have a value in %2: %3=%4, %5=%6. It cannot be zero or empty.';
+    begin
+        exit(StrSubstNo(
+                FieldMustHaveValueInSalesHeaderTxt,
+                NewFieldCaption,
+                SalesHeader.TableCaption(),
+                SalesHeader.FieldCaption("Document Type"),
+                SalesHeader."Document Type",
+                SalesHeader.FieldCaption("No."),
+                SalesHeader."No."))
+    end;
 }
