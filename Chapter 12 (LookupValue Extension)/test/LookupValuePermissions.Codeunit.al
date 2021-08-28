@@ -315,13 +315,7 @@ codeunit 81020 "LookupValue Permissions"
 
     local procedure CreateLookupValue(var LookupValue: Record LookupValue)
     begin
-        LookupValue.Init();
-        LookupValue.Validate(
-            Code,
-            LibraryUtility.GenerateRandomCode(LookupValue.FieldNo(Code),
-            Database::LookupValue));
-        LookupValue.Validate(Description, LookupValue.Code);
-        LookupValue.Insert();
+        LibraryLookupValue.CreateLookupValue(LookupValue);
     end;
 
     local procedure CreateLookupValueCode(): Code[10]
