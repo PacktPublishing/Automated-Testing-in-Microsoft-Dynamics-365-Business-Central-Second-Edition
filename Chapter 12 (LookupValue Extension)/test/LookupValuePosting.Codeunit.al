@@ -128,7 +128,8 @@ codeunit 81005 "LookupValue Posting"
         if isInitialized then
             exit;
 
-        //[GIVEN] Lookup value
+        //[GIVEN] Location with require shipment
+        //[GIVEN] Warehouse employee for current user
         LocationSetup();
 
         isInitialized := true;
@@ -325,8 +326,8 @@ codeunit 81005 "LookupValue Posting"
     local procedure VerifyMissingLookupValueOnSalesOrderError(SalesHeader: Record "Sales Header")
     begin
         Assert.ExpectedError(
-    LibraryMessages.GetFieldMustHaveValueInSalesHeaderTxt(
-        SalesHeader.FieldCaption("Lookup Value Code"),
-        SalesHeader));
+            LibraryMessages.GetFieldMustHaveValueInSalesHeaderTxt(
+                SalesHeader.FieldCaption("Lookup Value Code"),
+                SalesHeader));
     end;
 }
