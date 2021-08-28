@@ -128,7 +128,8 @@ codeunit 81005 "LookupValue Posting"
         if isInitialized then
             exit;
 
-        //[GIVEN] Lookup value
+        //[GIVEN] Location with require shipment
+        //[GIVEN] Warehouse employee for current user
         LocationSetup();
 
         isInitialized := true;
