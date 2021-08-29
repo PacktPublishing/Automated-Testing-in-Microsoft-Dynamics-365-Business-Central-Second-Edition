@@ -1,0 +1,102 @@
+name: $(Build.BuildId)
+
+trigger:
+ branches:
+   include:
+     - master/Chapter-13-(LookupValue-Extension)
+
+variables:
+- group: 'PipelineVariables'
+
+pool: default
+
+steps:
+- checkout: self
+  clean: true 
+
+- task: ALOpsDockerCreate@1
+  displayName: 'ALOPS - Create Docker Image' # It will reuse the image if already exists, or build one if it doesn't.
+  inputs:
+    artifactversion: '$(artifactVersion)'
+    artifactcountry: '$(artifactCountry)'
+    forcecreateimage: $(forceCreateImage)
+    includetesttoolkit: true
+    includetestlibrariesonly: true
+
+- task: ALOpsDockerStart@1
+  displayName: 'ALOPS - Start Docker Container' # No need to provide any details - it will get the details from previous step
+
+- task: ALOpsDockerWait@1
+  displayName: 'ALOPS - Wait for Docker Container to start'
+  inputs:
+    search_string: 'Ready for connections!'
+
+- task: ALOpsLicenseImport@1
+  displayName: 'ALOPS - License Import'
+  inputs:
+    usedocker: true
+    license_path: '$(LuxBeheerBcDevLicense)'
+
+- task: ALOpsAppCompiler@1
+  displayName: 'ALOPS - Compile Extension: App'
+  inputs:
+    usedocker: true
+    nav_app_version: '?.?.[yyyyWW].*'
+    targetproject: 'Chapter 13 (LookupValue Extension)/app.json'
+    app_file_suffix: '_APP'                                 # A trick to uniquely identify the APP (from the TEST-app)
+
+- task: ALOpsAppPublish@1
+  displayName: 'ALOPS - Publish Extension'
+  inputs:
+    usedocker: true
+    nav_artifact_app_filter: '*APP.app'
+    skip_verification: true
+
+- task: ALOpsAppTest@1
+  displayName: 'ALOPS - Run TestSuite'
+  inputs:
+    usedocker: true
+    disabledtests: '$(Build.SourcesDirectory)/Chapter 13 (LookupValue Extension)/disabledtests/DisabledTests.json'
+    import_testtoolkit: false
+    import_action: 'Skip'
+    testpage: '130455'
+    extensionid: 'e26890f8-fafe-49c6-8951-2c1457921f9b'
+    failed_test_action: 'Ignore'
+  continueOnError: true
+
+- task: PublishTestResults@2
+  displayName: 'Publish Test Results **/TestResults.xml'
+  inputs:
+    testResultsFormat: XUnit
+    testResultsFiles: '**/TestResults.xml'
+    failTaskOnFailedTests: true
+    testRunTitle: 'BC Test Results: $(Build.BuildId)'
+
+- task: PowerShell@2
+  displayName: "Create DisabledTests.json"
+  inputs:
+    filePath: '$(Build.SourcesDirectory)/Chapter 13 (LookupValue Extension)/disabledtests/ConvertTo-DisabledTests.ps1'
+    arguments: '-inputFolderPath ''$(System.DefaultWorkingDirectory)/'''
+    errorActionPreference: 'continue'
+  condition: always()
+
+- task: CopyFiles@2
+  displayName: 'Copy Test Artifacts to $(Agent.BuildDirectory)/TestResults'
+  inputs:
+    SourceFolder: '$(Build.Sourcesdirectory)'
+    Contents: ?(TestResults.xml|DisabledTests.json)
+    TargetFolder: '$(Agent.BuildDirectory)/TestResults'
+  condition: always()
+
+- task: PublishPipelineArtifact@1
+  displayName: 'Publish Test Artifacts: TestResults.xml and DisabledTests.json'
+  inputs:
+    targetPath: '$(Agent.BuildDirectory)/TestResults'
+    artifact: 'TestResults'
+    publishLocation: 'pipeline'
+  condition: always()
+
+- task: ALOpsDockerRemove@1
+  displayName: 'ALOPS - Remove Docker Container'
+  enabled: true
+  condition: always()

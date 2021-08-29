@@ -1,0 +1,61 @@
+{
+  "id": "e26890f8-fafe-49c6-8951-2c1457921f9b",
+  "name": "LookupValue",
+  "publisher": "fluxxus.nl",
+  "brief": "LookupValue extension for book Automated Testing in Microsoft Dynamics 365 Business Central",
+  "description": "LookupValue extension as basis to test examples in chapter 6 and following for the book Automated Testing in Microsoft Dynamics 365 Business Central written by Luc van Vugt and published by Packt",
+  "version": "2.0.0.0",
+  "privacyStatement": "",
+  "EULA": "",
+  "help": "",
+  "url": "",
+  "logo": "",
+  "dependencies": [
+    {
+      "id": "e7320ebb-08b3-4406-b1ec-b4927d3e280b",
+      "publisher": "Microsoft",
+      "version": "18.0.0.0",
+      "name": "Any"
+    },
+    {
+      "id": "dd0be2ea-f733-4d65-bb34-a28f4624fb14",
+      "publisher": "Microsoft",
+      "version": "18.0.0.0",
+      "name": "Library Assert"
+    },
+    {
+      "id": "5095f467-0a01-4b99-99d1-9ff1237d286f",
+      "publisher": "Microsoft",
+      "version": "18.0.0.0",
+      "name": "Library Variable Storage"
+    },
+    {
+      "id": "5d86850b-0d76-4eca-bd7b-951ad998e997",
+      "publisher": "Microsoft",
+      "version": "18.0.0.0",
+      "name": "Tests-TestLibraries"
+    },
+    {
+      "id":  "23de40a6-dfe8-4f80-80db-d70f83ce8caf",
+      "name":  "Test Runner",
+      "publisher":  "Microsoft",
+      "version":  "18.0.0.0"
+    }
+  ],
+  "screenshots": [],
+  "platform": "18.0.0.0",
+  "application": "18.0.0.0",
+  "idRanges": [
+    {
+      "from": 50000,
+      "to": 50099
+    },
+    {
+      "from": 80000,
+      "to": 81099
+    }    
+  ],
+  "target": "OnPrem",
+  "showMyCode": true,
+  "runtime": "7.0"
+}
