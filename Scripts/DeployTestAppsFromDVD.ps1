@@ -1,6 +1,6 @@
 ﻿Import-Module "${env:ProgramFiles}\Microsoft Dynamics 365 Business Central\180\Service\Microsoft.Dynamics.Nav.Apps.Management.psd1" -force -DisableNameChecking
 
-$dvdFilePath = 'place-here-the-filepath-to the-product-dvd-folder'
+$dvdFilePath = 'C:\Users\lvvugt\Desktop\Dynamics.365.BC.29545.W1.DVD'
 $bcServerInstance = 'BC180'
 $apps = @()
 
@@ -19,15 +19,20 @@ if (Test-Path  "$dvdFilePath\Applications\system application\Test") {
     $apps += @(Get-ChildItem -Path "$dvdFilePath\Applications\system application\Test\*.*" -recurse -filter "Microsoft_*.app") | Where-Object { $_ -like "*\Microsoft_System Application Test Library.app"}
 }
 
-# get System Test app
-if (Test-Path  "$dvdFilePath\Applications\system application\Test") {
-    $apps += @(Get-ChildItem -Path "$dvdFilePath\Applications\system application\Test\*.*" -recurse -filter "Microsoft_*.app") | Where-Object { $_ -like "*\Microsoft_System Application Test.app"}
+## get System Test app
+#if (Test-Path  "$dvdFilePath\Applications\system application\Test") {
+#    $apps += @(Get-ChildItem -Path "$dvdFilePath\Applications\system application\Test\*.*" -recurse -filter "Microsoft_*.app") | Where-Object { $_ -like "*\Microsoft_System Application Test.app"}
+#}
+
+# get Tests-TestLibraries app
+if (Test-Path  "$dvdFilePath\Applications\BaseApp\Test") {
+    $apps += @(Get-ChildItem -Path "$dvdFilePath\Applications\BaseApp\Test\*.*" -recurse -filter "Microsoft_*.app") | Where-Object { $_ -like "*\Microsoft_Tests-TestLibraries.app"}
 }
 
-# get Application Test Library app
-if (Test-Path  "$dvdFilePath\Applications\BaseApp\Test") {
-    $apps += @(Get-ChildItem -Path "$dvdFilePath\Applications\BaseApp\Test\*.*" -recurse -filter "Microsoft_*.app") | Where-Object { $_ -like "*\Microsoft_Tests-TestLibraries.app" -or $_ -like "*\Microsoft_Library-NoTransactions.app"}
-}
+## get Library-NoTransactions app / NOTE: Do not default install Library-NoTransactions. This one is used to prevent any transaction from happening, it is used to test that e.g. ugrade is not writing any data on the second run.
+#if (Test-Path  "$dvdFilePath\Applications\BaseApp\Test") {
+#    $apps += @(Get-ChildItem -Path "$dvdFilePath\Applications\BaseApp\Test\*.*" -recurse -filter "Microsoft_*.app") | Where-Object { $_ -like "*\Microsoft_Library-NoTransactions.app"}
+#}
 
 # get Application Test apps
 if (Test-Path  "$dvdFilePath\Applications\BaseApp\Test") {
