@@ -120,31 +120,19 @@ codeunit 81090 "APIV1 - LookupValues E2E"
     var
         LookupValueJson: Text;
     begin
-        // if LookupValue.Code = '' then
-        //     LookupValue.Code := NextCustomerNo();
-        // if LookupValue.Description = '' then
-        //     LookupValue.Description := LibraryUtility.GenerateGUID();
         LookupValueJson := LibraryGraphMgt.AddPropertytoJSON(LookupValueJson, 'number', LookupValue.Code);
         LookupValueJson := LibraryGraphMgt.AddPropertytoJSON(LookupValueJson, 'displayName', LookupValue.Description);
         exit(LookupValueJson)
     end;
 
-    // local procedure NextCustomerNo(): Code[20]
-    // var
-    //     LookupValue: Record LookupValue;
-    // begin
-    //     LookupValue.SetFilter(Code, StrSubstNo('%1*', PrefixTxt));
-    //     if LookupValue.FindLast() then
-    //         exit(IncStr(LookupValue.Code));
-
-    //     exit(CopyStr(PrefixTxt + '0001', 1, 20));
-    // end;
-
-    local procedure VerifyProperties(JSON: Text; LookupValue: Record LookupValue)
+    local procedure VerifyProperties(ResponseText: Text; LookupValue: Record LookupValue)
+    var
+        LookupValueJSON: Text;
     begin
-        Assert.AreNotEqual('', JSON, EmptyJSONErr);
-        LibraryGraphMgt.VerifyIDInJson(JSON);
-        LibraryGraphMgt.VerifyPropertyInJSON(JSON, 'number', LookupValue.Code);
-        LibraryGraphMgt.VerifyPropertyInJSON(JSON, 'displayName', LookupValue.Description);
+        LibraryGraphMgt.GetObjectFromJSONResponse(ResponseText, LookupValueJSON, 1);
+        Assert.AreNotEqual('', ResponseText, EmptyJSONErr);
+        LibraryGraphMgt.VerifyIDInJson(LookupValueJSON);
+        LibraryGraphMgt.VerifyPropertyInJSON(LookupValueJSON, 'number', LookupValue.Code);
+        LibraryGraphMgt.VerifyPropertyInJSON(LookupValueJSON, 'displayName', LookupValue.Description);
     end;
 }

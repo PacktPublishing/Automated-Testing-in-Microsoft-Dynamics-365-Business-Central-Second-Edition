@@ -31,7 +31,7 @@ page 50090 "APIV1 - Lookup Values"
                         RegisterFieldSet(Rec.FieldNo(Code));
                     end;
                 }
-                field(displayDescriptdisplayNameion; Rec.Description)
+                field(displayName; Rec.Description)
                 {
                     Caption = 'displayName', Locked = true;
                     ShowMandatory = true;
