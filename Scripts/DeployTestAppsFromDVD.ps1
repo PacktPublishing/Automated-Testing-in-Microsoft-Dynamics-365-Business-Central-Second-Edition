@@ -1,6 +1,6 @@
 ﻿Import-Module "${env:ProgramFiles}\Microsoft Dynamics 365 Business Central\180\Service\Microsoft.Dynamics.Nav.Apps.Management.psd1" -force -DisableNameChecking
 
-$dvdFilePath = 'C:\Users\lvvugt\Desktop\Dynamics.365.BC.29545.W1.DVD'
+$dvdFilePath = 'place-here-the-filepath-to the-product-dvd-folder'
 $bcServerInstance = 'BC180'
 $apps = @()
 
