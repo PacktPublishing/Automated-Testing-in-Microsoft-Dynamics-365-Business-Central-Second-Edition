@@ -5,15 +5,14 @@ codeunit 81090 "APIV1 - LookupValues E2E"
 
     trigger OnRun()
     begin
-        // [FEATURE] [Graph] [Customer]
+        // [FEATURE] [Graph] [LookupValue]
     end;
 
     var
         Assert: Codeunit "Library Assert";
         LibraryGraphMgt: Codeunit "Library - Graph Mgt";
         LibraryUtility: Codeunit "Library - Utility";
-        IsInitialized: Boolean;
-        ServiceNameTxt: Label 'lookupvalues';
+        ServiceNameTxt: Label 'lookupValues';
         EmptyJSONErr: Label 'JSON should not be empty.';
 
     [Test]
@@ -23,17 +22,15 @@ codeunit 81090 "APIV1 - LookupValues E2E"
         Response: Text;
         TargetURL: Text;
     begin
-        // [SCENARIO xxxxx] User can Get lookup value with a Get request to the service.
-        Initialize();
+        // [SCENARIO xxxxx] User can get lookup value with GET request to service
+        // [GIVEN] Lookup value
+        CreateAndCommitLookupValue(LookupValue);
 
-        // [GIVEN] Lookup value exists in the system.
-        CreateLookupValue(LookupValue);
-
-        // [WHEN] The user makes a Get request for given lookup value.
+        // [WHEN] User makes GET request for given lookup value
         TargetURL := LibraryGraphMgt.CreateTargetURL(LookupValue.SystemId, Page::"APIV1 - Lookup Values", ServiceNameTxt);
         LibraryGraphMgt.GetFromWebService(Response, TargetURL);
 
-        // [THEN] The response text contains the lookup value information.
+        // [THEN] Response contains lookup value
         VerifyProperties(Response, LookupValue);
     end;
 
@@ -45,21 +42,19 @@ codeunit 81090 "APIV1 - LookupValues E2E"
         TargetURL: Text;
         Response: Text;
     begin
-        // [SCENARIO yyyyy] User can delete lookup value by making a DELETE request.
-        Initialize();
-
-        // [GIVEN] Lookup value exists.
-        CreateLookupValue(LookupValue);
+        // [SCENARIO yyyyy] User can delete lookup value by making DELETE request.
+        // [GIVEN] Lookup value
+        CreateAndCommitLookupValue(LookupValue);
         LookupValueCode := LookupValue.Code;
 
-        // [WHEN] The user makes a DELETE request to the endpoint for lookup value.
+        // [WHEN] User makes a DELETE request to endpoint for lookup value
         TargetURL := LibraryGraphMgt.CreateTargetURL(LookupValue.SystemId, Page::"APIV1 - Lookup Values", ServiceNameTxt);
         LibraryGraphMgt.DeleteFromWebService(TargetURL, '', Response);
 
-        // [THEN] The response is empty.
+        // [THEN] Response is empty
         Assert.AreEqual('', Response, 'DELETE response should be empty.');
 
-        // [THEN] Lookup value is no longer in the database.
+        // [THEN] Lookup value is no longer in the database
         LookupValue.SetRange(Code, LookupValueCode);
         Assert.IsTrue(LookupValue.IsEmpty(), 'Lookup Value should be deleted.');
     end;
@@ -73,66 +68,71 @@ codeunit 81090 "APIV1 - LookupValues E2E"
         Response: Text;
         TargetURL: Text;
     begin
-        // [SCENARIO zzzzz] User can modify lookup value through a PATCH request.
-        Initialize();
-
-        // [GIVEN] Lookup value exists.
-        CreateLookupValue(LookupValue);
+        // [SCENARIO zzzzz] User can modify lookup value through PATCH request.
+        // [GIVEN] Lookup value
+        CreateAndCommitLookupValue(LookupValue);
         TempLookupValue.TransferFields(LookupValue);
         TempLookupValue.Description := LibraryUtility.GenerateGUID();
         RequestBody := GetLookupValueJSON(TempLookupValue);
 
-        // [WHEN] The user makes a patch request to the service.
+        // [WHEN] User makes patch request to service
         TargetURL := LibraryGraphMgt.CreateTargetURL(LookupValue.SystemId, Page::"APIV1 - Lookup Values", ServiceNameTxt);
         LibraryGraphMgt.PatchToWebService(TargetURL, RequestBody, Response);
 
-        // [THEN] The response text contains the new values.
+        // [THEN] Response text contains new value
         VerifyProperties(Response, TempLookupValue);
 
-        // [THEN] The record in the database contains the new values.
+        // [THEN] Record in database contains new description
         LookupValue.Get(LookupValue.Code);
         VerifyProperties(Response, LookupValue);
     end;
 
-    local procedure Initialize()
+    [Test]
+    procedure TestCreateLookupValue()
+    var
+        LookupValue: Record LookupValue;
+        TempLookupValue: Record LookupValue temporary;
+        RequestBody: Text;
+        Response: Text;
+        TargetURL: Text;
     begin
-        if IsInitialized then
-            exit;
+        // [SCENARIO ttttt] User can create lookup value through POST request.
+        // [GIVEN] Lookup value JSON object
+        TempLookupValue.Code := LibraryUtility.GenerateGUID();
+        TempLookupValue.Description := LibraryUtility.GenerateGUID();
+        RequestBody := GetLookupValueJSON(TempLookupValue);
 
-        IsInitialized := true;
-        Commit();
+        // [WHEN] User makes POST request to service
+        TargetURL := LibraryGraphMgt.CreateTargetURL('', Page::"APIV1 - Lookup Values", ServiceNameTxt);
+        LibraryGraphMgt.PostToWebService(TargetURL, RequestBody, Response);
+
+        // [THEN] Response text contains new lookup value
+        VerifyProperties(Response, TempLookupValue);
+
+        // [THEN] Lookup value created in database
+        LookupValue.Get(TempLookupValue.Code);
+        VerifyProperties(Response, LookupValue);
     end;
 
-    local procedure CreateLookupValue(var LookupValue: Record LookupValue)
+    local procedure CreateAndCommitLookupValue(var LookupValue: Record LookupValue)
     var
         LibraryLookupValue: Codeunit "Library - Lookup Value";
     begin
         LibraryLookupValue.CreateLookupValue(LookupValue);
-        LookupValue.Description := LibraryUtility.GenerateGUID();
-        LookupValue.Modify(true);
-
-        LookupValue.Get(LookupValue.Code);
-
         Commit(); // Need to commit in order to unlock tables and allow web service to pick up changes.
     end;
 
-    local procedure GetLookupValueJSON(var LookupValue: Record LookupValue): Text
-    var
-        LookupValueJson: Text;
+    local procedure GetLookupValueJSON(var LookupValue: Record LookupValue) LookupValueJson: Text
     begin
         LookupValueJson := LibraryGraphMgt.AddPropertytoJSON(LookupValueJson, 'number', LookupValue.Code);
         LookupValueJson := LibraryGraphMgt.AddPropertytoJSON(LookupValueJson, 'displayName', LookupValue.Description);
-        exit(LookupValueJson)
     end;
 
-    local procedure VerifyProperties(ResponseText: Text; LookupValue: Record LookupValue)
-    var
-        LookupValueJSON: Text;
+    local procedure VerifyProperties(JSON: Text; LookupValue: Record LookupValue)
     begin
-        LibraryGraphMgt.GetObjectFromJSONResponse(ResponseText, LookupValueJSON, 1);
-        Assert.AreNotEqual('', ResponseText, EmptyJSONErr);
-        LibraryGraphMgt.VerifyIDInJson(LookupValueJSON);
-        LibraryGraphMgt.VerifyPropertyInJSON(LookupValueJSON, 'number', LookupValue.Code);
-        LibraryGraphMgt.VerifyPropertyInJSON(LookupValueJSON, 'displayName', LookupValue.Description);
+        Assert.AreNotEqual('', JSON, EmptyJSONErr);
+        LibraryGraphMgt.VerifyIDInJson(JSON);
+        LibraryGraphMgt.VerifyPropertyInJSON(JSON, 'number', LookupValue.Code);
+        LibraryGraphMgt.VerifyPropertyInJSON(JSON, 'displayName', LookupValue.Description);
     end;
 }
