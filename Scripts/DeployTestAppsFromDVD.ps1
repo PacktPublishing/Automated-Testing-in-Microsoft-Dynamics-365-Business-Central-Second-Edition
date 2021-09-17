@@ -19,10 +19,10 @@ if (Test-Path  "$dvdFilePath\Applications\system application\Test") {
     $apps += @(Get-ChildItem -Path "$dvdFilePath\Applications\system application\Test\*.*" -recurse -filter "Microsoft_*.app") | Where-Object { $_ -like "*\Microsoft_System Application Test Library.app"}
 }
 
-## get System Test app
-#if (Test-Path  "$dvdFilePath\Applications\system application\Test") {
-#    $apps += @(Get-ChildItem -Path "$dvdFilePath\Applications\system application\Test\*.*" -recurse -filter "Microsoft_*.app") | Where-Object { $_ -like "*\Microsoft_System Application Test.app"}
-#}
+# get System Test app
+if (Test-Path  "$dvdFilePath\Applications\system application\Test") {
+    $apps += @(Get-ChildItem -Path "$dvdFilePath\Applications\system application\Test\*.*" -recurse -filter "Microsoft_*.app") | Where-Object { $_ -like "*\Microsoft_System Application Test.app"}
+}
 
 # get Tests-TestLibraries app
 if (Test-Path  "$dvdFilePath\Applications\BaseApp\Test") {

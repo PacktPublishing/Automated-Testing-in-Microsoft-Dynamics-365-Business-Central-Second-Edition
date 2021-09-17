@@ -1,6 +1,6 @@
 @baseurl = http://d365bc18:7048/BC
-@username = Lucas
-@password = Workshop4you!
+@username = your-user-name
+@password = your-password
 
 ###############################################################
 get {{baseurl}}/api/v2.0/companies?tenant=default
