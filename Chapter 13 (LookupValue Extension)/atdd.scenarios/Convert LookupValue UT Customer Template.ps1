@@ -1,8 +1,7 @@
-& "./atdd.scenarios/LookupValue UT Customer Template.ps1" | `
+& "./atdd.scenarios/LookupValue UT API.ps1" | `
     ConvertTo-ALTestCodeunit `
-        -CodeunitID 81002 `
-        -CodeunitName 'LookupValue UT Cust. Template' `
-        -InitializeFunction `
+        -CodeunitID 81090 `
+        -CodeunitName 'LookupValue UT API' `
         -GivenFunctionName "Create {0}" `
         -ThenFunctionName "Verify {0}" `
-        | Out-File '.\test\LookupValueUTCustTemplate_2.Codeunit.al'
+        | Out-File '.\test\LookupValueUTAPI_2.Codeunit.al'
