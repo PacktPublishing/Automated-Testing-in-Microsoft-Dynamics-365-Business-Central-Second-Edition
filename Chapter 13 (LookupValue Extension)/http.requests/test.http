@@ -1,4 +1,4 @@
-@baseurl = http://d365bc189:7048/BC
+@baseurl = http://d365bc19:7048/BC
 @username = your-user-name
 @password = your-password
 
