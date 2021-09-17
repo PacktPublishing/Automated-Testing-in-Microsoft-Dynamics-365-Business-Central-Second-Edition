@@ -1,0 +1,21 @@
+@baseurl = http://d365bc189:7048/BC
+@username = your-user-name
+@password = your-password
+
+###############################################################
+get {{baseurl}}/api/v2.0/companies?tenant=default
+Authorization: Basic {{username}}:{{password}}
+
+###############################################################
+get {{baseurl}}/api/fluxxus/automation/v1.0?tenant=default
+Authorization: Basic {{username}}:{{password}}
+
+###############################################################
+# @name companies
+get {{baseurl}}/api/fluxxus/automation/v1.0/companies?tenant=default
+Authorization: Basic {{username}}:{{password}}
+
+##############################################################
+@companyid = {{companies.response.body.value[0].id}}
+get {{baseurl}}/api/fluxxus/automation/v1.0/companies({{companyid}})/lookupValues?tenant=default
+Authorization: Basic {{username}}:{{password}}
