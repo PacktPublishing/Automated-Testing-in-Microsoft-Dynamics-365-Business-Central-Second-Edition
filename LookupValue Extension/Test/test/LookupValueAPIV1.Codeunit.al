@@ -1,4 +1,4 @@
-codeunit 81090 "LookupValue API"
+codeunit 81090 "LookupValue APIV1"
 {
     Subtype = Test;
     TestPermissions = Disabled;
@@ -82,6 +82,33 @@ codeunit 81090 "LookupValue API"
     end;
 
     [Test]
+    procedure ModifyLookupValueWithEmptyDescription()
+    // [FEATURE] LookupValue UT API
+    var
+        LookupValue: Record LookupValue;
+        TempLookupValue: Record LookupValue temporary;
+        RequestBody: Text;
+        Response: Text;
+    begin
+        // [SCENARIO #0203] Modify lookup value with empty description
+
+        // [GIVEN] Committed lookup value
+        CreateCommittedLookupValue(LookupValue);
+        // [GIVEN] Updated lookup value JSON object with empty description
+        TempLookupValue.Code := LookupValue.Code;
+        TempLookupValue.Description := '';
+        RequestBody := GetLookupValueJSON(TempLookupValue);
+
+        // [WHEN] Send PATCH request for lookup value JSON object
+        asserterror Response := SendPatchRequestForLookupValueJSONObject(LookupValue, RequestBody);
+
+        // [THEN] Empty response
+        VerifyEmptyResponse(Response);
+        // [THEN] Non-updated lookup value in database
+        VerifyNonUpdatedLookupValueInDatabase(LookupValue);
+    end;
+
+    [Test]
     procedure CreateLookupValue()
     // [FEATURE] LookupValue UT API
     var
@@ -105,6 +132,31 @@ codeunit 81090 "LookupValue API"
         // [THEN] New lookup value in database
         LookupValue.Get(TempLookupValue.Code);
         VerifyLookupValueInResponse(Response, LookupValue);
+    end;
+
+    [Test]
+    procedure CreateLookupValueWithEmptyDescription()
+    // [FEATURE] LookupValue UT API
+    var
+        LookupValue: Record LookupValue;
+        TempLookupValue: Record LookupValue temporary;
+        RequestBody: Text;
+        Response: Text;
+    begin
+        // [SCENARIO #0205] Create lookup value with empty description
+
+        // [GIVEN] Lookup value JSON object with empty description
+        TempLookupValue.Code := LibraryUtility.GenerateRandomCode(TempLookupValue.FieldNo(Code), Database::LookupValue);
+        TempLookupValue.Description := '';
+        RequestBody := GetLookupValueJSON(TempLookupValue);
+
+        // [WHEN] Send POST request for lookup value JSON object
+        asserterror Response := SendPostRequestForLookupValueJSONObject(RequestBody);
+
+        // [THEN] Empty response
+        VerifyEmptyResponse(Response);
+        // [THEN] No new lookup value in database
+        VerifyNoNewLookupValueInDatabase(TempLookupValue);
     end;
 
     local procedure CreateCommittedLookupValue(var LookupValue: Record LookupValue)
@@ -143,7 +195,7 @@ codeunit 81090 "LookupValue API"
 
     local procedure CreateTargetURL(ID: Text): Text
     begin
-        exit(LibraryGraphMgt.CreateTargetURL(ID, Page::"APIV1 - Lookup Values", 'lookupValues'));
+        exit(LibraryGraphMgt.CreateTargetURL(ID, Page::"Lookup Values APIV1", 'lookupValues'));
     end;
 
     local procedure VerifyEmptyResponse(Response: Text)
@@ -165,5 +217,19 @@ codeunit 81090 "LookupValue API"
         LibraryGraphMgt.VerifyIDInJson(JSON);
         LibraryGraphMgt.VerifyPropertyInJSON(JSON, 'number', LookupValue.Code);
         LibraryGraphMgt.VerifyPropertyInJSON(JSON, 'displayName', LookupValue.Description);
+    end;
+
+    local procedure VerifyNonUpdatedLookupValueInDatabase(LookupValue: Record LookupValue)
+    var
+        LookupValue2: Record LookupValue;
+    begin
+        LookupValue2.Get(LookupValue.Code);
+        Assert.AreEqual(LookupValue.Description, LookupValue2.Description, 'Lookup value should not be updated in database.');
+    end;
+
+    local procedure VerifyNoNewLookupValueInDatabase(LookupValue: Record LookupValue)
+    begin
+        LookupValue.SetRange(Code, LookupValue.Code);
+        Assert.RecordIsEmpty(LookupValue);
     end;
 }
