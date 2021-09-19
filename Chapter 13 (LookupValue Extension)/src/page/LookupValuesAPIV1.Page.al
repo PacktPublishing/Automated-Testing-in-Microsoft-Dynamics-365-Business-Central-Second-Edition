@@ -1,4 +1,4 @@
-page 50090 "APIV1 - Lookup Values"
+page 50090 "Lookup Values APIV1"
 {
     Caption = 'lookupValues', Locked = true;
     SourceTable = LookupValue;
