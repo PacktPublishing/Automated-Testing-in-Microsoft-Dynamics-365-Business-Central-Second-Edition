@@ -9,9 +9,9 @@ codeunit 60001 "MySecondTestCodeunit"
     end;
 
     [Test]
-    procedure MyPostiveNegativeTestFunction()
+    procedure MyPositiveNegativeTestFunction()
     begin
-        asserterror Error('MyPostiveNegativeTestFunction');
+        asserterror Error('MyPositiveNegativeTestFunction');
     end;
 }
 
