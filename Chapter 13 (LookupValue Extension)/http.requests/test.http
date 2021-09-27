@@ -2,20 +2,46 @@
 @username = your-user-name
 @password = your-password
 
-###############################################################
-get {{baseurl}}/api/v2.0/companies?tenant=default
-Authorization: Basic {{username}}:{{password}}
-
-###############################################################
+#### Get all v1.0 entities for API publisher and API group ###################
 get {{baseurl}}/api/fluxxus/automation/v1.0?tenant=default
 Authorization: Basic {{username}}:{{password}}
 
-###############################################################
+#### Get and store all companies for API publisher and API group #############
 # @name companies
 get {{baseurl}}/api/fluxxus/automation/v1.0/companies?tenant=default
 Authorization: Basic {{username}}:{{password}}
 
-##############################################################
+#### Get all lookup values for first company #################################
+# @name lookupvalues
 @companyid = {{companies.response.body.value[0].id}}
 get {{baseurl}}/api/fluxxus/automation/v1.0/companies({{companyid}})/lookupValues?tenant=default
 Authorization: Basic {{username}}:{{password}}
+
+#### Get first lookup values for first company #################################
+@lookupvalueid = {{lookupvalues.response.body.value[0].id}}
+get {{baseurl}}/api/fluxxus/automation/v1.0/companies({{companyid}})/lookupValues({{lookupvalueid}})?tenant=default
+Authorization: Basic {{username}}:{{password}}
+
+##### Create new lookup value ################################################
+post {{baseurl}}/api/fluxxus/automation/v1.0/companies({{companyid}})/lookupValues?tenant=default
+Authorization: Basic {{username}}:{{password}}
+Content-Type: application/json
+
+{
+    "number" : "New",
+    "displayName": "New lookup value"
+}
+
+#### Delete lookup value #####################################################
+delete {{baseurl}}/api/fluxxus/automation/v1.0/companies({{companyid}})/lookupValues(id-of-lookupvalue-to-be-deleted)?tenant=default
+Authorization: Basic {{username}}:{{password}}
+
+##### Modify lookup value ################################################
+patch {{baseurl}}/api/fluxxus/automation/v1.0/companies({{companyid}})/lookupValues(id-of-lookupvalue-to-be-modified)?tenant=default
+Authorization: Basic {{username}}:{{password}}
+Content-Type: application/json
+If-Match: etag-of-lookupvalue-to-be-modified
+
+{
+    "displayName": "New description"
+}
