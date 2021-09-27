@@ -53,7 +53,7 @@
     {
       "from": 80000,
       "to": 81099
-    }    
+    }
   ],
   "target": "OnPrem",
   "showMyCode": true,
