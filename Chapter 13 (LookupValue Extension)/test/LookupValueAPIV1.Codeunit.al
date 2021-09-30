@@ -181,17 +181,12 @@ codeunit 81090 "LookupValue APIV1"
         exit(GetLookupValueJSONObject(TempLookupValue.Code, '', TempLookupValue));
     end;
 
-    local procedure GetLookupValueJSONObject(NewCode: Code[10]; NewDescription: Text[50]; var TempLookupValue: Record LookupValue temporary): Text
+    local procedure GetLookupValueJSONObject(NewCode: Code[10]; NewDescription: Text[50]; var TempLookupValue: Record LookupValue temporary) LookupValueJSON: Text
     begin
         TempLookupValue.Code := NewCode;
         TempLookupValue.Description := NewDescription;
-        exit(GetLookupValueJSON(TempLookupValue));
-    end;
-
-    local procedure GetLookupValueJSON(var LookupValue: Record LookupValue) LookupValueJSON: Text
-    begin
-        LookupValueJSON := LibraryGraphMgt.AddPropertytoJSON(LookupValueJSON, 'number', LookupValue.Code);
-        LookupValueJSON := LibraryGraphMgt.AddPropertytoJSON(LookupValueJSON, 'displayName', LookupValue.Description);
+        LookupValueJSON := LibraryGraphMgt.AddPropertytoJSON(LookupValueJSON, 'number', NewCode);
+        LookupValueJSON := LibraryGraphMgt.AddPropertytoJSON(LookupValueJSON, 'displayName', NewDescription);
     end;
 
     local procedure SendDeleteRequestForLookupValue(LookupValue: Record LookupValue) Response: Text
