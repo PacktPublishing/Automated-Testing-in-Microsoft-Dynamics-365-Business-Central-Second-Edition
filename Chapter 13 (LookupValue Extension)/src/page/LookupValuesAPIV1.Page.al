@@ -48,7 +48,7 @@ page 50090 "Lookup Values APIV1"
     }
 
     var
-        TempFieldSet: Record 2000000041 temporary;
+        TempFieldSet: Record Field temporary;
         GraphMgtGeneralTools: Codeunit "Graph Mgt - General Tools";
         NotProvidedNameErr: Label 'A "displayName" must be provided.', Locked = true;
         BlankNameErr: Label 'The blank "displayName" is not allowed.', Locked = true;
