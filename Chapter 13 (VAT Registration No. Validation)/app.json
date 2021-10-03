@@ -1,9 +1,9 @@
 {
   "id": "7a6433f5-95fa-46b9-9f91-5c0c3fe3f86f",
-  "name": "VAT Registration No. Check",
+  "name": "VAT Registration No. Validation",
   "publisher": "fluxxus.nl",
-  "brief": "VAT Registration No. Check extension for book Automated Testing in Microsoft Dynamics 365 Business Central",
-  "description": "VAT Registration No. Check as basis to test example 13 in chapter 13 for the book Automated Testing in Microsoft Dynamics 365 Business Central written by Luc van Vugt and published by Packt",
+  "brief": "VAT Registration No. Validation extension for book Automated Testing in Microsoft Dynamics 365 Business Central",
+  "description": "VAT Registration No. Validation as basis to test example 13 in chapter 13 for the book Automated Testing in Microsoft Dynamics 365 Business Central written by Luc van Vugt and published by Packt",
   "version": "1.0.0.0",
   "privacyStatement": "",
   "EULA": "",
@@ -47,8 +47,8 @@
   "application": "18.0.0.0",
   "idRanges": [
     {
-      "from": 6000,
-      "to": 60099
+      "from": 60100,
+      "to": 60999
     },
     {
       "from": 90000,

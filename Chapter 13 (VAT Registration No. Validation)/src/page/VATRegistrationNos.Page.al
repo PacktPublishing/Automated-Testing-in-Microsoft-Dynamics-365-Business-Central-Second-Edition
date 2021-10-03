@@ -1,4 +1,4 @@
-page 60007 "VAT Registration Nos."
+page 60100 "VAT Registration Nos."
 {
     ApplicationArea = All;
     Caption = 'VAT Registration Nos.';
@@ -14,14 +14,22 @@ page 60007 "VAT Registration Nos."
             {
                 field("No."; Rec."No.")
                 {
+                    ToolTip = 'Specifies the value of the No. field';
+                    ApplicationArea = All;
+                }
+                field("Codeunit Set Method"; Rec."Codeunit Set Method")
+                {
+                    ToolTip = 'Specifies the value of the Codeunit Set Method field';
                     ApplicationArea = All;
                 }
                 field("Country/Region Code"; Rec."Country/Region Code")
                 {
+                    ToolTip = 'Specifies the value of the Country/Region Code field';
                     ApplicationArea = All;
                 }
                 field("VAT Registration No."; Rec."VAT Registration No.")
                 {
+                    ToolTip = 'Specifies the value of the VAT Registration No. field';
                     ApplicationArea = All;
                 }
             }

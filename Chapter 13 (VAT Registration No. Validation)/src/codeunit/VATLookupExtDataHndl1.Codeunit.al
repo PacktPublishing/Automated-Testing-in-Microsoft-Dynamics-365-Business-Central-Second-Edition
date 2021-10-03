@@ -1,4 +1,4 @@
-codeunit 60048 "VAT Lookup Ext. Data Hndl FLX"
+codeunit 60148 "VAT Lookup Ext. Data Hndl 1"
 // abstract of codeunit 248 "VAT Lookup Ext. Data Hndl"
 {
     Permissions = TableData "VAT Registration Log" = rimd;
