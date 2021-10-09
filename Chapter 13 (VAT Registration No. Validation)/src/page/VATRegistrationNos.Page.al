@@ -12,14 +12,14 @@ page 60100 "VAT Registration Nos."
         {
             repeater(General)
             {
-                field("No."; Rec."No.")
+                field("No."; Rec."Entry No.")
                 {
-                    ToolTip = 'Specifies the value of the No. field';
+                    ToolTip = 'Specifies the value of the Entry No. field';
                     ApplicationArea = All;
                 }
-                field("Codeunit Set Method"; Rec."Codeunit Set Method")
+                field("Codeunit Set Method"; Rec."Service Handling Type")
                 {
-                    ToolTip = 'Specifies the value of the Codeunit Set Method field';
+                    ToolTip = 'Specifies the value of the Service Handling Type field';
                     ApplicationArea = All;
                 }
                 field("Country/Region Code"; Rec."Country/Region Code")
@@ -40,6 +40,15 @@ page 60100 "VAT Registration Nos."
     {
         area(Navigation)
         {
+            action(VATRegistrationConfig)
+            {
+                ApplicationArea = All;
+                Caption = 'EU VAT Registration No. Validation Service Setup';
+                Image = NumberSetup;
+                Promoted = true;
+                PromotedCategory = Process;
+                RunObject = page "VAT Registration Config";
+            }
             action(VATRegistrationLog)
             {
                 ApplicationArea = All;

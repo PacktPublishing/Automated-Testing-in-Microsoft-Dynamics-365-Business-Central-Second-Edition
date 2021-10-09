@@ -17,7 +17,7 @@ codeunit 60148 "VAT Lookup Ext. Data Hndl 1"
 
     var
         VATRegistrationLog: Record "VAT Registration Log";
-        VATRegistrationLogMgt: Codeunit "VAT Registration Log Mgt.";
+        VATRegistrationLogMgt: Codeunit "VAT Registration Log Mgt. 1";
         VATRegistrationURL: Text;
         NamespaceTxt: Label 'urn:ec.europa.eu:taxud:vies:services:checkVat:types', Locked = true;
         NoVATNoToValidateErr: Label 'Specify the VAT registration number that you want to verify.';

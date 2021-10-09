@@ -5,7 +5,7 @@ table 60100 "VAT Registration No."
 
     fields
     {
-        field(1; "No."; Code[20])
+        field(1; "Entry No."; Code[20])
         {
             DataClassification = ToBeClassified;
             Caption = 'No.';
@@ -35,16 +35,16 @@ table 60100 "VAT Registration No."
                     VATRegistrationValidationSelector();
             end;
         }
-        field(60100; "Codeunit Set Method"; Enum "Codeunit Set Method")
+        field(60100; "Service Handling Type"; Enum "Service Handling Type")
         {
             DataClassification = ToBeClassified;
-            Caption = 'Codeunit Set Method';
+            Caption = 'Service Handling Type';
         }
     }
 
     keys
     {
-        key(PK; "No.")
+        key(PK; "Entry No.")
         {
             Clustered = true;
         }
@@ -55,27 +55,25 @@ table 60100 "VAT Registration No."
         VATRegNoSrvConfig: Record "VAT Reg. No. Srv Config";
         VATRegLogMgtEvents: Codeunit "VAT Reg. Log Mgt. Events";
     begin
-        case "Codeunit Set Method" of
-            "Codeunit Set Method"::"Default Codeunit":
-                VATRegistrationValidation1();
-            "Codeunit Set Method"::"From Setup":
+        case "Service Handling Type" of
+            "Service Handling Type"::"Default Codeunit":
+                VATRegistrationValidation();
+            "Service Handling Type"::"From Setup":
                 begin
                     VATRegNoSrvConfig.Get();
-                    VATRegNoSrvConfig.TestField("Service Codeunit");
-                    VATRegistrationValidation2("No.", "VAT Registration No.", "Country/Region Code", VATRegNoSrvConfig."Service Codeunit");
+                    VATRegNoSrvConfig.TestField("Handling Codeunit ID");
+                    VATRegValidationFromSetup(VATRegNoSrvConfig."Handling Codeunit ID");
                 end;
-            "Codeunit Set Method"::"Set with Subscriber":
+            "Service Handling Type"::"With Subscriber":
                 begin
                     BindSubscription(VATRegLogMgtEvents);
-                    VATRegistrationValidation2("No.", "VAT Registration No.", "Country/Region Code", 0);
+                    VATRegValidationWithSubscriber();
                     UnbindSubscription(VATRegLogMgtEvents);
                 end;
-            "Codeunit Set Method"::"Set with Interface":
-                ;
         end;
     end;
 
-    procedure VATRegistrationValidation1()
+    procedure VATRegistrationValidation()
     var
         VATRegistrationNoFormat: Record "VAT Registration No. Format";
         VATRegistrationLog: Record "VAT Registration Log";
@@ -90,7 +88,7 @@ table 60100 "VAT Registration No."
         if IsHandled then
             exit;
 
-        if not VATRegistrationNoFormat.Test("VAT Registration No.", "Country/Region Code", "No.", DATABASE::"VAT Registration No.") then
+        if not VATRegistrationNoFormat.Test("VAT Registration No.", "Country/Region Code", "Entry No.", DATABASE::"VAT Registration No.") then
             exit;
 
         if ("Country/Region Code" <> '') or (VATRegistrationNoFormat."Country/Region Code" <> '') then begin
@@ -99,13 +97,13 @@ table 60100 "VAT Registration No."
                 ApplicableCountryCode := VATRegistrationNoFormat."Country/Region Code";
             if VATRegNoSrvConfig.VATRegNoSrvIsEnabled then begin
                 VATRegistrationLogMgt.ValidateVATRegNoWithVIES(
-                    ResultRecordRef, Rec, "No.", VATRegistrationLog."Account Type"::Customer.AsInteger(), ApplicableCountryCode);
+                    ResultRecordRef, Rec, "Entry No.", VATRegistrationLog."Account Type"::Customer.AsInteger(), ApplicableCountryCode);
                 ResultRecordRef.SetTable(Rec);
             end;
         end;
     end;
 
-    procedure VATRegistrationValidation2(EntryNo: Code[20]; VATRegNo: Text[20]; CountryCode: Code[10]; VATRegNoSrvCodeunitId: Integer)
+    procedure VATRegValidationFromSetup(VATRegNoSrvCodeunitId: Integer)
     var
         VATRegistrationNoFormat: Record "VAT Registration No. Format";
         VATRegistrationLog: Record "VAT Registration Log";
@@ -120,16 +118,46 @@ table 60100 "VAT Registration No."
         if IsHandled then
             exit;
 
-        if not VATRegistrationNoFormat.Test(VATRegNo, CountryCode, "No.", DATABASE::"VAT Registration No.") then
+        if not VATRegistrationNoFormat.Test("VAT Registration No.", "Country/Region Code", "Entry No.", DATABASE::"VAT Registration No.") then
             exit;
 
-        if (CountryCode <> '') or (VATRegistrationNoFormat."Country/Region Code" <> '') then begin
-            ApplicableCountryCode := CountryCode;
+        if ("Country/Region Code" <> '') or (VATRegistrationNoFormat."Country/Region Code" <> '') then begin
+            ApplicableCountryCode := "Country/Region Code";
             if ApplicableCountryCode = '' then
                 ApplicableCountryCode := VATRegistrationNoFormat."Country/Region Code";
             if VATRegNoSrvConfig.VATRegNoSrvIsEnabled then begin
                 VATRegistrationLogMgt.ValidateVATRegNoWithVIES(
-                    ResultRecordRef, Rec, "No.", VATRegistrationLog."Account Type"::Customer.AsInteger(), ApplicableCountryCode, VATRegNoSrvCodeunitId);
+                    ResultRecordRef, Rec, "Entry No.", VATRegistrationLog."Account Type"::Customer.AsInteger(), ApplicableCountryCode, VATRegNoSrvCodeunitId);
+                ResultRecordRef.SetTable(Rec);
+            end;
+        end;
+    end;
+
+    procedure VATRegValidationWithSubscriber()
+    var
+        VATRegistrationNoFormat: Record "VAT Registration No. Format";
+        VATRegistrationLog: Record "VAT Registration Log";
+        VATRegNoSrvConfig: Record "VAT Reg. No. Srv Config";
+        VATRegistrationLogMgt: Codeunit "VAT Registration Log Mgt. 3";
+        ResultRecordRef: RecordRef;
+        ApplicableCountryCode: Code[10];
+        IsHandled: Boolean;
+    begin
+        IsHandled := false;
+        OnBeforeVATRegistrationValidation(Rec, IsHandled);
+        if IsHandled then
+            exit;
+
+        if not VATRegistrationNoFormat.Test("VAT Registration No.", "Country/Region Code", "Entry No.", DATABASE::"VAT Registration No.") then
+            exit;
+
+        if ("Country/Region Code" <> '') or (VATRegistrationNoFormat."Country/Region Code" <> '') then begin
+            ApplicableCountryCode := "Country/Region Code";
+            if ApplicableCountryCode = '' then
+                ApplicableCountryCode := VATRegistrationNoFormat."Country/Region Code";
+            if VATRegNoSrvConfig.VATRegNoSrvIsEnabled then begin
+                VATRegistrationLogMgt.ValidateVATRegNoWithVIES(
+                    ResultRecordRef, Rec, "Entry No.", VATRegistrationLog."Account Type"::Customer.AsInteger(), ApplicableCountryCode);
                 ResultRecordRef.SetTable(Rec);
             end;
         end;
