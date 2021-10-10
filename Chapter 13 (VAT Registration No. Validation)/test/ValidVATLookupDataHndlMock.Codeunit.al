@@ -14,7 +14,7 @@ codeunit 60198 "ValidVATLookupDataHndlMock"
     local procedure SetValidVATRegistrationLog(var VATRegistrationLog: Record "VAT Registration Log")
     var
         Any: Codeunit Any;
-        VATRegistrationLogMgt: Codeunit "VAT Reg. Log Mgt. Default";
+        VATRegistrationLogMgt: Codeunit "VAT Registration Log Mgt.";
         ValidVATResponseDoc: DotNet XmlDocument;
         ValidatedName: Text;
         ValidatedAddress: Text;

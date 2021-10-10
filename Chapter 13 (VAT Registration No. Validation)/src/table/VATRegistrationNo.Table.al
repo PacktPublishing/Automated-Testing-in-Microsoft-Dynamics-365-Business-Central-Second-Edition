@@ -20,7 +20,7 @@ table 60100 "VAT Registration No."
             trigger OnValidate()
             begin
                 if "Country/Region Code" <> xRec."Country/Region Code" then
-                    VATRegistrationValidationSelector();
+                    VATRegistrationValidation();
             end;
         }
         field(86; "VAT Registration No."; Text[20])
@@ -32,7 +32,7 @@ table 60100 "VAT Registration No."
             begin
                 "VAT Registration No." := UpperCase("VAT Registration No.");
                 if "VAT Registration No." <> xRec."VAT Registration No." then
-                    VATRegistrationValidationSelector();
+                    VATRegistrationValidation();
             end;
         }
         field(60100; "Service Handling Type"; Enum "Service Handling Type")
@@ -50,7 +50,7 @@ table 60100 "VAT Registration No."
         }
     }
 
-    local procedure VATRegistrationValidationSelector()
+    local procedure VATRegistrationValidation()
     var
         VATRegNoSrvConfig: Record "VAT Reg. No. Srv Config";
     begin
@@ -75,7 +75,7 @@ table 60100 "VAT Registration No."
         VATRegistrationNoFormat: Record "VAT Registration No. Format";
         VATRegistrationLog: Record "VAT Registration Log";
         VATRegNoSrvConfig: Record "VAT Reg. No. Srv Config";
-        VATRegistrationLogMgt: Codeunit "VAT Reg. Log Mgt. Default";
+        VATRegistrationLogMgt: Codeunit "VAT Registration Log Mgt.";
         ResultRecordRef: RecordRef;
         ApplicableCountryCode: Code[10];
         IsHandled: Boolean;
