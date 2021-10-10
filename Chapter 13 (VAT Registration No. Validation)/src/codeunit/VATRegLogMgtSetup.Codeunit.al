@@ -42,7 +42,7 @@ codeunit 60159 "VAT Reg. Log Mgt. Setup"
             if VATRegNoSrvCodeunitId <> 0 then
                 Codeunit.Run(VATRegNoSrvCodeunitId, VATRegistrationLog)
             else
-                Codeunit.Run(Codeunit::"VATLookupExtDataHndlDefault", VATRegistrationLog);
+                Codeunit.Run(Codeunit::"VAT Lookup Ext. Data Hndl", VATRegistrationLog);
         end;
     end;
 
