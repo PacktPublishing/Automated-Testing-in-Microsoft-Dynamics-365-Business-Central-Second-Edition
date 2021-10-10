@@ -53,11 +53,10 @@ table 60100 "VAT Registration No."
     local procedure VATRegistrationValidationSelector()
     var
         VATRegNoSrvConfig: Record "VAT Reg. No. Srv Config";
-        VATRegLogMgtEvents: Codeunit "VAT Reg. Log Mgt. Events";
     begin
         case "Service Handling Type" of
             "Service Handling Type"::"Default Codeunit":
-                VATRegistrationValidation();
+                VATRegValidationDefault();
             "Service Handling Type"::"From Setup":
                 begin
                     VATRegNoSrvConfig.Get();
@@ -66,19 +65,17 @@ table 60100 "VAT Registration No."
                 end;
             "Service Handling Type"::"With Subscriber":
                 begin
-                    BindSubscription(VATRegLogMgtEvents);
                     VATRegValidationWithSubscriber();
-                    UnbindSubscription(VATRegLogMgtEvents);
                 end;
         end;
     end;
 
-    procedure VATRegistrationValidation()
+    procedure VATRegValidationDefault()
     var
         VATRegistrationNoFormat: Record "VAT Registration No. Format";
         VATRegistrationLog: Record "VAT Registration Log";
         VATRegNoSrvConfig: Record "VAT Reg. No. Srv Config";
-        VATRegistrationLogMgt: Codeunit "VAT Registration Log Mgt. 1";
+        VATRegistrationLogMgt: Codeunit "VAT Reg. Log Mgt. Default";
         ResultRecordRef: RecordRef;
         ApplicableCountryCode: Code[10];
         IsHandled: Boolean;
@@ -108,7 +105,7 @@ table 60100 "VAT Registration No."
         VATRegistrationNoFormat: Record "VAT Registration No. Format";
         VATRegistrationLog: Record "VAT Registration Log";
         VATRegNoSrvConfig: Record "VAT Reg. No. Srv Config";
-        VATRegistrationLogMgt: Codeunit "VAT Registration Log Mgt. 2";
+        VATRegistrationLogMgt: Codeunit "VAT Reg. Log Mgt. Setup";
         ResultRecordRef: RecordRef;
         ApplicableCountryCode: Code[10];
         IsHandled: Boolean;
@@ -138,7 +135,7 @@ table 60100 "VAT Registration No."
         VATRegistrationNoFormat: Record "VAT Registration No. Format";
         VATRegistrationLog: Record "VAT Registration Log";
         VATRegNoSrvConfig: Record "VAT Reg. No. Srv Config";
-        VATRegistrationLogMgt: Codeunit "VAT Registration Log Mgt. 3";
+        VATRegistrationLogMgt: Codeunit "VAT Reg. Log Mgt. Subscriber";
         ResultRecordRef: RecordRef;
         ApplicableCountryCode: Code[10];
         IsHandled: Boolean;

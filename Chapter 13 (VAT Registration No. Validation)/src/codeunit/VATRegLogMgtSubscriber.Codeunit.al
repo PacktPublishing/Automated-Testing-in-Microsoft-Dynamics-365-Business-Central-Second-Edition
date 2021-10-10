@@ -1,5 +1,5 @@
-codeunit 60159 "VAT Registration Log Mgt. 2"
-// abstracted from codeunit 249 "VAT Registration Log Mgt." and adjusted: added VATRegNoSrvCodeunitId parameter
+codeunit 60169 "VAT Reg. Log Mgt. Subscriber"
+// abstracted from codeunit 249 "VAT Registration Log Mgt." and adjusted: added OnBeforeCheckVIESForVATNoCodeunit event
 {
     Permissions = TableData "VAT Registration Log" = rimd;
 
@@ -10,23 +10,25 @@ codeunit 60159 "VAT Registration Log Mgt. 2"
         NotVerifiedVATRegMsg: Label 'We couldn''t verify the VAT registration number. Please try again later.';
         DetailsNotVerifiedMsg: Label 'The specified VAT registration number is valid.\The VAT VIES validation service did not provide additional details.';
 
-    procedure ValidateVATRegNoWithVIES(var RecordRef: RecordRef; RecordVariant: Variant; EntryNo: Code[20]; AccountType: Option; CountryCode: Code[10]; VATRegNoSrvCodeunitId: Integer)
+    procedure ValidateVATRegNoWithVIES(var RecordRef: RecordRef; RecordVariant: Variant; EntryNo: Code[20]; AccountType: Option; CountryCode: Code[10])
     var
         VATRegistrationLog: Record "VAT Registration Log";
     begin
-        CheckVIESForVATNo(RecordRef, VATRegistrationLog, RecordVariant, EntryNo, CountryCode, AccountType, VATRegNoSrvCodeunitId);
+        CheckVIESForVATNo(RecordRef, VATRegistrationLog, RecordVariant, EntryNo, CountryCode, AccountType);
 
         if VATRegistrationLog.Find() then // Only update if the log was created
             UpdateRecordFromVATRegLog(RecordRef, RecordVariant, VATRegistrationLog);
     end;
 
-    procedure CheckVIESForVATNo(var RecordRef: RecordRef; var VATRegistrationLog: Record "VAT Registration Log"; RecordVariant: Variant; EntryNo: Code[20]; CountryCode: Code[10]; AccountType: Option; VATRegNoSrvCodeunitId: Integer)
+    procedure CheckVIESForVATNo(var RecordRef: RecordRef; var VATRegistrationLog: Record "VAT Registration Log"; RecordVariant: Variant; EntryNo: Code[20]; CountryCode: Code[10]; AccountType: Option)
     var
         VATRegNo: Record "VAT Registration No.";
         VATRegNoSrvConfig: Record "VAT Reg. No. Srv Config";
         CountryRegion: Record "Country/Region";
         VatRegNoFieldRef: FieldRef;
         VATRegNoTxt: Text[20];
+        IsHandled: Boolean;
+        VATRegNoSrvCodeunitId: Integer;
     begin
         RecordRef.GetTable(RecordVariant);
         if not CountryRegion.IsEUCountry(CountryCode) then
@@ -39,10 +41,15 @@ codeunit 60159 "VAT Registration Log Mgt. 2"
             VATRegNoTxt := VatRegNoFieldRef.Value;
 
             VATRegistrationLog.InitVATRegLog(VATRegistrationLog, CountryCode, AccountType, EntryNo, VATRegNoTxt);
+
+            OnBeforeCheckVIESForVATNoCodeunit(VATRegNoSrvCodeunitId, IsHandled);
+            if IsHandled then
+                exit;
+
             if VATRegNoSrvCodeunitId <> 0 then
                 Codeunit.Run(VATRegNoSrvCodeunitId, VATRegistrationLog)
             else
-                Codeunit.Run(Codeunit::"VAT Lookup Ext. Data Hndl 1", VATRegistrationLog);
+                Codeunit.Run(Codeunit::"VATLookupExtDataHndlDefault", VATRegistrationLog);
         end;
     end;
 
@@ -70,5 +77,10 @@ codeunit 60159 "VAT Registration Log Mgt. 2"
                     Message(NotVerifiedVATRegMsg);
             end;
         end;
+    end;
+
+    [IntegrationEvent(false, false)]
+    local procedure OnBeforeCheckVIESForVATNoCodeunit(var VATRegNoSrvCodeunitId: Integer; var IsHandled: Boolean)
+    begin
     end;
 }
