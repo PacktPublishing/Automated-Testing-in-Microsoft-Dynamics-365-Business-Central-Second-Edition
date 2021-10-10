@@ -11,7 +11,7 @@ codeunit 60199 "InvalidVATLookupDataHndlMock"
 
     local procedure SetInvalidVATRegistrationLog(var VATRegistrationLog: Record "VAT Registration Log")
     var
-        VATRegistrationLogMgt: Codeunit "VAT Registration Log Mgt. 1";
+        VATRegistrationLogMgt: Codeunit "VAT Reg. Log Mgt. Default";
         InvalidVATResponseDoc: DotNet XmlDocument;
         NamespaceTxt: Label 'urn:ec.europa.eu:taxud:vies:services:checkVat:types', Locked = true;
     begin

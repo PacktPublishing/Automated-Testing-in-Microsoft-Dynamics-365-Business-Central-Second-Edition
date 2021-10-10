@@ -1,4 +1,4 @@
-codeunit 60149 "VAT Registration Log Mgt. 1"
+codeunit 60149 "VAT Reg. Log Mgt. Default"
 // abstracted from codeunit 249 "VAT Registration Log Mgt."
 {
     Permissions = TableData "VAT Registration Log" = rimd;
@@ -130,7 +130,7 @@ codeunit 60149 "VAT Registration Log Mgt. 1"
             VATRegNoTxt := VatRegNoFieldRef.Value;
 
             VATRegistrationLog.InitVATRegLog(VATRegistrationLog, CountryCode, AccountType, EntryNo, VATRegNoTxt);
-            Codeunit.Run(CODEUNIT::"VAT Lookup Ext. Data Hndl 1", VATRegistrationLog);
+            Codeunit.Run(CODEUNIT::"VATLookupExtDataHndlDefault", VATRegistrationLog);
         end;
     end;
 
