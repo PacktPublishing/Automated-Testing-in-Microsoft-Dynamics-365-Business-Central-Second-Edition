@@ -13,93 +13,90 @@ codeunit 81025 "LookupValue UT Posting"
         Assert: Codeunit "Library Assert";
 
     [Test]
-    procedure CheckFailureOnBeforePostSalesDocEventSubscriber()
+    procedure CheckFailureCheckLookupvalueExistsOnSalesHeaderSalesPosting()
     //[FEATURE] LookupValue UT Posting Sales Document
     var
         SalesHeader: Record "Sales Header";
     begin
-        // [SCENARIO #0100] Check failure OnBeforePostSalesDocEvent subscriber
+        // [SCENARIO #0100] Check failure CheckLookupvalueExistsOnSalesHeader Sales Posting
 
         // [GIVEN] Sales header without lookup value
         // See local variable SalesHeader
 
-        // [WHEN] Trigger OnBeforePostSalesDocEvent
-        asserterror TriggerOnBeforePostSalesDocEvent(SalesHeader);
+        // [WHEN] Trigger CheckLookupvalueExistsOnSalesHeader Sales Posting
+        asserterror TriggerCheckLookupvalueExistsOnSalesHeaderSalesPosting(SalesHeader);
 
         // [THEN] Missing lookup value on sales header error thrown
         VerifyMissingLookupValueOnSalesHeaderErrorThrown(SalesHeader);
     end;
 
     [Test]
-    procedure CheckSuccessOnBeforePostSalesDocEventSubscriber()
+    procedure CheckSuccessCheckLookupvalueExistsOnSalesHeaderSalesPosting()
     //[FEATURE] LookupValue UT Posting Sales Document
     var
         SalesHeader: Record "Sales Header";
     begin
-        // [SCENARIO #0101] Check success OnBeforePostSalesDocEvent subscriber
+        // [SCENARIO #0101] Check success CheckLookupvalueExistsOnSalesHeader Sales Posting
 
         // [GIVEN] Sales header with lookup value
         SalesHeader."Lookup Value Code" := 'SC #0101';
 
-        // [WHEN] Trigger OnBeforePostSalesDocEvent
-        TriggerOnBeforePostSalesDocEvent(SalesHeader);
+        // [WHEN] Trigger CheckLookupvalueExistsOnSalesHeader Sales Posting
+        TriggerCheckLookupvalueExistsOnSalesHeaderSalesPosting(SalesHeader);
 
         // [THEN] No error thrown
         VerifyNoErrorThrown();
     end;
 
     [Test]
-    procedure CheckFailureOnBeforePostSourceDocumentEventSubscriber()
+    procedure CheckFailureCheckLookupvalueExistsOnSalesHeaderWhsePosting()
     // [FEATURE] LookupValue UT Posting Warehouse Shipment
     var
         SalesHeader: Record "Sales Header";
     begin
-        // [SCENARIO #0102] Check failure OnBeforePostSourceDocumentEvent subscriber
+        // [SCENARIO #0102] Check failure CheckLookupvalueExistsOnSalesHeader Whse. Posting
 
         // [GIVEN] Sales header with number and without lookup value
         SalesHeader."No." := 'SC #0102';
 
-        // [WHEN] Trigger OnBeforePostSourceDocumentEvent
-        asserterror TriggerOnBeforePostSourceDocumentEvent(SalesHeader);
+        // [WHEN] Trigger CheckLookupvalueExistsOnSalesHeader Whse. Posting
+        asserterror TriggerCheckLookupvalueExistsOnSalesHeaderWhsePosting(SalesHeader);
 
         // [THEN] Missing lookup value on sales header error thrown
         VerifyMissingLookupValueOnSalesHeaderErrorThrown(SalesHeader);
     end;
 
     [Test]
-    procedure CheckSuccessOnBeforePostSourceDocumentEventSubscriber()
+    procedure CheckSuccessCheckLookupvalueExistsOnSalesHeaderWhsePosting()
     // [FEATURE] LookupValue UT Posting Warehouse Shipment
     var
         SalesHeader: Record "Sales Header";
     begin
-        // [SCENARIO #0103] Check success OnBeforePostSourceDocumentEvent subscriber
+        // [SCENARIO #0103] Check success CheckLookupvalueExistsOnSalesHeader Whse. Posting
 
         // [GIVEN] Sales header with number and lookup value
         SalesHeader."No." := 'SC #0103';
         SalesHeader."Lookup Value Code" := 'SC #0103';
 
-        // [WHEN] Trigger OnBeforePostSourceDocumentEvent
-        TriggerOnBeforePostSourceDocumentEvent(SalesHeader);
+        // [WHEN] Trigger CheckLookupvalueExistsOnSalesHeader Whse. Posting
+        TriggerCheckLookupvalueExistsOnSalesHeaderWhsePosting(SalesHeader);
 
         // [THEN] No error thrown
         VerifyNoErrorThrown();
     end;
 
-    local procedure TriggerOnBeforePostSalesDocEvent(SalesHeader: Record "Sales Header")
+    local procedure TriggerCheckLookupvalueExistsOnSalesHeaderSalesPosting(SalesHeader: Record "Sales Header")
     var
         SalesPostEvents: Codeunit SalesPostEvents;
     begin
-        SalesPostEvents.OnBeforePostSalesDocEvent(SalesHeader)
+        SalesPostEvents.CheckLookupvalueExistsOnSalesHeader(SalesHeader)
     end;
 
-    local procedure TriggerOnBeforePostSourceDocumentEvent(SalesHeader: Record "Sales Header")
+    local procedure TriggerCheckLookupvalueExistsOnSalesHeaderWhsePosting(SalesHeader: Record "Sales Header")
     var
-        WhseShptLine: Record "Warehouse Shipment Line";
-        PurchaseHeader: Record "Purchase Header";
-        TransferHeader: Record "Transfer Header";
         WhsePostShipmentEvents: Codeunit WhsePostShipmentEvents;
     begin
-        WhsePostShipmentEvents.OnBeforePostSourceDocumentEvent(WhseShptLine, PurchaseHeader, SalesHeader, TransferHeader);
+        WhsePostShipmentEvents.CheckLookupvalueExistsOnSalesHeader(SalesHeader);
     end;
 
     local procedure VerifyMissingLookupValueOnSalesHeaderErrorThrown(SalesHeader: Record "Sales Header")
