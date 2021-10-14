@@ -11,15 +11,8 @@
   "url": "",
   "logo": "",
   "dependencies": [],
-  "internalsVisibleTo": [
-    {
-      "id": "78ba7129-4003-40b6-8c5b-90d514eb088b",
-      "name": "TestLookupValue",
-      "publisher": "fluxxus.nl"
-    }
-  ],
   "screenshots": [],
-  "platform": "18.0.0.0",
+  "platform": "1.0.0.0",
   "application": "18.0.0.0",
   "idRanges": [
     {
@@ -28,6 +21,10 @@
     }
   ],
   "target": "OnPrem",
-  "showMyCode": true,
-  "runtime": "7.0"
+  "resourceExposurePolicy": {
+    "allowDebugging": true,
+    "allowDownloadingSource": false,
+    "includeSourceInSymbolFile": false
+  },
+  "runtime": "8.0"
 }
