@@ -1,11 +1,16 @@
-codeunit 50003 "ContactEvents"
+codeunit 50003 ContactEvents
 {
     [EventSubscriber(ObjectType::Table, Database::Contact, 'OnCreateCustomerFromTemplateOnBeforeCustomerInsert', '', false, false)]
-    internal procedure OnCreateCustomerFromTemplateOnBeforeCustomerInsertEvent(var Cust: Record Customer; CustomerTemplate: Code[20]; var Contact: Record Contact)
+    local procedure OnCreateCustomerFromTemplateOnBeforeCustomerInsertEvent(var Cust: Record Customer; CustomerTemplate: Code[20]; var Contact: Record Contact)
+    begin
+        ApplyLookupValueFromCustomerTemplate(Cust, CustomerTemplate);
+    end;
+
+    procedure ApplyLookupValueFromCustomerTemplate(var Customer: Record Customer; CustomerTemplateCode: Code[20])
     var
         CustomerTempl: Record "Customer Templ.";
     begin
-        CustomerTempl.Get(CustomerTemplate);
-        Cust."Lookup Value Code" := CustomerTempl."Lookup Value Code";
+        CustomerTempl.Get(CustomerTemplateCode);
+        Customer."Lookup Value Code" := CustomerTempl."Lookup Value Code";
     end;
 }

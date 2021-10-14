@@ -15,41 +15,41 @@ codeunit 81026 "LookupValue UT Inheritance"
         LibraryMessages: Codeunit "Library - Messages";
 
     [Test]
-    procedure CheckOnAfterCopySellToCustomerAddressFieldsFromCustomerEventSubscriber()
+    procedure CheckInheritLookupValueFromCustomer()
     // [FEATURE] LookupValue UT Inheritance
     var
         Customer: Record Customer;
         SalesHeader: Record "Sales Header";
     begin
-        // [SCENARIO #0104] Check OnAfterCopySellToCustomerAddressFieldsFromCustomerEvent subscriber
+        // [SCENARIO #0104] Check InheritLookupValueFromCustomer
 
         // [GIVEN] Customer with Lookup value
         Customer."Lookup Value Code" := 'SC #0104';
         // [GIVEN] Sales header without lookup value
         // See local variable SalesHeader
 
-        // [WHEN] OnAfterCopySellToCustomerAddressFieldsFromCustomerEvent is triggered
-        TriggerOnAfterCopySellToCustomerAddressFieldsFromCustomerEvent(SalesHeader, Customer);
+        // [WHEN] Trigger InheritLookupValueFromCustomer
+        TriggerInheritLookupValueFromCustomer(SalesHeader, Customer);
 
         // [THEN] Lookup value on sales document is populated with lookup value of customer
         VerifyLookupValueOnSalesHeader(SalesHeader, Customer."Lookup Value Code");
     end;
 
     [Test]
-    procedure CheckOnCreateCustomerFromTemplateOnBeforeCustomerInsertEventSubscriber()
+    procedure CheckApplyLookupValueFromCustomerTemplateFromContact()
     // [FEATURE] LookupValue UT Inheritance
     var
         Customer: Record Customer;
         CustomerTempl: Record "Customer Templ.";
     begin
-        // [SCENARIO #0105] Check OnCreateCustomerFromTemplateOnBeforeCustomerInsertEvent subscriber
+        // [SCENARIO #0105] Check ApplyLookupValueFromCustomerTemplate from Contact
 
         // [GIVEN] Customer template with lookup value
         CreateCustomerTemplateWithLookupValue(CustomerTempl);
         // [GIVEN] Customer
         // See local variable Customer
 
-        // [WHEN] OnCreateCustomerFromTemplateOnBeforeCustomerInsertEvent is triggered
+        // [WHEN] Trigger ApplyLookupValueFromCustomerTemplate
         TriggerOnCreateCustomerFromTemplateOnBeforeCustomerInsertEvent(Customer, CustomerTempl.Code);
 
         // [THEN] Lookup value on customer is populated with lookup value of customer template
@@ -71,19 +71,18 @@ codeunit 81026 "LookupValue UT Inheritance"
         exit(LibraryLookupValue.CreateLookupValueCode())
     end;
 
-    local procedure TriggerOnAfterCopySellToCustomerAddressFieldsFromCustomerEvent(var SalesHeader: Record "Sales Header"; SellToCustomer: Record Customer)
+    local procedure TriggerInheritLookupValueFromCustomer(var SalesHeader: Record "Sales Header"; SellToCustomer: Record Customer)
     var
         SalesHeaderEvents: Codeunit SalesHeaderEvents;
     begin
-        SalesHeaderEvents.OnAfterCopySellToCustomerAddressFieldsFromCustomerEvent(SalesHeader, SellToCustomer)
+        SalesHeaderEvents.InheritLookupValueFromCustomer(SalesHeader, SellToCustomer)
     end;
 
     local procedure TriggerOnCreateCustomerFromTemplateOnBeforeCustomerInsertEvent(var Cust: Record Customer; CustomerTemplate: Code[20])
     var
-        Contact: Record Contact;
         ContactEvents: Codeunit ContactEvents;
     begin
-        ContactEvents.OnCreateCustomerFromTemplateOnBeforeCustomerInsertEvent(Cust, CustomerTemplate, Contact);
+        ContactEvents.ApplyLookupValueFromCustomerTemplate(Cust, CustomerTemplate);
     end;
 
     local procedure VerifyLookupValueOnSalesHeader(SalesHeader: Record "Sales Header"; LookupValueCode: Code[10])
