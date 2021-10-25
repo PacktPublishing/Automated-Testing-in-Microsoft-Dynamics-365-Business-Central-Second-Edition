@@ -3,7 +3,6 @@ codeunit 81090 "LookupValue APIV1"
     // Generated on 27-9-2021 at 15:21 by lvanvugt
 
     Subtype = Test;
-    TestPermissions = Disabled;
 
     trigger OnRun()
     begin
