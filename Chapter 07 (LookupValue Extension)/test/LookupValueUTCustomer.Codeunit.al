@@ -79,6 +79,7 @@ codeunit 81000 "LookupValue UT Customer"
     end;
 
     local procedure CreateLookupValueCode(): Code[10]
+    // this smells like duplication ;-) - see test example 1
     var
         LookupValue: Record LookupValue;
     begin

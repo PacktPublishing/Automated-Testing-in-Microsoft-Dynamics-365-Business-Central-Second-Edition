@@ -150,9 +150,9 @@ codeunit 81002 "LookupValue UT Cust. Template"
         Assert.ExpectedError(
             StrSubstNo(
                 ValueCannotBeFoundInTableTxt,
-        CustomerTemplate.FieldCaption("Lookup Value Code"),
-        CustomerTemplate.TableCaption(),
-        LookupValueCode,
-        LookupValue.TableCaption()));
+                CustomerTemplate.FieldCaption("Lookup Value Code"),
+                CustomerTemplate.TableCaption(),
+                LookupValueCode,
+                LookupValue.TableCaption()));
     end;
 }
