@@ -1,7 +1,7 @@
-﻿Import-Module "${env:ProgramFiles}\Microsoft Dynamics 365 Business Central\180\Service\Microsoft.Dynamics.Nav.Apps.Management.psd1" -force -DisableNameChecking
+﻿Import-Module "${env:ProgramFiles}\Microsoft Dynamics 365 Business Central\190\Service\Microsoft.Dynamics.Nav.Apps.Management.psd1" -force -DisableNameChecking
 
 $dvdFilePath = 'place-here-the-filepath-to the-product-dvd-folder'
-$bcServerInstance = 'BC180'
+$bcServerInstance = 'BC190'
 $apps = @()
 
 # get Test Runner app

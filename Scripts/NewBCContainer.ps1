@@ -7,7 +7,7 @@ $accept_eula = $true
 $containerName = 'your-container-name'
 
 # set artifact url
-$artifactUrl = Get-BCArtifactUrl -country "base" -version "18"
+$artifactUrl = Get-BCArtifactUrl -country "base" -version "19"
 
 # set credentials for UserPassword usage
 $login = 'your-user-name'
