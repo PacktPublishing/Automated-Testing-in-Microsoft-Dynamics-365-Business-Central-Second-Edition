@@ -19,7 +19,7 @@
     }
   ],
   "screenshots": [],
-  "platform": "1.0.0.0",
+  "platform": "18.0.0.0",
   "application": "18.0.0.0",
   "idRanges": [
     {
@@ -27,7 +27,7 @@
       "to": 60099
     }
   ],
-  "target":  "OnPrem",
+  "target": "OnPrem",
   "showMyCode": true,
   "runtime": "7.0"
 }
