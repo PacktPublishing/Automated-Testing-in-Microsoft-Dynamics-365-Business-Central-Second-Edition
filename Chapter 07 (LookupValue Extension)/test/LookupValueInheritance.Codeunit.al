@@ -68,23 +68,23 @@ codeunit 81006 "LookupValue Inheritance"
 
     [Test]
     [HandlerFunctions('HandleConfigTemplates')]
-    procedure InheritLookupValueFromConfigurationTemplateToCustomer();
-    //[FEATURE] LookupValue Inheritance - Customer / Configuration Templates
+    procedure InheritLookupValueFromCustomerTemplateToCustomer();
+    //[FEATURE] LookupValue Inheritance - Customer Templates
     var
         CustomerNo: Code[20];
-        ConfigTemplateCode: Code[10];
+        CustomerTemplateCode: Code[10];
     begin
-        //[SCENARIO #0028] Create customer from configuration template with lookup value
+        //[SCENARIO #0028] Create customer from customer template with lookup value
         Initialize();
 
-        //[GIVEN] Configuration template (customer) with lookup value
-        ConfigTemplateCode := CreateCustomerConfigurationTemplateWithLookupValue(LookupValueCode);
+        //[GIVEN] Customer template with lookup value
+        CustomerTemplateCode := CreateCustomerTemplateWithLookupValue(LookupValueCode);
 
-        //[WHEN] Create customer from configuration template
-        LibraryVariableStorage.Enqueue(ConfigTemplateCode);
-        CustomerNo := CreateCustomerFromConfigurationTemplate(ConfigTemplateCode);
+        //[WHEN] Create customer card
+        LibraryVariableStorage.Enqueue(CustomerTemplateCode);
+        CustomerNo := CreateCustomerCard();
 
-        //[THEN] Lookup value on customer is populated with lookup value of configuration template
+        //[THEN] Lookup value on customer is populated with lookup value of customer template
         VerifyLookupValueOnCustomer(CustomerNo, LookupValueCode);
     end;
 
@@ -163,26 +163,20 @@ codeunit 81006 "LookupValue Inheritance"
         Customer.FindFirst();
     end;
 
-    local procedure CreateCustomerConfigurationTemplateWithLookupValue(LookupValueCode: Code[10]): Code[10]
-    // Adopted from Codeunit 132213 Library - Small Business
+    local procedure CreateCustomerTemplateWithLookupValue(LookupValueCode: Code[10]): Code[20]
     var
-        ConfigTemplateHeader: Record "Config. Template Header";
-        Customer: Record Customer;
+        CustomerTemplate: Record "Customer Templ.";
+        LibraryTemplates: Codeunit "Library - Templates";
     begin
-        LibraryRapidStart.CreateConfigTemplateHeader(ConfigTemplateHeader);
-        ConfigTemplateHeader.Validate("Table ID", Database::Customer);
-        ConfigTemplateHeader.Modify(true);
+        LibraryTemplates.CreateCustomerTemplate(CustomerTemplate);
 
-        LibrarySmallBusiness.CreateCustomerTemplateLine(
-            ConfigTemplateHeader,
-            Customer.FieldNo("Lookup Value Code"),
-            Customer.FieldName("Lookup Value Code"),
-            LookupValueCode);
+        CustomerTemplate."Lookup Value Code" := LookupValueCode;
+        CustomerTemplate.Modify();
 
-        exit(ConfigTemplateHeader.Code);
+        exit(CustomerTemplate.Code);
     end;
 
-    local procedure CreateCustomerFromConfigurationTemplate(ConfigurationTemplateCode: Code[10]) CustomerNo: Code[20]
+    local procedure CreateCustomerCard() CustomerNo: Code[20]
     var
         CustomerCard: TestPage "Customer Card";
     begin
@@ -224,9 +218,9 @@ codeunit 81006 "LookupValue Inheritance"
     end;
 
     [ModalPageHandler]
-    procedure HandleConfigTemplates(var ConfigTemplates: TestPage "Config Templates")
+    procedure HandleConfigTemplates(var CustomerTemplates: TestPage "Select Customer Templ. List")
     begin
-        ConfigTemplates.GoToKey(LibraryVariableStorage.DequeueText());
-        ConfigTemplates.OK().Invoke();
+        CustomerTemplates.GoToKey(LibraryVariableStorage.DequeueText());
+        CustomerTemplates.OK().Invoke();
     end;
 }

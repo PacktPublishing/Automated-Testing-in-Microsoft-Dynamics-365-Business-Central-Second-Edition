@@ -78,6 +78,13 @@ codeunit 81026 "LookupValue UT Inheritance"
         SalesHeaderEvents.InheritLookupValueFromCustomer(SalesHeader, SellToCustomer)
     end;
 
+    local procedure TriggerApplyLookupValueFromCustomerTemplate(var Customer: Record Customer; CustomerTempl: Record "Customer Templ.")
+    var
+        CustomerTemplEvents: Codeunit CustomerTemplEvents;
+    begin
+        CustomerTemplEvents.ApplyLookupValueFromCustomerTemplate(Customer, CustomerTempl);
+    end;
+
     local procedure TriggerOnCreateCustomerFromTemplateOnBeforeCustomerInsertEvent(var Cust: Record Customer; CustomerTemplate: Code[20])
     var
         ContactEvents: Codeunit ContactEvents;
