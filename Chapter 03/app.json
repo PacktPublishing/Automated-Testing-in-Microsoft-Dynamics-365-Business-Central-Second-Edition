@@ -27,11 +27,7 @@
       "to": 60099
     }
   ],
-  "target": "OnPrem",
-  "resourceExposurePolicy": {
-    "allowDebugging": true,
-    "allowDownloadingSource": false,
-    "includeSourceInSymbolFile": false
-  },
-  "runtime": "8.0"
+  "target":  "OnPrem",
+  "showMyCode": true,
+  "runtime": "7.0"
 }

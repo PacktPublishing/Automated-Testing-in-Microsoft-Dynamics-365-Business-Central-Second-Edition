@@ -13,6 +13,8 @@ codeunit 81006 "LookupValue Inheritance"
         LibraryMarketing: Codeunit "Library - Marketing";
         LibraryTemplates: Codeunit "Library - Templates";
         LibraryVariableStorage: Codeunit "Library - Variable Storage";
+        LibraryRapidStart: Codeunit "Library - Rapid Start";
+        LibrarySmallBusiness: Codeunit "Library - Small Business";
         LibraryLookupValue: Codeunit "Library - Lookup Value";
         LibraryMessages: Codeunit "Library - Messages";
         isInitialized: Boolean;
@@ -67,23 +69,23 @@ codeunit 81006 "LookupValue Inheritance"
 
     [Test]
     [HandlerFunctions('HandleConfigTemplates')]
-    procedure InheritLookupValueFromCustomerTemplateToCustomer();
-    //[FEATURE] LookupValue Inheritance - Customer Templates
+    procedure InheritLookupValueFromConfigurationTemplateToCustomer();
+    //[FEATURE] LookupValue Inheritance - Customer / Configuration Templates
     var
         CustomerNo: Code[20];
-        CustomerTemplateCode: Code[10];
+        ConfigTemplateCode: Code[10];
     begin
-        //[SCENARIO #0028] Create customer from customer template with lookup value
+        //[SCENARIO #0028] Create customer from configuration template with lookup value
         Initialize();
 
-        //[GIVEN] Customer template with lookup value
-        CustomerTemplateCode := CreateCustomerTemplateWithLookupValue(LookupValueCode);
+        //[GIVEN] Configuration template (customer) with lookup value
+        ConfigTemplateCode := CreateCustomerConfigurationTemplateWithLookupValue(LookupValueCode);
 
-        //[WHEN] Create customer card
-        LibraryVariableStorage.Enqueue(CustomerTemplateCode);
-        CustomerNo := CreateCustomerCard();
+        //[WHEN] Create customer from configuration template
+        LibraryVariableStorage.Enqueue(ConfigTemplateCode);
+        CustomerNo := CreateCustomerFromConfigurationTemplate(ConfigTemplateCode);
 
-        //[THEN] Lookup value on customer is populated with lookup value of customer template
+        //[THEN] Lookup value on customer is populated with lookup value of configuration template
         VerifyLookupValueOnCustomer(CustomerNo, LookupValueCode);
     end;
 
@@ -152,20 +154,26 @@ codeunit 81006 "LookupValue Inheritance"
         Customer.FindFirst();
     end;
 
-    local procedure CreateCustomerTemplateWithLookupValue(LookupValueCode: Code[10]): Code[20]
+    local procedure CreateCustomerConfigurationTemplateWithLookupValue(LookupValueCode: Code[10]): Code[10]
+    // Adopted from Codeunit 132213 Library - Small Business
     var
-        CustomerTemplate: Record "Customer Templ.";
-        LibraryTemplates: Codeunit "Library - Templates";
+        ConfigTemplateHeader: Record "Config. Template Header";
+        Customer: Record Customer;
     begin
-        LibraryTemplates.CreateCustomerTemplate(CustomerTemplate);
+        LibraryRapidStart.CreateConfigTemplateHeader(ConfigTemplateHeader);
+        ConfigTemplateHeader.Validate("Table ID", Database::Customer);
+        ConfigTemplateHeader.Modify(true);
 
-        CustomerTemplate."Lookup Value Code" := LookupValueCode;
-        CustomerTemplate.Modify();
+        LibrarySmallBusiness.CreateCustomerTemplateLine(
+            ConfigTemplateHeader,
+            Customer.FieldNo("Lookup Value Code"),
+            Customer.FieldName("Lookup Value Code"),
+            LookupValueCode);
 
-        exit(CustomerTemplate.Code);
+        exit(ConfigTemplateHeader.Code);
     end;
 
-    local procedure CreateCustomerCard() CustomerNo: Code[20]
+    local procedure CreateCustomerFromConfigurationTemplate(ConfigurationTemplateCode: Code[10]) CustomerNo: Code[20]
     var
         CustomerCard: TestPage "Customer Card";
     begin
@@ -185,9 +193,9 @@ codeunit 81006 "LookupValue Inheritance"
     end;
 
     [ModalPageHandler]
-    procedure HandleConfigTemplates(var CustomerTemplates: TestPage "Select Customer Templ. List")
+    procedure HandleConfigTemplates(var ConfigTemplates: TestPage "Config Templates")
     begin
-        CustomerTemplates.GoToKey(LibraryVariableStorage.DequeueText());
-        CustomerTemplates.OK().Invoke();
+        ConfigTemplates.GoToKey(LibraryVariableStorage.DequeueText());
+        ConfigTemplates.OK().Invoke();
     end;
 }

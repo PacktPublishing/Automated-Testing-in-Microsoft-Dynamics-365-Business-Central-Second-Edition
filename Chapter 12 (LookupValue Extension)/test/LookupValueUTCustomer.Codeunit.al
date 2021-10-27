@@ -58,7 +58,7 @@ codeunit 81000 "LookupValue UT Customer"
     end;
 
     [Test]
-    [HandlerFunctions('HandleCustomerTemplList')]
+    [HandlerFunctions('HandleConfigTemplates')]
     procedure AssignLookupValueToCustomerCard()
     var
         CustomerCard: TestPage "Customer Card";
@@ -127,8 +127,8 @@ codeunit 81000 "LookupValue UT Customer"
     end;
 
     [ModalPageHandler]
-    procedure HandleCustomerTemplList(var CustomerTemplList: TestPage "Select Customer Templ. List")
+    procedure HandleConfigTemplates(var ConfigTemplates: TestPage "Config Templates")
     begin
-        CustomerTemplList.OK().Invoke();
+        ConfigTemplates.OK().Invoke();
     end;
 }

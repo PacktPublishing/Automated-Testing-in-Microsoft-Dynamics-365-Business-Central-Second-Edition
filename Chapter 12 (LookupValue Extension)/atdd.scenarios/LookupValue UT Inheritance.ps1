@@ -12,11 +12,4 @@ Feature 'LookupValue UT Inheritance' {
         When 'Trigger ApplyLookupValueFromCustomerTemplate'
         Then 'Lookup value on customer is populated with lookup value of customer template' 
     }
-
-    Scenario 0106 'Check ApplyLookupValueFromCustomerTemplate' {
-        Given 'Customer template with lookup value'
-        Given 'Customer'
-        When 'Trigger ApplyLookupValueFromCustomerTemplate'
-        Then 'Lookup value on customer is populated with lookup value of customer template'
-    }
 }    

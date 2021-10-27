@@ -56,27 +56,6 @@ codeunit 81026 "LookupValue UT Inheritance"
         VerifyLookupValueOnCustomer(Customer, CustomerTempl."Lookup Value Code");
     end;
 
-    [Test]
-    procedure CheckApplyLookupValueFromCustomerTemplate()
-    // [FEATURE] LookupValue UT Inheritance
-    var
-        Customer: Record Customer;
-        CustomerTempl: Record "Customer Templ.";
-    begin
-        // [SCENARIO #0106] Check ApplyLookupValueFromCustomerTemplate
-
-        // [GIVEN] Customer template with lookup value
-        CustomerTempl."Lookup Value Code" := 'SC #0106';
-        // [GIVEN] Customer
-        // See local variable Customer
-
-        // [WHEN] Trigger ApplyLookupValueFromCustomerTemplate
-        TriggerApplyLookupValueFromCustomerTemplate(Customer, CustomerTempl);
-
-        // [THEN] Lookup value on customer is populated with lookup value of customer template
-        VerifyLookupValueOnCustomer(Customer, CustomerTempl."Lookup Value Code");
-    end;
-
     local procedure CreateCustomerTemplateWithLookupValue(var CustomerTemplate: Record "Customer Templ."): Code[10]
     var
         LibraryTemplates: Codeunit "Library - Templates";

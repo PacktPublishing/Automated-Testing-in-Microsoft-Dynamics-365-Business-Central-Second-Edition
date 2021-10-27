@@ -1,6 +1,6 @@
 /* Query to Remove all user related data to enable testing of APIs - see chapter 13 */
 
-USE [Demo Database BC (19-0)]
+USE [Demo Database BC (18-0)]
 GO
 
 SELECT *  FROM [dbo].[User]
