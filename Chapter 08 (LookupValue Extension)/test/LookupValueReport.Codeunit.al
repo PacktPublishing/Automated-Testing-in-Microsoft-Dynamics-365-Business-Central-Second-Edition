@@ -42,10 +42,6 @@ codeunit 81008 "LookupValue Report"
         if isInitialized then
             exit;
 
-        // Workaround to not get the parsing of XML dataset failing; see https://github.com/PacktPublishing/Automated-Testing-in-Microsoft-Dynamics-365-Business-Central-Second-Edition/issues/9
-        Customer.Get('46525241');
-        Customer.Delete();
-
         isInitialized := true;
         Commit();
     end;
