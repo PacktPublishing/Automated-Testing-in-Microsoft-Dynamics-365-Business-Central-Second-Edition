@@ -148,7 +148,7 @@ codeunit 81004 "LookupValue Sales Archive"
     var
         ArchiveDocumentNo: Label 'Archive %1 no.: %2';
     begin
-        Assert.ExpectedConfirm(
+        Assert.ExpectedMessage(
             StrSubstNo(ArchiveDocumentNo,
                 LibraryVariableStorage.DequeueText(),
                 LibraryVariableStorage.DequeueText()
