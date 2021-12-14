@@ -38,7 +38,7 @@ fields
 **Following is what you need for this book:**
 This book is for consultants, testers, developers, and development managers working with Microsoft Dynamics 365 Business Central. Functional as well as technical development teams will find this book on automated testing techniques useful.
 
-We also provide a PDF file that has color images of the screenshots/diagrams used in this book. [Click here to download it](https://github.com/PacktPublishing/Automated-Testing-in-Microsoft-Dynamics-365-Business-Central-Second-Edition/tree/main/Graphics/).
+We also provide the color images of the screenshots/diagrams used in this book. [Click here to download it](https://github.com/PacktPublishing/Automated-Testing-in-Microsoft-Dynamics-365-Business-Central-Second-Edition/tree/main/Graphics/).
 
 ### Related products
 * Microsoft Dynamics 365 Project Operations [[Packt]](https://www.packtpub.com/product/microsoft-dynamics-365-project-operations/9781801072076?utm_source=github&utm_medium=repository&utm_campaign=9781801072076) [[Amazon]](https://www.amazon.com/dp/1801072078)
