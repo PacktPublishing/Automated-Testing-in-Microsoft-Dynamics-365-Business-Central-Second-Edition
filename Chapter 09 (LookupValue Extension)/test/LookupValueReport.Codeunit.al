@@ -37,7 +37,7 @@ codeunit 81008 "LookupValue Report"
 
     local procedure Initialize()
     var
-        Customer: record Customer;
+        Customer: Record Customer;
     begin
         if isInitialized then
             exit;
