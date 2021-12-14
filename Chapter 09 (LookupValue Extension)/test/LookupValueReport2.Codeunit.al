@@ -1,4 +1,4 @@
-codeunit 81008 "LookupValue Report"
+codeunit 81009 "LookupValue Report 2"
 {
     Subtype = Test;
 
@@ -15,19 +15,19 @@ codeunit 81008 "LookupValue Report"
 
     [Test]
     [HandlerFunctions('CustomerListRequestPageHandler')]
-    procedure TestLookupValueShowsOnCustomerListReport();
+    procedure TestLookupValueShowsOnStandardCustomerListReport();
     //[FEATURE] LookupValue Report
     var
         Customer: array[2] of Record Customer;
     begin
-        //[SCENARIO #0029] Test that lookup value shows on CustomerList report
+        //[SCENARIO #0032] Test that lookup value shows on standard Customer - List report
         Initialize();
 
         //[GIVEN] 2 customers with different lookup value
         CreateCustomerWithLookupValue(Customer[1]);
         CreateCustomerWithLookupValue(Customer[2]);
 
-        //[WHEN] Run report CustomerList
+        //[WHEN] Run standard report Customer - List
         CommitAndRunReportCustomerList();
 
         //[THEN] Report dataset contains both customers with lookup value
@@ -64,18 +64,18 @@ codeunit 81008 "LookupValue Report"
     begin
         Commit(); // close open write transaction to be able to run the report
 
-        RequestPageXML := Report.RunRequestPage(Report::CustomerList, RequestPageXML);
-        LibraryReportDataset.RunReportAndLoad(Report::CustomerList, '', RequestPageXML);
+        RequestPageXML := Report.RunRequestPage(Report::"Customer - List", RequestPageXML);
+        LibraryReportDataset.RunReportAndLoad(Report::"Customer - List", '', RequestPageXML);
     end;
 
     local procedure VerifyCustomerWithLookupValueOnCustomerListReport(No: Code[20]; LookupValueCode: Code[10])
     begin
-        LibraryReportDataset.AssertElementWithValueExists('Customer_No_', No);
+        LibraryReportDataset.AssertElementWithValueExists('Customer__No__', No);
         LibraryReportDataset.AssertElementWithValueExists('Customer_Lookup_Value_Code', LookupValueCode);
     end;
 
     [RequestPageHandler]
-    procedure CustomerListRequestPageHandler(var CustomerListRequestPage: TestRequestPage CustomerList)
+    procedure CustomerListRequestPageHandler(var CustomerListRequestPage: TestRequestPage "Customer - List")
     begin
         // Empty handler used to close the request page, default settings are used
     end;
