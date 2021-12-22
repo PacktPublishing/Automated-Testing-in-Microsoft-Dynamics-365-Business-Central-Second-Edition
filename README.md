@@ -50,3 +50,9 @@ We also provide the color images of the screenshots/diagrams used in this book. 
 ## Get to Know the Author
 
 In 1999, **Luc van Vugt** stepped into the Dynamics 365 Business Central (BC) world, training many developers. After Microsoft acquired Navision, he joined their Dynamics localization team as tester and project lead, 6 years closely involved with all BC releases. Since he left MS, he became an active community member with his blog, Dutch Dynamics Community and as conference speaker. He co-founded NAV Skills, supporting BC pros with workshops and webinars until 2019. He continues ever since with webinars under the flag of Areopa. For all this work, Luc has been awarded MS MVP since 2011. In 2012, he started fluxxus.nl mainly focusing on BC development courses and workshops on test automation, on the latter a main driving force in the community.
+
+## Addenda to the book
+
+As with any other project this book had a certain scope and due to that some things fell out of this scope. These out-scoped items have been partly parked as [issues](https://github.com/PacktPublishing/Automated-Testing-in-Microsoft-Dynamics-365-Business-Central-Second-Edition/issues) on this repo and partly on a WIP list. Over time most of these issues will be tackled as an _addedum_ post on Luc's [blog](https://fluxxus.nl) and a new commit on this repo. Everytime a new _addendum_ is handled a reference to it will be listed here.
+
+- [Addendum #01](https://www.fluxxus.nl/index.php/bc/addendum-01-scenario-0032-test-that-lookup-value-shows-on-standard-customer-list-report/) – Scenario 0032 ‘Test that lookup value shows on standard Customer – List report’
