@@ -2,9 +2,6 @@ codeunit 81020 "LookupValue Permissions"
 {
     Subtype = Test;
 
-    var
-        LibraryLookupValue: Codeunit "Library - Lookup Value";
-
     trigger OnRun()
     begin
         //[FEATURE] LookupValue Permissions
@@ -14,6 +11,7 @@ codeunit 81020 "LookupValue Permissions"
         Assert: Codeunit "Library Assert";
         LibraryUtility: Codeunit "Library - Utility";
         LibraryLowerPermissions: Codeunit "Library - Lower Permissions";
+        LibraryLookupValue: Codeunit "Library - Lookup Value";
 
     [Test]
     procedure CreateLookupValueWithoutPermissions()
@@ -56,7 +54,7 @@ codeunit 81020 "LookupValue Permissions"
 
         //[GIVEN] Unrestricted starting permissions
         SetUnrestrictedStartingPermissions();
-        //[GIVEN] Create lookup value
+        //[GIVEN] Lookup value
         LookupValueCode := CreateLookupValueCode();
         //[GIVEN] Full base permissions
         SetFullBasePermissions();
@@ -77,7 +75,7 @@ codeunit 81020 "LookupValue Permissions"
 
         //[GIVEN] Unrestricted starting permissions
         SetUnrestrictedStartingPermissions();
-        //[GIVEN] Create lookup value
+        //[GIVEN] Lookup value
         LookupValueCode := CreateLookupValueCode();
         //[GIVEN] Full base permissions extended with Lookup Value
         SetFullBasePermissionsExtendedWithLookupValue();
@@ -98,7 +96,7 @@ codeunit 81020 "LookupValue Permissions"
 
         //[GIVEN] Unrestricted starting permissions
         SetUnrestrictedStartingPermissions();
-        //[GIVEN] Create lookup value
+        //[GIVEN] Lookup value
         CreateLookupValue(LookupValue);
         //[GIVEN] Full base permissions
         SetFullBasePermissions();
@@ -119,7 +117,7 @@ codeunit 81020 "LookupValue Permissions"
 
         //[GIVEN] Unrestricted starting permissions
         SetUnrestrictedStartingPermissions();
-        //[GIVEN] Create lookup value
+        //[GIVEN] Lookup value
         CreateLookupValue(LookupValue);
         //[GIVEN] Full base permissions extended with Lookup Value
         SetFullBasePermissionsExtendedWithLookupValue();
@@ -140,7 +138,7 @@ codeunit 81020 "LookupValue Permissions"
 
         //[GIVEN] Unrestricted starting permissions
         SetUnrestrictedStartingPermissions();
-        //[GIVEN] Create lookup value
+        //[GIVEN] Lookup value
         CreateLookupValue(LookupValue);
         //[GIVEN] Full base permissions
         SetFullBasePermissions();
@@ -161,7 +159,7 @@ codeunit 81020 "LookupValue Permissions"
 
         //[GIVEN] Unrestricted starting permissions
         SetUnrestrictedStartingPermissions();
-        //[GIVEN] Create lookup value
+        //[GIVEN] Lookup value
         CreateLookupValue(LookupValue);
         //[GIVEN] Full base permissions extended with Lookup Value
         SetFullBasePermissionsExtendedWithLookupValue();
@@ -182,7 +180,7 @@ codeunit 81020 "LookupValue Permissions"
 
         //[GIVEN] Unrestricted starting permissions
         SetUnrestrictedStartingPermissions();
-        //[Given] Lookup value
+        //[GIVEN] Lookup value
         CreateLookupValueCode();
         //[GIVEN] Full base permissions
         SetFullBasePermissions();
