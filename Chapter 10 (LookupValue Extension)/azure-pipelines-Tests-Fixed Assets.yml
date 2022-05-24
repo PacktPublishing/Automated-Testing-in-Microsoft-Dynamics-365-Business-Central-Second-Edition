@@ -128,4 +128,6 @@ jobs:
   - task: ALOpsDockerRemove@1
     displayName: 'ALOPS - Remove Docker Container'
     enabled: true
+    inputs:
+      createsqlbackup: $(createSqlBackup)
     condition: always()
