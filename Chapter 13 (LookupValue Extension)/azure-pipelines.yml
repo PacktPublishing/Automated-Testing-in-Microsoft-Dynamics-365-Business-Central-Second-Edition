@@ -57,6 +57,8 @@ steps:
   inputs:
     usedocker: true
     disabledtests: '$(Build.SourcesDirectory)/Chapter 13 (LookupValue Extension)/disabledtests/DisabledTests.json'
+    import_testtoolkit: false
+    import_action: 'Skip'
     testpage: '130455'
     testsuite: 'API'
     failed_test_action: 'Ignore'
