@@ -25,6 +25,8 @@ steps:
 
 - task: ALOpsDockerStart@1
   displayName: 'ALOPS - Start Docker Container' # No need to provide any details - it will get the details from previous step
+  inputs:
+    enable_api_services: true
 
 - task: ALOpsDockerWait@1
   displayName: 'ALOPS - Wait for Docker Container to start'
