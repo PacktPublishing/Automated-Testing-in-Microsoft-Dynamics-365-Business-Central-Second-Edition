@@ -25,6 +25,8 @@ steps:
 
 - task: ALOpsDockerStart@1
   displayName: 'ALOPS - Start Docker Container' # No need to provide any details - it will get the details from previous step
+  inputs:
+    enable_api_services: true
 
 - task: ALOpsDockerWait@1
   displayName: 'ALOPS - Wait for Docker Container to start'
@@ -79,6 +81,18 @@ steps:
     failed_test_action: 'Ignore'
   continueOnError: true
 
+- task: ALOpsAppTest@1
+  displayName: 'ALOPS - Run TestSuite for API'
+  inputs:
+    usedocker: true
+    disabledtests: '$(Build.SourcesDirectory)/Chapter 13 (LookupValue Extension)/disabledtests/DisabledTests.json'
+    import_testtoolkit: false
+    import_action: 'Skip'
+    testpage: '130455'
+    testsuite: 'API'
+    failed_test_action: 'Ignore'
+  continueOnError: true
+
 - task: PublishTestResults@2
   displayName: 'Publish Test Results **/TestResults.xml'
   inputs:
@@ -87,10 +101,26 @@ steps:
     failTaskOnFailedTests: true
     testRunTitle: 'BC Test Results: $(Build.BuildId)'
 
-- task: PublishPipelineArtifact@1
-  displayName: 'Publish Artifact: Test Results **/TestResults.xml'
+- task: PowerShell@2
+  displayName: "Create DisabledTests.json"
   inputs:
-    targetPath: '$(System.DefaultWorkingDirectory)/TestResults.xml'
+    filePath: '$(Build.SourcesDirectory)/Chapter 13 (LookupValue Extension)/disabledtests/ConvertTo-DisabledTests.ps1'
+    arguments: '-inputFolderPath ''$(System.DefaultWorkingDirectory)/'''
+    errorActionPreference: 'continue'
+  condition: always()
+
+- task: CopyFiles@2
+  displayName: 'Copy Test Artifacts to $(Agent.BuildDirectory)/TestResults'
+  inputs:
+    SourceFolder: '$(Build.Sourcesdirectory)'
+    Contents: ?(TestResults.xml|DisabledTests.json)
+    TargetFolder: '$(Agent.BuildDirectory)/TestResults'
+  condition: always()
+
+- task: PublishPipelineArtifact@1
+  displayName: 'Publish Test Artifacts: TestResults.xml and DisabledTests.json'
+  inputs:
+    targetPath: '$(Agent.BuildDirectory)/TestResults'
     artifact: 'TestResults'
     publishLocation: 'pipeline'
   condition: always()
