@@ -21,7 +21,7 @@ codeunit 80097 "Install API TestSuite"
         TestSuiteMgt.CreateTestSuite(SuiteName);
         ALTestSuite.Get(SuiteName);
 
-        TestSuiteMgt.SelectTestMethodsByRange(ALTestSuite, '80000..89999');
+        TestSuiteMgt.SelectTestMethodsByRange(ALTestSuite, '81090');
         TestSuiteMgt.ChangeTestRunner(ALTestSuite, 130451);
     end;
 }
