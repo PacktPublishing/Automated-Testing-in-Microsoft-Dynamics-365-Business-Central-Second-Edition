@@ -1,3 +1,7 @@
+## [Get this title for $10 on Packt's Spring Sale](https://www.packt.com/B17489?utm_source=github&utm_medium=packt-github-repo&utm_campaign=spring_10_dollar_2022)
+-----
+For a limited period, all eBooks and Videos are only $10. All the practical content you need \- by developers, for developers
+
 # Automated Testing in Microsoft Dynamics 365 Business Central - Second Edition
 
 <a href="https://www.packtpub.com/product/automated-testing-in-microsoft-dynamics-365-business-central-second-edition/9781801816427?utm_source=github&utm_medium=repository&utm_campaign=9781801816427"><img src="https://static.packt-cdn.com/products/9781801816427/cover/smaller" alt="Automated Testing in Microsoft Dynamics 365 Business Central - Second Edition" height="256px" align="right"></a>
