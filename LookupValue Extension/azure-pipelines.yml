@@ -89,6 +89,7 @@ steps:
     import_action: 'Skip'
     testpage: '130455'
     testsuite: 'API'
+    testfilter: '81090'
     failed_test_action: 'Ignore'
   continueOnError: true
 
