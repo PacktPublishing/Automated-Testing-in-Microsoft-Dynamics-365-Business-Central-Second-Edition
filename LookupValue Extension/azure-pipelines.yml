@@ -80,6 +80,18 @@ steps:
     failed_test_action: 'Ignore'
   continueOnError: true
 
+- task: ALOpsAppTest@1
+  displayName: 'ALOPS - Run TestSuite'
+  inputs:
+    usedocker: true
+    disabledtests: '$(Build.SourcesDirectory)/LookupValue Extension/Test/disabledtests/DisabledTests.json'
+    import_testtoolkit: false
+    import_action: 'Skip'
+    testpage: '130455'
+    extensionid: '78ba7129-4003-40b6-8c5b-90d514eb088b'
+    failed_test_action: 'Ignore'
+  continueOnError: true
+
 - task: PublishTestResults@2
   displayName: 'Publish Test Results **/TestResults.xml'
   inputs:
