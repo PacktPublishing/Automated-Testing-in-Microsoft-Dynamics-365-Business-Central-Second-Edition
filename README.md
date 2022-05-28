@@ -61,3 +61,4 @@ As with any other project this book had a certain scope and due to that some thi
 
 - [Addendum #01](https://www.fluxxus.nl/index.php/bc/addendum-01-scenario-0032-test-that-lookup-value-shows-on-standard-customer-list-report/) – Scenario 0032 ‘Test that lookup value shows on standard Customer – List report’
 - [Addendum #02](https://www.fluxxus.nl/index.php/bc/addendum-02-including-all-extended-pages-in-permissions-testing/) – Including all extended pages in permissions testing
+- [Addendum #03](https://www.fluxxus.nl/index.php/bc/addendum-03-simplifying-api-testing-using-basic-authentication/) – Simplifying API testing using basic authentication
