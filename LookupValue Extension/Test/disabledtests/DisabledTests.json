@@ -4,6 +4,7 @@
     { "codeunitId": 134025,"codeunitName": "ERM Unrealized VAT Customer","method": "ThreePartialPaymentsOfUnrealVATSalesInvoiceWithThreeLines" },
     { "codeunitId": 134026,"codeunitName": "ERM Unrealized VAT Vendor","method": "UnrealizedVATWithCreditMemo" },
     { "codeunitId": 134029,"codeunitName": "ERM VAT On Gen Journal Line","method": "PositiveVATDiffOnGenJnlLine" },
+    { "codeunitId": 134039,"codeunitName": "ERM Inv Disc VAT Sale/Purchase","method": "SalesLineDiscountWhenPostItemCharge" },
     { "codeunitId": 134051,"codeunitName": "ERM VAT Tool - Sales Doc","method": "VATToolSalesBlOrdMakePShpMake" },
     { "codeunitId": 134052,"codeunitName": "ERM VAT Tool - Purch. Doc","method": "VATToolPurchaseBlOrdMakePShpMk" },
     { "codeunitId": 134053,"codeunitName": "ERM VAT Tool - Serv. Doc","method": "VATToollServOrderPartShipAndConsume" },
