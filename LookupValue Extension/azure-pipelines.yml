@@ -99,10 +99,10 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      $TestResultsAPI = [xml](Get-Content -Path $PSScriptRoot/TestResultsAPI.xml)
-      $TestResultsRest = [xml](Get-Content -Path $PSScriptRoot/TestResults.Restxml)
+      $TestResultsAPI = [xml](Get-Content -Path $(Build.SourcesDirectory)/TestResultsAPI.xml)
+      $TestResultsRest = [xml](Get-Content -Path $(Build.SourcesDirectory)/TestResults.Restxml)
       $TestResultsRest.DocumentElement.ChildNodes | ForEach-Object { $TestResultsAPI.DocumentElement.AppendChild($TestResultsAPI.ImportNode($_, $true)) | Out-Null }
-      Set-Content -Path $PSScriptRoot/TestResults.xml -Value ($TestResultsAPI.OuterXml)
+      Set-Content -Path $(Build.SourcesDirectory)/TestResults.xml -Value ($TestResultsAPI.OuterXml)
 
 - task: PublishTestResults@2
   displayName: 'Publish Test Results **/TestResults.xml'
