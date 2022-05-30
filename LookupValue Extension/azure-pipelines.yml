@@ -100,7 +100,7 @@ steps:
     targetType: 'inline'
     script: |
       $TestResults1 = [xml](Get-Content -Path $(Build.SourcesDirectory)/TestResults1.xml)
-      $TestResults2 = [xml](Get-Content -Path $(Build.SourcesDirectory)/TestResults.Restxml)
+      $TestResults2 = [xml](Get-Content -Path $(Build.SourcesDirectory)/TestResults2.xml)
       $TestResults2.DocumentElement.ChildNodes | ForEach-Object { $TestResults1.DocumentElement.AppendChild($TestResults1.ImportNode($_, $true)) | Out-Null }
       Set-Content -Path $(Build.SourcesDirectory)/TestResults.xml -Value ($TestResults1.OuterXml)
 
