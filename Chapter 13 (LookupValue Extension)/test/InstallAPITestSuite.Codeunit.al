@@ -21,7 +21,7 @@ codeunit 80097 "Install API TestSuite"
         TestSuiteMgt.CreateTestSuite(SuiteName);
         ALTestSuite.Get(SuiteName);
 
-        TestSuiteMgt.SelectTestMethodsByRange(ALTestSuite, '81090');
-        TestSuiteMgt.ChangeTestRunner(ALTestSuite, 130451);
+        TestSuiteMgt.SelectTestMethodsByRange(ALTestSuite, StrSubstNo('%1', Codeunit::"LookupValue APIV1"));
+        TestSuiteMgt.ChangeTestRunner(ALTestSuite, Codeunit::"Test Runner - Isol. Disabled");
     end;
 }
