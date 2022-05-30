@@ -78,6 +78,7 @@ steps:
     testpage: '130455'
     testsuite: 'API'
     failed_test_action: 'Ignore'
+    resultfilename: 'TestResultsAPI.xml'
   continueOnError: true
 
 - task: ALOpsAppTest@1
