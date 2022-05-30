@@ -77,8 +77,8 @@ steps:
     import_action: 'Skip'
     testpage: '130455'
     testsuite: 'API'
-    failed_test_action: 'Ignore'
     resultfilename: 'TestResultsAPI.xml'
+    failed_test_action: 'Ignore'
   continueOnError: true
 
 - task: ALOpsAppTest@1
@@ -90,8 +90,19 @@ steps:
     import_action: 'Skip'
     testpage: '130455'
     extensionid: '78ba7129-4003-40b6-8c5b-90d514eb088b'
+    resultfilename: 'TestResultsRest.xml'
     failed_test_action: 'Ignore'
   continueOnError: true
+
+- task: PowerShell@2
+  displayName: 'Merge test Results'
+  inputs:
+    targetType: 'inline'
+    script: |
+      $TestResultsAPI = [xml](Get-Content -Path $PSScriptRoot/TestResultsAPI.xml)
+      $TestResultsRest = [xml](Get-Content -Path $PSScriptRoot/TestResults.Restxml)
+      $TestResultsRest.DocumentElement.ChildNodes | ForEach-Object { $TestResultsAPI.DocumentElement.AppendChild($TestResultsAPI.ImportNode($_, $true)) | Out-Null }
+      Set-Content -Path $PSScriptRoot/TestResults.xml -Value ($TestResultsAPI.OuterXml)
 
 - task: PublishTestResults@2
   displayName: 'Publish Test Results **/TestResults.xml'
