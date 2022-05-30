@@ -77,7 +77,7 @@ steps:
     import_action: 'Skip'
     testpage: '130455'
     testsuite: 'API'
-    resultfilename: 'TestResultsAPI.xml'
+    resultfilename: 'TestResults1.xml'
     failed_test_action: 'Ignore'
   continueOnError: true
 
@@ -90,7 +90,7 @@ steps:
     import_action: 'Skip'
     testpage: '130455'
     extensionid: '78ba7129-4003-40b6-8c5b-90d514eb088b'
-    resultfilename: 'TestResultsRest.xml'
+    resultfilename: 'TestResults2.xml'
     failed_test_action: 'Ignore'
   continueOnError: true
 
@@ -99,10 +99,10 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      $TestResultsAPI = [xml](Get-Content -Path $(Build.SourcesDirectory)/TestResultsAPI.xml)
-      $TestResultsRest = [xml](Get-Content -Path $(Build.SourcesDirectory)/TestResults.Restxml)
-      $TestResultsRest.DocumentElement.ChildNodes | ForEach-Object { $TestResultsAPI.DocumentElement.AppendChild($TestResultsAPI.ImportNode($_, $true)) | Out-Null }
-      Set-Content -Path $(Build.SourcesDirectory)/TestResults.xml -Value ($TestResultsAPI.OuterXml)
+      $TestResults1 = [xml](Get-Content -Path $(Build.SourcesDirectory)/TestResults1.xml)
+      $TestResults2 = [xml](Get-Content -Path $(Build.SourcesDirectory)/TestResults.Restxml)
+      $TestResults2.DocumentElement.ChildNodes | ForEach-Object { $TestResults1.DocumentElement.AppendChild($TestResults1.ImportNode($_, $true)) | Out-Null }
+      Set-Content -Path $(Build.SourcesDirectory)/TestResults.xml -Value ($TestResults1.OuterXml)
 
 - task: PublishTestResults@2
   displayName: 'Publish Test Results **/TestResults.xml'
