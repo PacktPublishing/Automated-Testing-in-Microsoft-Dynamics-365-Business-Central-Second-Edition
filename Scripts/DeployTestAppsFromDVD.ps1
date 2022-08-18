@@ -1,8 +1,17 @@
-﻿Import-Module "${env:ProgramFiles}\Microsoft Dynamics 365 Business Central\190\Service\Microsoft.Dynamics.Nav.Apps.Management.psd1" -force -DisableNameChecking
+﻿$serverFilePath = "${env:ProgramFiles}\Microsoft Dynamics 365 Business Central\190\Service"
+
+Import-Module "$serverFilePath\Microsoft.Dynamics.Nav.Apps.Management.psd1" -force -DisableNameChecking
+Import-Module "$serverFilePath\Microsoft.Dynamics.Nav.Management.psd1" -force -DisableNameChecking
 
 $dvdFilePath = 'place-here-the-filepath-to the-product-dvd-folder'
 $bcServerInstance = 'BC190'
 $apps = @()
+
+# copy MockTest.dll to server folder
+if ((Test-Path "$dvdFilePath\Test Assemblies\Mock Assemblies") -and (Test-Path "$serverFilePath\Add-ins") -and ((Test-Path "$serverFilePath\Add-ins\MockTest.dll") -eq $false)) {
+    Copy-Item -Path "$dvdFilePath\Test Assemblies\Mock Assemblies\MockTest.dll" -Destination "$serverFilePath\Add-ins"
+    Restart-NAVServerInstance $bcServerInstance
+}
 
 # get Test Runner app
 if (Test-Path  "$dvdFilePath\Applications\TestFramework\TestRunner") {
