@@ -22,6 +22,7 @@ steps:
     versionselect: 'nextmajor'
     sastoken: '$(BCInsiderToken)'
     forcecreateimage: $(forceCreateImage)
+    licensefile: '$(LuxBeheerBcDevLicense)'
     includetesttoolkit: true
     includetestlibrariesonly: true
 
