@@ -1,7 +1,7 @@
 codeunit 81020 "LookupValue Permissions"
 {
     Subtype = Test;
-    TestPermissions = Disabled;
+    TestPermissions = Restrictive;
 
     trigger OnRun()
     begin
@@ -20,7 +20,7 @@ codeunit 81020 "LookupValue Permissions"
         //[SCENARIO #0041] Create lookup value without permissions
 
         //[GIVEN] Full base starting permissions
-        SetFullBaseStartingPermissions();
+        // Full base starting permissions automatically set based on TestPermissions property
 
         //[WHEN] Create lookup value
         asserterror CreateLookupValueCode();
@@ -37,7 +37,8 @@ codeunit 81020 "LookupValue Permissions"
         //[SCENARIO #0042] Create lookup value with permissions
 
         //[GIVEN] Full base starting permissions extended with Lookup Value permissions
-        SetFullBaseStartingPermissionsExtendedWithLookupValue();
+        // Full base starting permissions automatically set based on TestPermissions property
+        AddLookupValuePermissions();
 
         //[WHEN] Create lookup value
         LookupValueCode := CreateLookupValueCode();
@@ -201,7 +202,8 @@ codeunit 81020 "LookupValue Permissions"
         //[SCENARIO #0050] Open Lookup Values Page with permissions
 
         //[GIVEN] Full base starting permissions extended with Lookup Value permissions
-        SetFullBaseStartingPermissionsExtendedWithLookupValue();
+        // Full base starting permissions automatically set based on TestPermissions property
+        AddLookupValuePermissions();
         //[GIVEN] Clear last error
         ClearLastError();
 
@@ -220,7 +222,7 @@ codeunit 81020 "LookupValue Permissions"
         //[SCENARIO #0051] Check lookup value on customer card without permissions
 
         //[GIVEN] Full base starting permissions
-        SetFullBaseStartingPermissions();
+        // Full base starting permissions automatically set based on TestPermissions property
 
         //[WHEN] Open customer card
         CustomerCard.OpenView();
@@ -237,7 +239,8 @@ codeunit 81020 "LookupValue Permissions"
         //[SCENARIO #0052] Check lookup value on customer card with permissions
 
         //[GIVEN] Full base starting permissions extended with Lookup Value permissions
-        SetFullBaseStartingPermissionsExtendedWithLookupValue();
+        // Full base starting permissions automatically set based on TestPermissions property
+        AddLookupValuePermissions();
 
         //[WHEN] Open customer card
         CustomerCard.OpenView();
@@ -254,7 +257,7 @@ codeunit 81020 "LookupValue Permissions"
         //[SCENARIO #0053] Check lookup value on customer list without permissions
 
         //[GIVEN] Full base starting permissions
-        SetFullBaseStartingPermissions();
+        // Full base starting permissions automatically set based on TestPermissions property
 
         //[WHEN] Open customer list
         CustomerList.OpenView();
@@ -271,24 +274,14 @@ codeunit 81020 "LookupValue Permissions"
         //[SCENARIO #0054] Check lookup value on customer list with permissions
 
         //[GIVEN] Full base starting permissions extended with Lookup Value permissions
-        SetFullBaseStartingPermissionsExtendedWithLookupValue();
+        // Full base starting permissions automatically set based on TestPermissions property
+        AddLookupValuePermissions();
 
         //[WHEN] Open customer list
         CustomerList.OpenView();
 
         //[THEN] Lookup value field shown
         VerifyLookupValueShownOnCustomerList(CustomerList);
-    end;
-
-    local procedure SetFullBaseStartingPermissions()
-    begin
-        LibraryLowerPermissions.StartLoggingNAVPermissions('D365 BUS FULL ACCESS');
-    end;
-
-    local procedure SetFullBaseStartingPermissionsExtendedWithLookupValue()
-    begin
-        SetFullBaseStartingPermissions();
-        AddLookupValuePermissions();
     end;
 
     local procedure SetFullBasePermissions()
