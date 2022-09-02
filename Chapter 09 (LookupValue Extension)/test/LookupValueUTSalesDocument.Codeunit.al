@@ -1,6 +1,7 @@
 codeunit 81001 "LookupValue UT Sales Document"
 {
     Subtype = Test;
+    TestPermissions = Disabled;
 
     trigger OnRun()
     begin

@@ -1,6 +1,7 @@
 codeunit 81020 "LookupValue Permissions"
 {
     Subtype = Test;
+    TestPermissions = Disabled;
 
     trigger OnRun()
     begin
@@ -341,7 +342,7 @@ codeunit 81020 "LookupValue Permissions"
 
     local procedure VerifyPermissionsErrorThrown(PermissionType: Text)
     var
-        YouDoNotHavePermissions: Label 'You do not have the following permissions on TableData LookupValue: %1';
+        YouDoNotHavePermissions: Label 'Sorry, the current permissions prevented the action. (TableData LookupValue %1: LookupValue)';
     begin
         Assert.ExpectedError(StrSubstNo(YouDoNotHavePermissions, PermissionType));
     end;
