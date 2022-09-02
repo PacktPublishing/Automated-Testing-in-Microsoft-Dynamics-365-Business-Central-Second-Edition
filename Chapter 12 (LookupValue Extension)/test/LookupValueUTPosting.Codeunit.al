@@ -3,6 +3,7 @@ codeunit 81025 "LookupValue UT Posting"
     // Generated on 5-8-2021 at 10:21 by lvanvugt
 
     Subtype = Test;
+    TestPermissions = Disabled;
 
     trigger OnRun()
     begin

@@ -3,6 +3,7 @@ codeunit 81026 "LookupValue UT Inheritance"
     // Generated on 5-8-2021 at 11:57 by lvanvugt
 
     Subtype = Test;
+    TestPermissions = Disabled;
 
     trigger OnRun()
     begin
@@ -76,6 +77,13 @@ codeunit 81026 "LookupValue UT Inheritance"
         SalesHeaderEvents: Codeunit SalesHeaderEvents;
     begin
         SalesHeaderEvents.InheritLookupValueFromCustomer(SalesHeader, SellToCustomer)
+    end;
+
+    local procedure TriggerApplyLookupValueFromCustomerTemplate(var Customer: Record Customer; CustomerTempl: Record "Customer Templ.")
+    var
+        CustomerTemplEvents: Codeunit CustomerTemplEvents;
+    begin
+        CustomerTemplEvents.ApplyLookupValueFromCustomerTemplate(Customer, CustomerTempl);
     end;
 
     local procedure TriggerOnCreateCustomerFromTemplateOnBeforeCustomerInsertEvent(var Cust: Record Customer; CustomerTemplate: Code[20])

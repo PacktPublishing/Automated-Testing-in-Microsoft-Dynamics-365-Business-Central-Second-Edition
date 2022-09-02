@@ -1,6 +1,7 @@
 codeunit 81002 "LookupValue UT Cust. Template"
 {
     Subtype = Test;
+    TestPermissions = Disabled;
 
     trigger OnRun()
     begin

@@ -1,6 +1,7 @@
 codeunit 81000 "LookupValue UT Customer"
 {
     Subtype = Test;
+    TestPermissions = Disabled;
 
     trigger OnRun()
     begin

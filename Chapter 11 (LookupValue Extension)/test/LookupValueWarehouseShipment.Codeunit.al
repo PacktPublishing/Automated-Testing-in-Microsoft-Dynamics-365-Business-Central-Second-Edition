@@ -1,6 +1,7 @@
 codeunit 81003 "LookupValue Warehouse Shipment"
 {
     Subtype = Test;
+    TestPermissions = Disabled;
 
     trigger OnRun()
     begin

@@ -342,9 +342,16 @@ codeunit 81020 "LookupValue Permissions"
 
     local procedure VerifyPermissionsErrorThrown(PermissionType: Text)
     var
-        YouDoNotHavePermissions: Label 'Sorry, the current permissions prevented the action. (TableData LookupValue %1: LookupValue)';
+        LookupValue: Record LookupValue;
+        YouDoNotHavePermissions: Label 'Sorry, the current permissions prevented the action. (TableData %1 %2', Comment = '%1 Table Caption, %2 Permission Type';
     begin
-        Assert.ExpectedError(StrSubstNo(YouDoNotHavePermissions, PermissionType));
+        Assert.ExpectedError(
+            StrSubstNo(
+                YouDoNotHavePermissions,
+                LookupValue.TableName(),
+                PermissionType
+            )
+        );
     end;
 
     local procedure VerifyLookupValueExists(LookupValueCode: Code[10])

@@ -3,6 +3,7 @@ codeunit 81005 "LookupValue Posting"
     // Generated on 28-8-2021 at 12:27 by lvvugt
 
     Subtype = Test;
+    TestPermissions = Disabled;
 
     trigger OnRun()
     begin

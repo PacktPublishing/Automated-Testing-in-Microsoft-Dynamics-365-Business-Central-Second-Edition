@@ -1,6 +1,7 @@
 codeunit 81009 "LookupValue Report 2"
 {
     Subtype = Test;
+    TestPermissions = Disabled;
 
     trigger OnRun()
     begin

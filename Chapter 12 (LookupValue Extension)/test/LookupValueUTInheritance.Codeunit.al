@@ -3,6 +3,7 @@ codeunit 81026 "LookupValue UT Inheritance"
     // Generated on 5-8-2021 at 11:57 by lvanvugt
 
     Subtype = Test;
+    TestPermissions = Disabled;
 
     trigger OnRun()
     begin
