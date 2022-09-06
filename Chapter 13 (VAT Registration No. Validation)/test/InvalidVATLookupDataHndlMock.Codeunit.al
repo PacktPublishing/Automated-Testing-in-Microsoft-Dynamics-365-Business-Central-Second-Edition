@@ -1,5 +1,5 @@
 codeunit 60199 "InvalidVATLookupDataHndlMock"
-// Mock of codeunit 60148 (abstract of codeunit 248 "VAT Lookup Ext. Data Hndl") returning an invalid log entry
+// Mock of codeunit 248 "VAT Lookup Ext. Data Hndl" returning an invalid log entry
 {
     Permissions = TableData "VAT Registration Log" = rimd;
     TableNo = "VAT Registration Log";
