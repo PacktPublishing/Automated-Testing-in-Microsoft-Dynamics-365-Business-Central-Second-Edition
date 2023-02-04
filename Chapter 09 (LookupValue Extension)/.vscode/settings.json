@@ -3,5 +3,6 @@
     "CRS.FileNamePattern": "<ObjectNameShort>.<ObjectTypeShortPascalCase>.al",
     "CRS.FileNamePatternExtensions": "<ObjectNameShort>.<ObjectTypeShortPascalCase>.al",
     "CRS.ExtensionObjectNamePattern": "",
-    "CRS.RemoveSuffixFromFilename": true
+    "CRS.RemoveSuffixFromFilename": true,
+    "al-test-runner.sendDebugTelemetry": false
 }
