@@ -76,9 +76,9 @@ codeunit 81009 "LookupValue Report 2"
         // LibraryReportDataset.AssertElementWithValueExists('Customer__No__', No);
         // LibraryReportDataset.AssertElementWithValueExists('Customer_Lookup_Value_Code', LookupValueCode);
 
-        Row[1] := LibraryReportDataset.FindRow('Customer_No_', No);
+        Row[1] := LibraryReportDataset.FindRow('Customer__No__', No);
         Row[2] := LibraryReportDataset.FindRow('Customer_Lookup_Value_Code', LookupValueCode);
-        Assert.AreEqual(0, Row[2] - Row[1], 'Delta between row for columns Customer_No_ and Customer_Lookup_Value_Code')
+        Assert.AreEqual(0, Row[2] - Row[1], 'Delta between row for columns Customer__No__ and Customer_Lookup_Value_Code')
     end;
 
     [RequestPageHandler]
