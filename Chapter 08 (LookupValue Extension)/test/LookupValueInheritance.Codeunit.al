@@ -1,6 +1,7 @@
 codeunit 81006 "LookupValue Inheritance"
 {
     Subtype = Test;
+    TestPermissions = Disabled;
 
     trigger OnRun()
     begin
