@@ -8,6 +8,7 @@ codeunit 81008 "LookupValue Report"
     end;
 
     var
+        Assert: Codeunit "Library Assert";
         LibrarySales: Codeunit "Library - Sales";
         LibraryReportDataset: Codeunit "Library - Report Dataset";
         LibraryLookupValue: Codeunit "Library - Lookup Value";
@@ -69,9 +70,15 @@ codeunit 81008 "LookupValue Report"
     end;
 
     local procedure VerifyCustomerWithLookupValueOnCustomerListReport(No: Code[20]; LookupValueCode: Code[10])
+    var
+        Row: array[2] of Integer;
     begin
-        LibraryReportDataset.AssertElementWithValueExists('Customer_No_', No);
-        LibraryReportDataset.AssertElementWithValueExists('Customer_Lookup_Value_Code', LookupValueCode);
+        // LibraryReportDataset.AssertElementWithValueExists('Customer__No__', No);
+        // LibraryReportDataset.AssertElementWithValueExists('Customer_Lookup_Value_Code', LookupValueCode);
+
+        Row[1] := LibraryReportDataset.FindRow('Customer_No_', No);
+        Row[2] := LibraryReportDataset.FindRow('Customer_Lookup_Value_Code', LookupValueCode);
+        Assert.AreEqual(0, Row[2] - Row[1], 'Delta between row for columns Customer_No_ and Customer_Lookup_Value_Code')
     end;
 
     [RequestPageHandler]
