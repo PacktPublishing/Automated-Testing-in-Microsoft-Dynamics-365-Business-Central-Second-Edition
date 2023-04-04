@@ -9,11 +9,13 @@ codeunit 81013 "LookupValue Sales Archive 2"
     end;
 
     var
+        Any: Codeunit Any;
         Assert: Codeunit "Library Assert";
         LibrarySales: Codeunit "Library - Sales";
         LibraryLookupValue: Codeunit "Library - Lookup Value";
+        LibraryVariableStorage: Codeunit "Library - Variable Storage";
 
-    [HandlerFunctions('ConfirmArchiveNo,ConfirmArchived')]
+    [HandlerFunctions('ConfirmHandlerYes,MessageHandler')]
     [Test]
     procedure RestoreArchivedSalesOrderWithLookupValueToSalesOrderWithLookupValue()
     var
@@ -21,214 +23,203 @@ codeunit 81013 "LookupValue Sales Archive 2"
         LookupValueCode: Code[20];
         NewLookupValueCode: Code[20];
     begin
-        //[SCENARIO #0008] Restore archived sales order with lookup value to sales order with new lookup value.
+        //[SCENARIO #0100] Restore archived sales order with lookup value to sales order with changed lookup value.
 
-        //[GIVEN] Lookup value
-        LookupValueCode := CreateLookupValueCode();
+        //[GIVEN] Sales order with lookup value
+        LookupValueCode := CreateSalesDocumentWithLookupValue(SalesHeader, "Sales Document Type"::Order);
+        //[GIVEN] Sales order is archived
+        ArchiveSalesDocument(SalesHeader);
         //[GIVEN] New lookup value
         NewLookupValueCode := CreateLookupValueCode();
-        //[GIVEN] Sales order with lookup value.
-        CreateDocumentWithLookupValue(SalesHeader, "Sales Document Type"::Order, LookupValueCode);
-        //[GIVEN] Archived sales order with lookup value.
-        CreateArchivedDocumentFromSalesDocument(SalesHeader."No.", "Sales Document Type"::Order);
-        //[GIVEN] Change lookup value on sales order to new lookup value
-        ChangeLookupValueCodeForSalesDocument(SalesHeader."No.", NewLookupValueCode, "Sales Document Type"::Order);
+        //[GIVEN] Lookup value on sales order changed to new lookup value
+        ChangeLookupValueOnSalesDocument(SalesHeader."No.", NewLookupValueCode, "Sales Document Type"::Order);
 
-        //[WHEN] Restore archived sales order.
+        //[WHEN] Restore archived sales order
         RestoreArchivedDocument(SalesHeader."No.", "Sales Document Type"::Order);
 
-        //[THEN] Sales order has lookup value equals lookup value from the archived sales order.
-        VerifySalesHeaderLookupValueEqualsArchivedLookupValue(SalesHeader."Lookup Value Code", LookupValueCode, "Sales Document Type"::Order);
+        //[THEN] Sales order lookup value equals lookup value of archived sales order
+        VerifySalesDocumentLookupValueEqualsLookupValueOfArchivedSalesDocument(SalesHeader."Lookup Value Code", LookupValueCode);
     end;
 
-    [HandlerFunctions('ConfirmArchiveNo,ConfirmArchived')]
+    [HandlerFunctions('ConfirmHandlerYes,MessageHandler')]
     [Test]
-    procedure RestoreArchivedSalesOrderWithoutLookupValueToSalesOrderWithLookupValue()
+    procedure RestoreArchivedSalesOrderWithEmptyLookupValueToSalesOrderWithLookupValue()
     var
         SalesHeader: Record "Sales Header";
-        ArchivedSalesNo: Code[20];
         NewLookupValueCode: Code[20];
     begin
-        //[SCENARIO #0009] Restore archived sales order without lookup value to sales order with lookup value.
+        //[SCENARIO #0101] Restore archived sales order with empty lookup value to sales order with lookup value.
 
-        //[GIVEN] Lookup value
+        //[GIVEN] Sales order with empty lookup value
+        CreateDocumentWithEmptyLookupValue(SalesHeader, "Sales Document Type"::Order);
+        //[GIVEN] Sales order is archived
+        ArchiveSalesDocument(SalesHeader);
+        //[GIVEN] New lookup value
         NewLookupValueCode := CreateLookupValueCode();
-        //[GIVEN] Sales order without lookup value.
-        CreateDocumentWithoutLookupValue(SalesHeader, "Sales Document Type"::Order);
-        //[GIVEN] Archived sales order with lookup value.
-        CreateArchivedDocumentFromSalesDocument(SalesHeader."No.", "Sales Document Type"::Order);
-        //[GIVEN] Change lookup value on sales order to new lookup value
-        ChangeLookupValueCodeForSalesDocument(SalesHeader."No.", NewLookupValueCode, "Sales Document Type"::Order);
+        //[GIVEN] Lookup value on sales order changed to new lookup value
+        ChangeLookupValueOnSalesDocument(SalesHeader."No.", NewLookupValueCode, "Sales Document Type"::Order);
 
-        //[WHEN] Restore archived sales order.
+        //[WHEN] Restore archived sales order
         RestoreArchivedDocument(SalesHeader."No.", "Sales Document Type"::Order);
 
-        //[THEN] Sales order has lookup value equals lookup value from the archived sales order.
-        VerifySalesHeaderLookupValueEqualsArchivedLookupValue(SalesHeader."Lookup Value Code", '', "Sales Document Type"::Order);
+        //[THEN] Sales order lookup value is empty
+        VerifySalesDocumentLookupValueIsEmpty(SalesHeader."Lookup Value Code");
     end;
 
-    [HandlerFunctions('ConfirmArchiveNo,ConfirmArchived')]
+    [HandlerFunctions('ConfirmHandlerYes,MessageHandler')]
     [Test]
-    procedure RestoreArchivedSalesOrderWithLookupValueToSalesOrderWithoutLookupValue()
+    procedure RestoreArchivedSalesOrderWithLookupValueToSalesOrderWithEmptyLookupValue()
     var
         SalesHeader: Record "Sales Header";
-        ArchivedSalesNo: Code[20];
         LookupValueCode: Code[20];
-        NewLookupValueCode: Code[20];
     begin
-        //[SCENARIO #0010] Restore archived sales order with lookup value to sales order without lookup value.
+        //[SCENARIO #0102] Restore archived sales order with lookup value to sales order with empty lookup value
 
-        //[GIVEN] Lookup value
-        LookupValueCode := CreateLookupValueCode();
-        //[GIVEN] New lookUp value
-        NewLookupValueCode := '';
-        //[GIVEN] Sales order with lookup value.
-        CreateDocumentWithLookupValue(SalesHeader, "Sales Document Type"::Order, LookupValueCode);
-        //[GIVEN] Archived sales order with lookup value.
-        CreateArchivedDocumentFromSalesDocument(SalesHeader."No.", "Sales Document Type"::Order);
-        //[GIVEN] Change lookup value on sales order to new lookup value (empty)
-        ChangeLookupValueCodeForSalesDocument(SalesHeader."No.", NewLookupValueCode, "Sales Document Type"::Order);
+        //[GIVEN] Sales order with lookup value
+        LookupValueCode := CreateSalesDocumentWithLookupValue(SalesHeader, "Sales Document Type"::Order);
+        //[GIVEN] Sales order is archived
+        ArchiveSalesDocument(SalesHeader);
+        //[GIVEN] Lookup value on sales order is emptied
+        EmptyLookupValueOnSalesDocument(SalesHeader."No.", "Sales Document Type"::Order);
 
-        //[WHEN] Restore archived sales order.
+        //[WHEN] Restore archived sales order
         RestoreArchivedDocument(SalesHeader."No.", "Sales Document Type"::Order);
 
-        //[THEN] Sales order has lookup value equals lookup value from the archived sales order.
-        VerifySalesHeaderLookupValueEqualsArchivedLookupValue(SalesHeader."Lookup Value Code", LookupValueCode, "Sales Document Type"::Order);
+        //[THEN] Sales order lookup value equals archived sales order lookup value
+        VerifySalesDocumentLookupValueEqualsLookupValueOfArchivedSalesDocument(SalesHeader."Lookup Value Code", LookupValueCode);
     end;
 
-    [HandlerFunctions('ConfirmArchiveNo,ConfirmArchived')]
+    [HandlerFunctions('ConfirmHandlerYes,MessageHandler')]
     [Test]
     procedure RestoreArchivedSalesQuoteWithLookupValueToSalesQuoteWithoutLookupValue()
     var
         SalesHeader: Record "Sales Header";
         ArchivedSalesNo: Code[20];
         LookupValueCode: Code[20];
-        NewLookupValueCode: Code[20];
     begin
-        //[SCENARIO #0011] Restore archived sales quote with lookup value to sales quote without lookup value.
+        //[SCENARIO #0011] Restore archived sales quote with lookup value to sales quote with empty lookup value
 
-        //[GIVEN] Lookup value
-        LookupValueCode := CreateLookupValueCode();
-        //[GIVEN] New lookup value
-        NewLookupValueCode := '';
-        //[GIVEN] Sales quote with lookup value.
-        CreateDocumentWithLookupValue(SalesHeader, "Sales Document Type"::"Quote", LookupValueCode);
-        //[GIVEN] Archived sales quote with lookup value.
-        CreateArchivedDocumentFromSalesDocument(SalesHeader."No.", "Sales Document Type"::Quote);
-        //[GIVEN] Change lookup value on sales quote to new lookup value (empty)
-        ChangeLookupValueCodeForSalesDocument(SalesHeader."No.", NewLookupValueCode, "Sales Document Type"::Quote);
+        //[GIVEN] Sales quote with lookup value
+        LookupValueCode := CreateSalesDocumentWithLookupValue(SalesHeader, "Sales Document Type"::"Quote");
+        //[GIVEN] Archived sales quote with lookup value
+        ArchiveSalesDocument(SalesHeader);
+        //[GIVEN] Empty lookup value on sales quote
+        EmptyLookupValueOnSalesDocument(SalesHeader."No.", "Sales Document Type"::Quote);
 
-        //[WHEN] Restore archived sales quote.
+        //[WHEN] Restore archived sales quote
         RestoreArchivedDocument(SalesHeader."No.", "Sales Document Type"::Quote);
 
-        //[THEN] Sales quote has lookup value equals lookup value from the archived sales quote.
-        VerifySalesHeaderLookupValueEqualsArchivedLookupValue(SalesHeader."Lookup Value Code", LookupValueCode, "Sales Document Type"::Quote);
+        //[THEN] Sales quote lookup value equals archived sales quote lookup value
+        VerifySalesDocumentLookupValueEqualsLookupValueOfArchivedSalesDocument(SalesHeader."Lookup Value Code", LookupValueCode);
     end;
 
-    [HandlerFunctions('ConfirmArchiveNo,ConfirmArchived')]
+    [HandlerFunctions('ConfirmHandlerYes,MessageHandler')]
     [Test]
     procedure RestoreArchivedSalesInvoiceWithLookupValueToSalesInvoiceWithoutLookupValue()
     var
         SalesHeader: Record "Sales Header";
         ArchivedSalesNo: Code[20];
         LookupValueCode: Code[20];
-        NewLookupValueCode: Code[20];
     begin
-        //[SCENARIO #0012] Restore archived sales invoice with lookup value to sales invoice without lookup value.
+        //[SCENARIO #0012] Restore archived sales invoice with lookup value to sales invoice with empty lookup value
 
-        //[GIVEN] Lookup value
-        LookupValueCode := CreateLookupValueCode();
-        //[GIVEN] New lookup value
-        NewLookupValueCode := '';
-        //[GIVEN] Sales invoice with lookup value.
-        CreateDocumentWithLookupValue(SalesHeader, "Sales Document Type"::Invoice, LookupValueCode);
-        //[GIVEN] Archived sales invoice with lookup value.
-        CreateArchivedDocumentFromSalesDocument(SalesHeader."No.", "Sales Document Type"::Invoice);
-        //[GIVEN] Change lookup value on sales invoice to new lookup value (empty)
-        ChangeLookupValueCodeForSalesDocument(SalesHeader."No.", NewLookupValueCode, "Sales Document Type"::Invoice);
+        //[GIVEN] Sales invoice with lookup value
+        LookupValueCode := CreateSalesDocumentWithLookupValue(SalesHeader, "Sales Document Type"::Invoice);
+        //[GIVEN] Archived sales invoice with lookup value
+        ArchiveSalesDocument(SalesHeader);
+        //[GIVEN] Empty lookup value on sales invoice
+        EmptyLookupValueOnSalesDocument(SalesHeader."No.", "Sales Document Type"::Invoice);
 
-        //[WHEN] Restore archived sales invoice.
+        //[WHEN] Restore archived sales invoice
         RestoreArchivedDocument(SalesHeader."No.", "Sales Document Type"::Invoice);
 
-        //[THEN] Sales invoice has lookup value equals lookup value from the archived sales invoice.
-        VerifySalesHeaderLookupValueEqualsArchivedLookupValue(SalesHeader."Lookup Value Code", LookupValueCode, "Sales Document Type"::Invoice);
+        //[THEN] Sales invoice lookup value equals archived sales invoice lookup value
+        VerifySalesDocumentLookupValueEqualsLookupValueOfArchivedSalesDocument(SalesHeader."Lookup Value Code", LookupValueCode);
     end;
 
-    [HandlerFunctions('ConfirmArchiveNo,ConfirmArchived')]
+    [HandlerFunctions('ConfirmHandlerYes,MessageHandler')]
     [Test]
-    procedure RestoreArchivedDocumentWithLookupValueToBlanketOrderWithoutLookupValue()
+    procedure RestoreArchivedBlanketOrderWithLookupValueToBlanketOrderWithoutLookupValue()
     var
         SalesHeader: Record "Sales Header";
         ArchivedSalesNo: Code[20];
         LookupValueCode: Code[20];
-        NewLookupValueCode: Code[20];
     begin
-        //[SCENARIO #0013] Restore archived blanket order with lookup value to blanket order without lookup value.
+        //[SCENARIO #0013] Restore archived blanket order with lookup value to blanket order with empty lookup value
 
-        //[GIVEN] Lookup value
-        LookupValueCode := CreateLookupValueCode();
-        //[GIVEN] New lookup value
-        NewLookupValueCode := '';
-        //[GIVEN] Blanket order with lookup value.
-        CreateDocumentWithLookupValue(SalesHeader, "Sales Document Type"::"Blanket Order", LookupValueCode);
-        //[GIVEN] Archived blanket order with lookup value.
-        CreateArchivedDocumentFromSalesDocument(SalesHeader."No.", "Sales Document Type"::"Blanket Order");
-        //[GIVEN] Change Lookup value on blanket order to new lookup value (empty)
-        ChangeLookupValueCodeForSalesDocument(SalesHeader."No.", NewLookupValueCode, "Sales Document Type"::"Blanket Order");
+        //[GIVEN] Blanket order with lookup value
+        LookupValueCode := CreateSalesDocumentWithLookupValue(SalesHeader, "Sales Document Type"::"Blanket Order");
+        //[GIVEN] Archived blanket order with lookup value
+        ArchiveSalesDocument(SalesHeader);
+        //[GIVEN] Empty lookup value on blanket order
+        EmptyLookupValueOnSalesDocument(SalesHeader."No.", "Sales Document Type"::"Blanket Order");
 
-        //[WHEN] Restore archived blanket order.
+        //[WHEN] Restore archived blanket order
         RestoreArchivedDocument(SalesHeader."No.", "Sales Document Type"::"Blanket Order");
 
-        //[THEN] Blanket order has lookup value equals lookup value from the archived Blanket order.
-        VerifySalesHeaderLookupValueEqualsArchivedLookupValue(SalesHeader."Lookup Value Code", LookupValueCode, "Sales Document Type"::"Blanket Order");
+        //[THEN] Blanket order lookup value equals archived blanket order lookup value
+        VerifySalesDocumentLookupValueEqualsLookupValueOfArchivedSalesDocument(SalesHeader."Lookup Value Code", LookupValueCode);
     end;
 
-    [HandlerFunctions('ConfirmArchiveNo,ConfirmArchived')]
+    [HandlerFunctions('ConfirmHandlerYes,MessageHandler')]
     [Test]
     procedure RestoreArchivedReturnOrderWithLookupValueToReturnOrderWithoutLookupValue()
     var
         SalesHeader: Record "Sales Header";
         ArchivedSalesNo: Code[20];
         LookupValueCode: Code[20];
-        NewLookupValueCode: Code[20];
     begin
-        //[SCENARIO #0014] Restore archived return order with lookup value to return order without lookup value.
+        //[SCENARIO #0014] Restore archived return order with lookup value to return order with empty lookup value
 
-        //[GIVEN] Lookup value
-        LookupValueCode := CreateLookupValueCode();
-        //[GIVEN] New lookup value
-        NewLookupValueCode := '';
-        //[GIVEN] return order with lookup value.
-        CreateDocumentWithLookupValue(SalesHeader, "Sales Document Type"::"Return Order", LookupValueCode);
-        //[GIVEN] Archived return order with lookup value.
-        CreateArchivedDocumentFromSalesDocument(SalesHeader."No.", "Sales Document Type"::"Return Order");
-        //[GIVEN] Change lookup value on return order to new lookup value (empty)
-        ChangeLookupValueCodeForSalesDocument(SalesHeader."No.", NewLookupValueCode, "Sales Document Type"::"Return Order");
+        //[GIVEN] return order with lookup value
+        LookupValueCode := CreateSalesDocumentWithLookupValue(SalesHeader, "Sales Document Type"::"Return Order");
+        //[GIVEN] Archived return order with lookup value
+        ArchiveSalesDocument(SalesHeader);
+        //[GIVEN] Empty lookup value on return order
+        EmptyLookupValueOnSalesDocument(SalesHeader."No.", "Sales Document Type"::"Return Order");
 
-        //[WHEN] Restore archived return order.
+        //[WHEN] Restore archived return order
         RestoreArchivedDocument(SalesHeader."No.", "Sales Document Type"::"Return Order");
 
-        //[THEN] Return order has lookup value equals lookup value from the archived return order.
-        VerifySalesHeaderLookupValueEqualsArchivedLookupValue(SalesHeader."Lookup Value Code", LookupValueCode, "Sales Document Type"::"Return Order");
+        //[THEN] Return order lookup value equals archived return order lookup value
+        VerifySalesDocumentLookupValueEqualsLookupValueOfArchivedSalesDocument(SalesHeader."Lookup Value Code", LookupValueCode);
     end;
 
-    local procedure VerifySalesHeaderLookupValueEqualsArchivedLookupValue(ActualLookupValue: Code[20]; ExpectedLookupValue: Code[20]; DocumentType: Enum "Sales Document Type")
-    var
-        SalesHeader: Record "Sales Header";
+    local procedure CreateLookupValueCode(): Code[10]
     begin
-        Assert.AreEqual(ExpectedLookupValue, ActualLookupValue, SalesHeader.FieldCaption("Lookup Value Code"));
+        exit(LibraryLookupValue.CreateLookupValueCode())
     end;
 
-    local procedure RestoreArchivedDocument(SalesHeaderNo: Code[20]; DocumentType: Enum "Sales Document Type")
-    var
-        ArchiveMgt: Codeunit ArchiveManagement;
-        ArchivedDocument: Record "Sales Header Archive";
+    local procedure CreateSalesDocumentWithLookupValue(var SalesHeader: Record "Sales Header"; DocumentType: Enum "Sales Document Type"): Code[20]
     begin
-        ArchivedDocument.Get(DocumentType, SalesHeaderNo, 1, 1);
-        ArchiveMgt.RestoreSalesDocument(ArchivedDocument);
+        CreateDocumentWithEmptyLookupValue(SalesHeader, DocumentType);
+
+        SalesHeader.Validate("Lookup Value Code", CreateLookupValueCode());
+        SalesHeader.Modify();
+        exit(SalesHeader."Lookup Value Code")
     end;
 
-    local procedure ChangeLookupValueCodeForSalesDocument(SalesHeaderNo: Code[20]; NewLookupValueCode: Code[20]; DocumentType: Enum "Sales Document Type")
+    local procedure CreateDocumentWithEmptyLookupValue(var SalesHeader: Record "Sales Header"; DocumentType: Enum "Sales Document Type"): Code[20]
+    begin
+        LibrarySales.CreateSalesHeader(SalesHeader, DocumentType, '');
+        exit(SalesHeader."No.");
+    end;
+
+    local procedure ArchiveSalesDocument(SalesHeader: Record "Sales Header")
+    var
+        ArchiveManagement: Codeunit ArchiveManagement;
+    begin
+        LibraryVariableStorage.Enqueue(1);
+        LibraryVariableStorage.Enqueue(SalesHeader."Document Type");
+        LibraryVariableStorage.Enqueue(SalesHeader."No.");
+
+        LibraryVariableStorage.Enqueue(1);
+        LibraryVariableStorage.Enqueue(SalesHeader."No.");
+
+        ArchiveManagement.ArchiveSalesDocument(SalesHeader);
+    end;
+
+    local procedure ChangeLookupValueOnSalesDocument(SalesHeaderNo: Code[20]; NewLookupValueCode: Code[20]; DocumentType: Enum "Sales Document Type")
     var
         SalesOrder: Record "Sales Header";
     begin
@@ -237,50 +228,92 @@ codeunit 81013 "LookupValue Sales Archive 2"
         SalesOrder.Modify(true);
     end;
 
-    local procedure CreateLookupValueCode(): Code[10]
+    local procedure EmptyLookupValueOnSalesDocument(SalesHeaderNo: Code[20]; DocumentType: Enum "Sales Document Type")
     begin
-        exit(LibraryLookupValue.CreateLookupValueCode())
+        ChangeLookupValueOnSalesDocument(SalesHeaderNo, '', DocumentType)
     end;
 
-    local procedure CreateArchivedDocumentFromSalesDocument(SalesOrderNo: Code[20]; DocumentType: Enum "Sales Document Type")
+    local procedure RestoreArchivedDocument(SalesHeaderNo: Code[20]; DocumentType: Enum "Sales Document Type")
     var
         ArchiveMgt: Codeunit ArchiveManagement;
-        SalesOrder: Record "Sales Header";
+        ArchivedDocument: Record "Sales Header Archive";
     begin
-        SalesOrder.Get(DocumentType, SalesOrderNo);
-        ArchiveMgt.ArchiveSalesDocument(SalesOrder);
+        ArchivedDocument.Get(DocumentType, SalesHeaderNo, 1, 1);
+
+        LibraryVariableStorage.Enqueue(2);
+        LibraryVariableStorage.Enqueue(DocumentType);
+        LibraryVariableStorage.Enqueue(SalesHeaderNo);
+        LibraryVariableStorage.Enqueue(1);
+
+        LibraryVariableStorage.Enqueue(2);
+        LibraryVariableStorage.Enqueue(DocumentType);
+        LibraryVariableStorage.Enqueue(SalesHeaderNo);
+
+        ArchiveMgt.RestoreSalesDocument(ArchivedDocument);
     end;
 
-    local procedure CreateDocumentWithoutLookupValue(var SalesHeader: Record "Sales Header"; DocumentType: Enum "Sales Document Type"): Code[20]
+    local procedure VerifySalesDocumentLookupValueEqualsLookupValueOfArchivedSalesDocument(ActualLookupValue: Code[20]; ExpectedLookupValue: Code[20])
+    var
+        SalesHeader: Record "Sales Header";
     begin
-        LibrarySales.CreateSalesHeader(SalesHeader, DocumentType, '');
-
-        exit(SalesHeader."No.");
+        Assert.AreEqual(ExpectedLookupValue, ActualLookupValue, SalesHeader.FieldCaption("Lookup Value Code"));
     end;
 
-    local procedure CreateDocumentWithLookupValue(var SalesHeader: Record "Sales Header"; DocumentType: Enum "Sales Document Type"; LookupValueCode: Code[20]): Code[20]
+    local procedure VerifySalesDocumentLookupValueIsEmpty(ActualLookupValue: Code[20])
+    var
+        SalesHeader: Record "Sales Header";
     begin
-        LibrarySales.CreateSalesHeader(SalesHeader, DocumentType, '');
-
-        SalesHeader.Validate("Lookup Value Code", LookupValueCode);
-        SalesHeader.Modify();
-        exit(SalesHeader."No.");
+        Assert.AreEqual('', ActualLookupValue, SalesHeader.FieldCaption("Lookup Value Code"));
     end;
-
-    local procedure RandomCode10(): Code[10];
-    begin
-        exit(Format(Random(999999999)));
-    end;
-
 
     [ConfirmHandler]
-    procedure ConfirmArchiveNo(Question: Text[1024]; var Reply: Boolean)
+    procedure ConfirmHandlerYes(Question: Text[1024]; var Reply: Boolean);
+    var
+        SequenceNo: Integer;
+        ArchiveDocumentQst: Label 'Archive %1 no.: %2';
+        RestoreDocumentQst: Label 'Do you want to Restore %1 %2 Version %3?';
     begin
+        SequenceNo := LibraryVariableStorage.DequeueInteger();
+        case SequenceNo of
+            1: // Archive
+                Assert.ExpectedMessage(
+                    StrSubstNo(ArchiveDocumentQst,
+                        LibraryVariableStorage.DequeueText(),
+                        LibraryVariableStorage.DequeueText()
+                    ),
+                    Question);
+            2: // Restore
+                Assert.ExpectedMessage(
+                    StrSubstNo(RestoreDocumentQst,
+                        LibraryVariableStorage.DequeueText(),
+                        LibraryVariableStorage.DequeueText(),
+                        LibraryVariableStorage.DequeueInteger()
+                    ),
+                    Question);
+        end;
         Reply := true;
     end;
 
     [MessageHandler]
-    procedure ConfirmArchived(Question: Text[1024])
+    procedure MessageHandler(Message: Text[1024])
+    var
+        SequenceNo: Integer;
+        DocumentHasBeenArchivedTxt: Label 'Document %1 has been archived';
+        DocumentHasBeenRestoredTxt: Label '%1 %2 has been restored';
     begin
+        SequenceNo := LibraryVariableStorage.DequeueInteger();
+        case SequenceNo of
+            1: // Archived
+                Assert.ExpectedMessage(
+                    StrSubstNo(DocumentHasBeenArchivedTxt,
+                        LibraryVariableStorage.DequeueText()),
+                    Message);
+            2: // Restored
+                Assert.ExpectedMessage(
+                    StrSubstNo(DocumentHasBeenRestoredTxt,
+                        LibraryVariableStorage.DequeueText(),
+                        LibraryVariableStorage.DequeueText()),
+                    Message);
+        end;
     end;
 }

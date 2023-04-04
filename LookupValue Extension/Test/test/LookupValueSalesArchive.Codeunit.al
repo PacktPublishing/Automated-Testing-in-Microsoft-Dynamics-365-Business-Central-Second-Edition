@@ -128,10 +128,10 @@ codeunit 81004 "LookupValue Sales Archive"
     [ConfirmHandler]
     procedure ConfirmHandlerYes(Question: Text[1024]; var Reply: Boolean);
     var
-        ArchiveDocumentNo: Label 'Archive %1 no.: %2';
+        ArchiveDocumentQst: Label 'Archive %1 no.: %2';
     begin
         Assert.ExpectedMessage(
-            StrSubstNo(ArchiveDocumentNo,
+            StrSubstNo(ArchiveDocumentQst,
                 LibraryVariableStorage.DequeueText(),
                 LibraryVariableStorage.DequeueText()
             ),
