@@ -1,7 +1,6 @@
 codeunit 81013 "LookupValue Sales Archive 2"
 {
     Subtype = Test;
-    TestPermissions = Disabled;
 
     trigger OnRun()
     begin
