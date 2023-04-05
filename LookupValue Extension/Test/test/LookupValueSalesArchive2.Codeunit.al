@@ -8,7 +8,6 @@ codeunit 81013 "LookupValue Sales Archive 2"
     end;
 
     var
-        Any: Codeunit Any;
         Assert: Codeunit "Library Assert";
         LibrarySales: Codeunit "Library - Sales";
         LibraryLookupValue: Codeunit "Library - Lookup Value";
