@@ -1,3 +1,6 @@
+
+
+
 # Automated Testing in Microsoft Dynamics 365 Business Central - Second Edition
 
 <a href="https://www.packtpub.com/product/automated-testing-in-microsoft-dynamics-365-business-central-second-edition/9781801816427?utm_source=github&utm_medium=repository&utm_campaign=9781801816427"><img src="https://static.packt-cdn.com/products/9781801816427/cover/smaller" alt="Automated Testing in Microsoft Dynamics 365 Business Central - Second Edition" height="256px" align="right"></a>
@@ -58,3 +61,9 @@ As with any other project this book had a certain scope and due to that some thi
 - [Addendum #01](https://www.fluxxus.nl/index.php/bc/addendum-01-scenario-0032-test-that-lookup-value-shows-on-standard-customer-list-report/) – Scenario 0032 ‘Test that lookup value shows on standard Customer – List report’
 - [Addendum #02](https://www.fluxxus.nl/index.php/bc/addendum-02-including-all-extended-pages-in-permissions-testing/) – Including all extended pages in permissions testing
 - [Addendum #03](https://www.fluxxus.nl/index.php/bc/addendum-03-simplifying-api-testing-using-basic-authentication/) – Simplifying API testing using basic authentication
+- [Addendum #04](https://www.fluxxus.nl/index.php/bc/addendum-04-verifying-the-report-dataset/) – Verifying the Report Dataset
+- [Addendum #05](https://www.fluxxus.nl/index.php/bc/addendum-05–include-lookup-value-in-restore-archived-sales-document-feature/) – Include Lookup Value in Restore Archived Sales Document feature
+### Download a free PDF
+
+ <i>If you have already purchased a print or Kindle version of this book, you can get a DRM-free PDF version at no cost.<br>Simply click on the link to claim your free PDF.</i>
+<p align="center"> <a href="https://packt.link/free-ebook/9781801816427">https://packt.link/free-ebook/9781801816427 </a> </p>
