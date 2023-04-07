@@ -62,6 +62,7 @@ As with any other project this book had a certain scope and due to that some thi
 - [Addendum #02](https://www.fluxxus.nl/index.php/bc/addendum-02-including-all-extended-pages-in-permissions-testing/) – Including all extended pages in permissions testing
 - [Addendum #03](https://www.fluxxus.nl/index.php/bc/addendum-03-simplifying-api-testing-using-basic-authentication/) – Simplifying API testing using basic authentication
 - [Addendum #04](https://www.fluxxus.nl/index.php/bc/addendum-04-verifying-the-report-dataset/) – Verifying the Report Dataset
+- [Addendum #05](https://www.fluxxus.nl/index.php/bc/addendum-05–include-lookup-value-in-restore-archived-sales-document-feature/) – Include Lookup Value in Restore Archived Sales Document feature
 ### Download a free PDF
 
  <i>If you have already purchased a print or Kindle version of this book, you can get a DRM-free PDF version at no cost.<br>Simply click on the link to claim your free PDF.</i>
