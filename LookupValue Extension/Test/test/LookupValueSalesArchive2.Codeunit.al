@@ -107,6 +107,14 @@ codeunit 81013 "LookupValue Sales Archive 2"
         RestoreArchivedSalesDocumentWithLookupValueToSalesDocumentWithEmptyLookupValue("Sales Document Type"::"Return Order");
     end;
 
+    [HandlerFunctions('ConfirmHandlerYes,MessageHandler')]
+    [Test]
+    procedure RestoreArchivedCreditMemoWithLookupValueToCreditMemoWithEmptyLookupValue()
+    begin
+        //[SCENARIO #0107] Restore archived credit memo with lookup value to credit memo with empty lookup value
+        RestoreArchivedSalesDocumentWithLookupValueToSalesDocumentWithEmptyLookupValue("Sales Document Type"::"Credit Memo");
+    end;
+
     local procedure RestoreArchivedSalesDocumentWithLookupValueToSalesDocumentWithEmptyLookupValue(DocumentType: Enum "Sales Document Type"): Code[20]
     var
         SalesHeader: Record "Sales Header";
