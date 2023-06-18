@@ -35,12 +35,8 @@ jobs:
     displayName: 'ALOPS - Wait for Docker Container to start'
     inputs:
       search_string: 'Ready for connections!'
-
-  - task: ALOpsLicenseImport@1
-    displayName: 'ALOPS - License Import'
     inputs:
-      usedocker: true
-      license_path: '$(LuxBeheerBcDevLicense)'
+      enable_api_services: true
 
   - task: ALOpsAppPublish@1
     displayName: 'ALOPS - Install specific test app(s)'
