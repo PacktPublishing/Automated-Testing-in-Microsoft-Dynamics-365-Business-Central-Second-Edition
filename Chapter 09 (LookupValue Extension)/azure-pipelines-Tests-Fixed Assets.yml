@@ -35,7 +35,6 @@ jobs:
     displayName: 'ALOPS - Wait for Docker Container to start'
     inputs:
       search_string: 'Ready for connections!'
-    inputs:
       enable_api_services: true
 
   - task: ALOpsAppPublish@1
