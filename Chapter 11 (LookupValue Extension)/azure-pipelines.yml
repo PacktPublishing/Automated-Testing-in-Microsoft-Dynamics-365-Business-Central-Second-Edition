@@ -23,7 +23,6 @@ steps:
     includetesttoolkit: true
     includetestlibrariesonly: true
 
-<<<<<<< HEAD
   - task: ALOpsDockerStart@1
     displayName: 'ALOPS - Start Docker Container' # No need to provide any details - it will get the details from previous step
     inputs:
@@ -33,17 +32,6 @@ steps:
     displayName: 'ALOPS - Wait for Docker Container to start'
     inputs:
       search_string: 'Ready for connections!'
-=======
-- task: ALOpsDockerStart@1
-  displayName: 'ALOPS - Start Docker Container' # No need to provide any details - it will get the details from previous step
-  inputs:
-    enable_api_services: true
-
-- task: ALOpsDockerWait@1
-  displayName: 'ALOPS - Wait for Docker Container to start'
-  inputs:
-    search_string: 'Ready for connections!'
->>>>>>> e24c3098a920c589fa17a6a67df2339df9e6f234
 
 - task: ALOpsAppCompiler@1
   displayName: 'ALOPS - Compile Extension: App'
