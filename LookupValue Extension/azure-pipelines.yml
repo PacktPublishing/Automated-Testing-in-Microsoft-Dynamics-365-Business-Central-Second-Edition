@@ -20,7 +20,7 @@ steps:
     artifactversion: '$(artifactVersion)'
     artifactcountry: '$(artifactCountry)'
     forcecreateimage: $(forceCreateImage)
-    licensefile: '$(LuxBeheerBcDevLicense)'
+    # licensefile: '$(LuxBeheerBcDevLicense)'
     includetesttoolkit: true
     includetestlibrariesonly: true
 
